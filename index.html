@@ -31,6 +31,11 @@
             scroll-behavior: smooth;
         }
 
+        html.light body {
+            background-color: #f1f5f9;
+            color: #0f172a;
+        }
+
         :root {
             --brand-500: 99 102 241;
             --brand-600: 79 70 229;
@@ -50,6 +55,79 @@
             z-index: -2;
             opacity: 0.3;
             mask-image: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+        }
+
+        html.light .scifi-grid {
+            background-image: linear-gradient(rgb(var(--brand-500)/0.1) 1px, transparent 1px), linear-gradient(90deg, rgb(var(--brand-500)/0.1) 1px, transparent 1px);
+            opacity: 0.5;
+        }
+
+        .holo-card {
+            background: rgba(10, 10, 15, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2), 0 8px 30px rgba(0, 0, 0, 0.4);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        html.light .holo-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            backdrop-filter: none;
+        }
+
+        .holo-card:hover {
+            border-color: rgba(var(--brand-500), 0.5);
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 0 0 1px rgba(var(--brand-500), 0.2), 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(var(--brand-500), 0.1);
+        }
+
+        html.light .holo-card:hover {
+            border-color: #cbd5e1;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        html.light .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        html.light .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(var(--brand-500), 0.5);
+        }
+
+        /* Input Styles For Light Mode */
+        html.light input,
+        html.light select,
+        html.light textarea {
+            background-color: #ffffff !important;
+            border-color: #cbd5e1 !important;
+            color: #0f172a !important;
+        }
+
+        html.light input:focus,
+        html.light select:focus,
+        html.light textarea:focus {
+            border-color: rgb(var(--brand-500)) !important;
+            box-shadow: 0 0 0 2px rgba(var(--brand-500), 0.1) !important;
         }
 
         @keyframes grid-move {
@@ -74,45 +152,10 @@
             }
         }
 
-        .holo-card {
-            background: rgba(10, 10, 15, 0.6);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2), 0 8px 30px rgba(0, 0, 0, 0.4);
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
-
-        .holo-card:hover {
-            border-color: rgba(var(--brand-500), 0.5);
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 0 0 1px rgba(var(--brand-500), 0.2), 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(var(--brand-500), 0.1);
-        }
-
-        .animate-float {
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .animate-float-delayed {
-            animation: float 8s ease-in-out infinite;
-            animation-delay: 2s;
-        }
-
         .animate-fade-in {
             animation: fadeIn 0.6s cubic-bezier(0.2, 0.9, 0.2, 1) forwards;
             opacity: 0;
             transform: translateY(20px);
-        }
-
-        .delay-100 {
-            animation-delay: 100ms;
-        }
-
-        .delay-200 {
-            animation-delay: 200ms;
-        }
-
-        .delay-300 {
-            animation-delay: 300ms;
         }
 
         @keyframes fadeIn {
@@ -138,62 +181,86 @@
             transform: rotateY(180deg);
         }
 
-        ::-webkit-scrollbar {
-            width: 6px;
+        /* Typography & Overrides */
+        html.light .text-slate-400,
+        html.light .text-slate-500 {
+            color: #64748b;
         }
 
+        html.light .text-white {
+            color: #0f172a;
+        }
+
+        html.light .bg-black\/50,
+        html.light .bg-black\/20,
+        html.light .bg-black\/40 {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        html.light .border-white\/10,
+        html.light .border-white\/5 {
+            border-color: rgba(0, 0, 0, 0.05);
+        }
+
+        html.light .bg-white\/5 {
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+
+        html.light .hover:bg-white\/10:hover {
+            background-color: rgba(0, 0, 0, 0.04);
+        }
+
+        /* Scrollbar track fix */
         ::-webkit-scrollbar-track {
             background: rgba(0, 0, 0, 0.3);
         }
 
-        ::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 3px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(var(--brand-500), 0.5);
-        }
-
-        @keyframes moveGrid {
-            0% {
-                transform: translateY(0);
-            }
-
-            100% {
-                transform: translateY(50px);
-            }
-        }
-
-        @keyframes marquee {
-            0% {
-                transform: translateX(0);
-            }
-
-            100% {
-                transform: translateX(-50%);
-            }
-        }
-
-        .animate-blink {
-            animation: blink 1s step-end infinite;
-        }
-
-        @keyframes blink {
-            50% {
-                opacity: 0;
-            }
-        }
-
-        .scifi-grid-animated {
-            background-image: linear-gradient(rgba(var(--brand-500), 0.1) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(var(--brand-500), 0.1) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: moveGrid 10s linear infinite;
+        html.light ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
         }
     </style>
     <script>
-        tailwind.config = { darkMode: 'class', theme: { extend: { colors: { brand: { 500: 'rgb(var(--brand-500) / <alpha-value>)', 600: 'rgb(var(--brand-600) / <alpha-value>)', 400: 'rgb(var(--brand-400) / <alpha-value>)' }, surface: { 800: '#1e293b', 900: '#0f172a' } }, fontFamily: { mono: ['JetBrains Mono', 'monospace'] }, animation: { shimmer: 'shimmer 1.5s infinite' }, keyframes: { shimmer: { '100%': { transform: 'translateX(100%)' } } } } } }
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            500: 'rgb(var(--brand-500) / <alpha-value>)',
+                            600: 'rgb(var(--brand-600) / <alpha-value>)',
+                            400: 'rgb(var(--brand-400) / <alpha-value>)'
+                        },
+                        surface: {
+                            800: '#1e293b',
+                            900: '#0f172a'
+                        }
+                    },
+                    fontFamily: {
+                        mono: ['JetBrains Mono', 'monospace']
+                    },
+                    animation: {
+                        shimmer: 'shimmer 1.5s infinite',
+                        blob: 'blob 20s infinite linear',
+                        breathe: 'breathe 3s infinite ease-in-out',
+                    },
+                    keyframes: {
+                        shimmer: {
+                            '100%': { transform: 'translateX(100%)' }
+                        },
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        breathe: {
+                            '0%, 100%': { opacity: '0.6', transform: 'scale(1)' },
+                            '50%': { opacity: '1', transform: 'scale(1.05)' },
+                        }
+                    }
+                }
+            }
+        }
     </script>
 </head>
 
@@ -240,12 +307,31 @@
         const { useState, useEffect, useMemo, useRef } = React;
 
         /* --- ICONS & UI --- */
-        const Icon = ({ name, size = 18, className = "" }) => { useEffect(() => { if (window.lucide) setTimeout(() => window.lucide.createIcons(), 50); }, [name]); return <i data-lucide={name} style={{ width: size, height: size, display: 'inline-block' }} className={className}></i>; };
+        const Icon = ({ name, size = 18, className = "" }) => {
+            const ref = useRef(null);
+            useEffect(() => {
+                if (!window.lucide) return;
+                const pascal = name.replace(/(^|-)([a-z])/g, (_, __, c) => c.toUpperCase());
+                const iconDef = window.lucide.icons?.[pascal];
+                if (iconDef && ref.current) {
+                    const svg = window.lucide.createElement(iconDef);
+                    svg.setAttribute('width', size);
+                    svg.setAttribute('height', size);
+                    ref.current.innerHTML = '';
+                    ref.current.appendChild(svg);
+                } else if (ref.current) {
+                    // Fallback for direct replacement if createElement not available
+                    ref.current.innerHTML = `<i data-lucide="${name}" width="${size}" height="${size}"></i>`;
+                    window.lucide.createIcons({ root: ref.current });
+                }
+            }, [name, size]);
+            return <span ref={ref} className={className} style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }} />;
+        };
         const cn = (...c) => c.filter(Boolean).join(" ");
-        const Card = ({ children, className = "", onClick }) => <div onClick={onClick} className={cn("holo-card rounded-2xl p-6 relative overflow-hidden group", className)}>{children}</div>;
+        const Card = ({ children, className = "", onClick }) => <div onClick={onClick} className={cn("holo-card rounded-2xl p-6 relative overflow-hidden group transition-all duration-200 ease-out hover:scale-[1.02] active:scale-[0.98] hover:shadow-lg hover:shadow-blue-500/10 dark:hover:shadow-black/50", className)}>{children}</div>;
         const Button = ({ children, onClick, variant = 'primary', className = "", icon = null, type = "button" }) => {
             const v = { primary: "bg-brand-600 text-white hover:bg-brand-500 shadow-[0_0_20px_rgba(var(--brand-500),0.3)]", secondary: "bg-white/5 border border-white/10 hover:bg-white/10 text-slate-200", danger: "bg-red-500/10 text-red-400 border border-red-500/30 hover:bg-red-500/20" };
-            return <button type={type} onClick={onClick} className={cn("flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-[10px] font-bold transition-all active:scale-95 uppercase tracking-widest", v[variant], className)}>{icon && <Icon name={icon} size={13} />}{children}</button>;
+            return <button type={type} onClick={onClick} className={cn("flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-[10px] font-bold transition-all duration-200 ease-out hover:scale-105 active:scale-95 uppercase tracking-widest", v[variant], className)}>{icon && <Icon name={icon} size={13} />}{children}</button>;
         };
 
         /* --- AUTH PAGE MODAL --- */
@@ -662,11 +748,11 @@
         const StatCard = ({ label, value, sub, icon, color }) => (
             <Card className={cn("border-t-2", color)}>
                 <div className="flex justify-between items-start mb-4">
-                    <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{label}</div>
-                    <div className="p-2 rounded-lg bg-white/5 text-slate-300"><Icon name={icon} size={16} /></div>
+                    <div className="text-[10px] font-bold dark:text-slate-400 text-slate-500 uppercase tracking-widest">{label}</div>
+                    <div className="p-2 rounded-lg dark:bg-white/5 bg-slate-100 dark:text-slate-300 text-slate-600"><Icon name={icon} size={16} /></div>
                 </div>
-                <div className="text-3xl font-bold text-white tracking-tight">{value}</div>
-                {sub && <div className="text-xs text-slate-500 mt-1 font-mono">{sub}</div>}
+                <div className="text-3xl font-bold dark:text-white text-slate-900 tracking-tight">{value}</div>
+                {sub && <div className="text-xs dark:text-slate-500 text-slate-400 mt-1 font-mono">{sub}</div>}
             </Card>
         );
 
@@ -726,10 +812,10 @@
                     <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-white/5">
                         <div>
                             <div className="flex items-center gap-3 mb-2"><span className="px-2 py-0.5 rounded bg-brand-500/20 text-brand-400 text-[10px] font-bold uppercase tracking-widest border border-brand-500/30">Lvl 1 • Initiate</span></div>
-                            <h2 className="text-4xl font-bold text-white tracking-tight">Command Center</h2>
+                            <h2 className="text-4xl font-bold dark:text-white text-slate-900 tracking-tight">Command Center</h2>
                         </div>
                         <div className="text-right hidden md:block">
-                            <div className="text-5xl font-mono font-bold text-white tracking-tighter">{daysLeft}</div>
+                            <div className="text-5xl font-mono font-bold dark:text-white text-slate-900 tracking-tighter">{daysLeft}</div>
                             <div className="text-xs text-brand-400 uppercase tracking-[0.3em] font-bold mt-1 opacity-70">Days to Launch</div>
                         </div>
                     </div>
@@ -742,17 +828,17 @@
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         <Card className="lg:col-span-2 min-h-[400px] flex flex-col">
                             <div className="flex justify-between items-center mb-6 border-b border-white/5 pb-4">
-                                <h3 className="font-bold text-white flex gap-2 items-center"><Icon name="hexagon" className="text-brand-400" /> NEURAL SKILL MAP</h3>
+                                <h3 className="font-bold dark:text-white text-slate-900 flex gap-2 items-center"><Icon name="hexagon" className="text-brand-400" /> NEURAL SKILL MAP</h3>
                                 <span className="text-[10px] font-mono text-slate-500 uppercase">Real-time Analysis</span>
                             </div>
-                            <div className="flex-1 w-full bg-[#05050a] rounded-2xl border border-white/5 shadow-inner">
+                            <div className="flex-1 w-full dark:bg-[#05050a] bg-slate-50 rounded-2xl border border-white/5 shadow-inner">
                                 <RadarChart data={stats.graphData} />
                             </div>
                         </Card>
                         <Card className="flex flex-col items-center justify-center text-center !bg-brand-900/10 border-brand-500/20 relative group cursor-pointer lg:h-full" onClick={() => setTab('focus')}>
                             <div className="absolute inset-0 bg-brand-500/5 group-hover:bg-brand-500/10 transition-colors"></div>
-                            <div className="w-20 h-20 rounded-full bg-black border border-brand-500/50 flex items-center justify-center mb-6 shadow-[0_0_40px_rgba(var(--brand-500),0.3)] group-hover:scale-110 transition-transform"><Icon name="play" size={32} className="text-white ml-1" /></div>
-                            <h3 className="text-xl font-bold text-white z-10">Engage Focus</h3>
+                            <div className="w-20 h-20 rounded-full dark:bg-black bg-white border border-brand-500/50 flex items-center justify-center mb-6 shadow-[0_0_40px_rgba(var(--brand-500),0.3)] group-hover:scale-110 transition-transform"><Icon name="play" size={32} className="dark:text-white text-brand-600 ml-1" /></div>
+                            <h3 className="text-xl font-bold dark:text-white text-slate-900 z-10">Engage Focus</h3>
                             <p className="text-brand-300 text-xs mt-2 z-10 opacity-70 px-6">Enter deep learning state. Tracking enabled.</p>
                         </Card>
                     </div>
@@ -760,19 +846,24 @@
             );
         };
 
-        const FocusMode = ({ focus, setFocus }) => {
+        const FocusEngine = ({ focus, setFocus, setTab }) => {
             const { motion, AnimatePresence } = window.Motion;
             const [strict, setStrict] = useState(false);
             const [dCount, setDCount] = useState(0);
-            const [streak, setStreak] = useState(0); // Session streak
+            const [streak, setStreak] = useState(0);
             const [intent, setIntent] = useState("");
             const [isIntentLocked, setIsIntentLocked] = useState(false);
-            const [audioMode, setAudioMode] = useState("mute"); // mute, rain, white_noise
+            const [audioMode, setAudioMode] = useState("mute");
             const [volume, setVolume] = useState(0.5);
-            const [zenMode, setZenMode] = useState(false);
             const [showMissionComplete, setShowMissionComplete] = useState(false);
+            const [isEditingTime, setIsEditingTime] = useState(false);
+            const [tempTime, setTempTime] = useState("");
 
             const audioRef = useRef(null);
+
+            // Technical Fix: Proctor Logic with useRef to avoid stale closure
+            const isRunningRef = useRef(focus.isActive);
+            useEffect(() => { isRunningRef.current = focus.isActive; }, [focus.isActive]);
 
             // Audio Sources
             const AUDIO_SRCS = {
@@ -786,7 +877,6 @@
                 const audio = audioRef.current;
 
                 if (audioMode === 'mute' || !focus.isActive) {
-                    // Fade out logic could go here, but prompt ask for simple fade out when paused/finished
                     audio.pause();
                 } else {
                     audio.src = AUDIO_SRCS[audioMode];
@@ -798,84 +888,76 @@
                 return () => audio.pause();
             }, [audioMode, focus.isActive]);
 
-            // Volume Update
-            useEffect(() => {
-                if (audioRef.current) audioRef.current.volume = volume;
-            }, [volume]);
-
-            const playSfx = (type) => {
-                const sfx = new Audio(type === 'complete' ? "https://cdn.pixabay.com/audio/2021/08/04/audio_12b0c7443c.mp3" : type === 'alert' ? "https://cdn.pixabay.com/audio/2021/08/09/audio_2e831c20bd.mp3" : "https://cdn.pixabay.com/audio/2022/03/10/audio_c8c8a73467.mp3");
-                sfx.volume = 0.4;
-                sfx.play().catch(() => { });
-            };
-
             // Completion Logic
             useEffect(() => {
                 if (focus.isActive && focus.timeLeft === 0) {
                     setFocus(p => ({ ...p, isActive: false }));
                     setStreak(s => s + 1);
                     setShowMissionComplete(true);
-                    playSfx('complete');
                     setIsIntentLocked(false);
                 }
             }, [focus.timeLeft, focus.isActive]);
 
-            const playAlert = () => {
-                const ctx = new (window.AudioContext || window.webkitAudioContext)();
-                if (ctx.state === 'suspended') ctx.resume();
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
-                osc.connect(gain);
-                gain.connect(ctx.destination);
-                osc.type = 'sawtooth';
-                osc.frequency.setValueAtTime(220, ctx.currentTime);
-                osc.frequency.linearRampToValueAtTime(110, ctx.currentTime + 0.3);
-                gain.gain.setValueAtTime(0.2, ctx.currentTime);
-                gain.gain.linearRampToValueAtTime(0.01, ctx.currentTime + 0.3);
-                osc.start();
-                osc.stop(0.3);
-            };
-
-            // Proctor Vision Logic
+            // Proctor Mode Fix
             useEffect(() => {
-                const h = () => {
-                    if (document.hidden && focus.isActive && strict) {
+                const handleVisibilityChange = () => {
+                    if (document.hidden && isRunningRef.current && strict) {
                         setFocus(p => ({ ...p, isActive: false }));
                         setDCount(c => c + 1);
                         setStreak(0); // Penalty
-                        playAlert();
-                        playSfx('alert');
+
+                        // Play Alarm
+                        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                        const osc = ctx.createOscillator();
+                        const gain = ctx.createGain();
+                        osc.connect(gain);
+                        gain.connect(ctx.destination);
+                        osc.type = 'sawtooth';
+                        osc.frequency.setValueAtTime(440, ctx.currentTime);
+                        gain.gain.setValueAtTime(0.5, ctx.currentTime);
+                        osc.start();
+                        osc.stop(ctx.currentTime + 1);
                     }
                 };
-                document.addEventListener("visibilitychange", h);
-                return () => document.removeEventListener("visibilitychange", h);
-            }, [focus.isActive, strict]);
+                document.addEventListener("visibilitychange", handleVisibilityChange);
+                return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
+            }, [strict]);
 
             const fmt = s => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
 
             const toggle = () => {
-                playSfx('click');
                 if (!intent.trim()) {
                     alert("PROTOCOL ERROR: Define mission objective before engagement.");
                     return;
                 }
                 setIsIntentLocked(true);
-                setFocus({ ...focus, isActive: !focus.isActive });
+                setFocus(p => ({ ...p, isActive: !p.isActive }));
             };
 
             const reset = () => {
-                playSfx('click');
-                setFocus({ ...focus, isActive: false, timeLeft: focus.initialTime });
+                setFocus(p => ({ ...p, isActive: false, timeLeft: p.initialTime }));
                 setDCount(0);
                 setIsIntentLocked(false);
                 setIntent("");
             };
 
             const setTime = (m) => {
-                playSfx('click');
-                setFocus({ timeLeft: m * 60, initialTime: m * 60, isActive: false });
-                setDCount(0);
-                setIsIntentLocked(false);
+                const mins = parseInt(m);
+                if (isNaN(mins) || mins <= 0) return;
+                setFocus({ timeLeft: mins * 60, initialTime: mins * 60, isActive: false });
+                setIsEditingTime(false);
+            };
+
+            const toggleTheme = () => {
+                document.documentElement.classList.toggle('dark');
+            };
+
+            const toggleFullscreen = () => {
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen().catch(() => { });
+                } else {
+                    document.exitFullscreen();
+                }
             };
 
             // Circular Progress Math
@@ -883,150 +965,201 @@
             const circumference = 2 * Math.PI * radius;
             const progress = focus.initialTime > 0 ? (focus.timeLeft / focus.initialTime) : 0;
             const dashOffset = circumference * (1 - progress);
-
-            // Color Logic
             const progressColor = progress > 0.5 ? '#22d3ee' : progress > 0.1 ? '#a855f7' : '#ef4444';
 
             return (
-                <div className="max-w-4xl mx-auto py-8 animate-fade-in text-center relative flex flex-col items-center">
-                    {/* MISSION COMPLETE MODAL */}
-                    <AnimatePresence>
-                        {showMissionComplete && (
-                            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 z-50 bg-black/90 backdrop-blur-xl flex flex-col items-center justify-center rounded-3xl border border-emerald-500/30">
-                                <motion.div initial={{ scale: 0.8 }} animate={{ scale: 1 }} className="text-center p-8">
-                                    <div className="text-emerald-400 mb-4 animate-bounce"><Icon name="award" size={60} /></div>
-                                    <h2 className="text-4xl font-bold text-white mb-2">MISSION ACCOMPLISHED</h2>
-                                    <p className="text-slate-400 font-mono text-sm mb-6 uppercase tracking-widest">{intent}</p>
-                                    <div className="flex justify-center gap-8 mb-8">
-                                        <div><div className="text-2xl font-bold text-white">+{Math.floor(focus.initialTime / 60 * 10)}</div><div className="text-[10px] text-brand-400 uppercase tracking-wider">XP Earned</div></div>
-                                        <div><div className="text-2xl font-bold text-white">{streak}</div><div className="text-[10px] text-brand-400 uppercase tracking-wider">Streak</div></div>
-                                    </div>
-                                    <button onClick={() => setShowMissionComplete(false)} className="px-8 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl uppercase tracking-widest transition-all">Continue Operations</button>
-                                </motion.div>
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
+                <div className="min-h-screen relative transition-colors duration-300 dark:bg-black bg-white flex flex-col items-center justify-center overflow-hidden">
+                    {/* Header: Exit Button (Left), Controls (Right) */}
+                    <button
+                        onClick={() => setTab('dashboard')}
+                        className="absolute top-6 left-6 p-4 bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white border border-red-500/30 rounded-2xl transition-all flex items-center gap-3 font-bold text-xs uppercase tracking-widest z-50 group"
+                    >
+                        <Icon name="log-out" size={18} className="group-hover:-translate-x-1 transition-transform" />
+                        EXIT ZONE
+                    </button>
 
-                    {/* Header HUD (Hidden in Zen Mode) */}
-                    {!zenMode && (
-                        <div className="w-full flex justify-between items-start mb-8 border-b border-white/5 pb-4 transition-all">
-                            <div className="text-left">
-                                <h2 className="text-3xl font-bold text-white tracking-tight flex items-center gap-2"><Icon name="cpu" /> FOCUS ENGINE</h2>
-                                <p className="text-slate-400 font-mono text-xs">NEURAL SYNCHRONIZATION: {dCount === 0 ? 'OPTIMAL' : 'COMPROMISED'}</p>
-                            </div>
-                            <div className="text-right flex items-center gap-4">
-                                <button onClick={() => setZenMode(true)} className="text-xs font-bold uppercase tracking-widest text-slate-500 hover:text-white flex items-center gap-2 border border-slate-700 px-3 py-1 rounded-full"><Icon name="maximize" size={12} /> Zen Mode</button>
-                                <div>
-                                    <div className="text-xs text-slate-500 font-bold uppercase tracking-widest">Streak</div>
-                                    <div className="text-2xl font-mono text-brand-400">{streak} Sessions</div>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-
-                    {/* Zen Mode Exit Button */}
-                    {zenMode && (
-                        <button onClick={() => setZenMode(false)} className="absolute top-0 right-0 p-4 text-slate-500 hover:text-white z-50"><Icon name="minimize" /></button>
-                    )}
-
-                    {/* Proctor Vision Critical Alert */}
-                    <AnimatePresence>
-                        {dCount > 0 && strict && (
-                            <motion.div
-                                initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
-                                className="absolute inset-x-0 top-20 py-3 bg-red-500/10 border border-red-500/50 text-red-500 font-bold uppercase tracking-[0.2em] flex items-center justify-center gap-3 z-50 rounded-xl backdrop-blur-md"
-                            >
-                                <Icon name="alert-triangle" /> FOCUS BREACH DETECTED (x{dCount})
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
-
-                    {/* Intent Lock Input (Hidden in Zen Mode) */}
-                    <div className={`w-full max-w-md mb-12 transition-all duration-500 ${isIntentLocked ? (zenMode ? 'opacity-0 scale-90 pointer-events-none h-0 margin-0' : 'opacity-80 pointer-events-none') : 'opacity-100'} ${zenMode && !isIntentLocked ? 'opacity-0 h-0 pointer-events-none' : ''}`}>
-                        {!zenMode && <label className="text-[10px] text-brand-400 font-bold uppercase tracking-widest mb-2 block">Mission Objective</label>}
-                        <div className="relative">
-                            <input
-                                value={intent}
-                                onChange={e => setIntent(e.target.value)}
-                                placeholder="Enter objective to unlock engines..."
-                                disabled={isIntentLocked}
-                                className={`w-full bg-black/50 border-2 p-4 rounded-xl text-center font-bold text-white outline-none transition-all ${isIntentLocked ? 'border-brand-500 shadow-[0_0_20px_rgba(var(--brand-500),0.2)]' : 'border-white/10 focus:border-white/30'}`}
-                            />
-                            {isIntentLocked && <div className="absolute right-4 top-1/2 -translate-y-1/2 text-brand-400"><Icon name="lock" size={16} /></div>}
-                        </div>
+                    <div className="absolute top-6 right-6 flex gap-3 z-50">
+                        <button
+                            onClick={toggleFullscreen}
+                            title="Toggle Fullscreen"
+                            className="p-4 bg-slate-100 dark:bg-white/5 text-slate-900 dark:text-white rounded-2xl border border-slate-200 dark:border-white/10 hover:border-brand-500 transition-all flex items-center gap-2 group"
+                        >
+                            <Icon name="maximize" size={18} />
+                            <span className="text-[10px] font-bold uppercase tracking-widest hidden group-hover:block transition-all">Fullscreen</span>
+                        </button>
                     </div>
 
-                    {/* Main ARC REACTOR (Timer) */}
-                    <div className={`relative mb-12 group transition-all duration-700 ${zenMode ? 'scale-125 mt-20' : 'scale-100'}`}>
-                        {/* SVG Ring */}
+                    {/* Main Reactor: SVG Circle Progress + Time Display */}
+                    <div className="relative group mb-12 flex items-center justify-center scale-110 md:scale-125">
+                        {/* Breathing Core Effect when !isActive */}
+                        {/* Breathing Core Effect when !isActive */}
+                        {!focus.isActive && (
+                            <motion.div
+                                animate={{ scale: [1, 1.05, 1], opacity: [0.5, 1, 0.5] }}
+                                transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
+                                className="absolute w-[400px] h-[400px] bg-brand-500/20 dark:bg-brand-500/20 bg-blue-400/30 rounded-full blur-[80px]"
+                            />
+                        )}
+
                         <div className="relative w-80 h-80 flex items-center justify-center">
-                            <svg className="w-full h-full transform -rotate-90 drop-shadow-[0_0_15px_rgba(0,0,0,0.5)]" viewBox="0 0 260 260">
-                                {/* Track */}
-                                <circle cx="130" cy="130" r={radius} fill="none" stroke="#1e293b" strokeWidth={zenMode ? 4 : 8} />
-                                {/* Progress */}
+                            <svg className="w-full h-full transform -rotate-90" viewBox="0 0 260 260">
+                                <circle cx="130" cy="130" r={radius} fill="none" stroke="currentColor" className="text-slate-100 dark:text-slate-900" strokeWidth="8" />
                                 <motion.circle
-                                    cx="130" cy="130" r={radius} fill="none" stroke={progressColor} strokeWidth={zenMode ? 4 : 8} strokeLinecap="round"
+                                    cx="130" cy="130" r={radius} fill="none" stroke={progressColor} strokeWidth="8" strokeLinecap="round"
                                     strokeDasharray={circumference}
                                     animate={{ strokeDashoffset: dashOffset }}
                                     transition={{ duration: 1, ease: "linear" }}
-                                    className="drop-shadow-[0_0_10px_currentColor]"
+                                    className="drop-shadow-[0_0_15px_currentColor]"
                                 />
                             </svg>
 
                             {/* Inner Content */}
                             <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
-                                <div className={`text-7xl font-black font-mono tracking-tighter transition-colors ${focus.isActive ? 'text-white' : 'text-slate-500'}`}>
-                                    {fmt(focus.timeLeft)}
-                                </div>
-                                <div className={`mt-2 text-xs font-bold uppercase tracking-[0.3em] ${focus.isActive ? 'text-brand-400 animate-pulse' : 'text-slate-600'}`}>
-                                    {focus.isActive ? (zenMode ? 'ENGAGED' : 'SYSTEM ENGAGED') : 'STANDBY'}
-                                </div>
-                            </div>
-
-                            {/* Ambient Glow */}
-                            {focus.isActive && <div className="absolute inset-0 bg-brand-500/5 blur-3xl rounded-full z-0 animate-pulse"></div>}
-                        </div>
-                    </div>
-
-                    {/* Controls (Hidden in Zen Mode) */}
-                    <div className={`flex flex-col gap-6 w-full max-w-lg transition-all duration-500 ${zenMode ? 'opacity-0 translate-y-20 pointer-events-none' : 'opacity-100 translate-y-0'}`}>
-                        {/* Audio & Strict Controls */}
-                        <div className="flex justify-between items-center bg-white/5 p-4 rounded-2xl border border-white/5">
-                            {/* Strict Toggle */}
-                            <button onClick={() => { playSfx('click'); !focus.isActive && setStrict(!strict); }} disabled={focus.isActive} className={`px-4 py-2 rounded-lg border text-[10px] font-bold uppercase tracking-widest transition-all flex items-center gap-2 ${strict ? 'bg-red-500/20 border-red-500 text-red-400' : 'bg-transparent border-slate-700 text-slate-500 hover:text-white'} ${focus.isActive && 'opacity-50 cursor-not-allowed'}`}>
-                                {strict ? <><Icon name="shield" size={12} /> Proctor: ON</> : <><Icon name="shield-off" size={12} /> Proctor: OFF</>}
-                            </button>
-
-                            {/* Audio Controls */}
-                            <div className="flex items-center gap-3">
-                                <div className="flex items-center gap-2 bg-black/40 rounded-lg p-1">
-                                    <button onClick={() => setAudioMode('mute')} className={`p-2 rounded ${audioMode === 'mute' ? 'bg-white/10 text-white' : 'text-slate-500 hover:text-white'}`}><Icon name="volume-x" size={14} /></button>
-                                    <button onClick={() => setAudioMode('rain')} className={`p-2 rounded ${audioMode === 'rain' ? 'bg-cyan-500/20 text-cyan-400' : 'text-slate-500 hover:text-white'}`}><Icon name="cloud-rain" size={14} /></button>
-                                    <button onClick={() => setAudioMode('white_noise')} className={`p-2 rounded ${audioMode === 'white_noise' ? 'bg-white/20 text-white' : 'text-slate-500 hover:text-white'}`}><Icon name="waves" size={14} /></button>
-                                </div>
-                                {audioMode !== 'mute' && (
-                                    <input type="range" min="0" max="1" step="0.1" value={volume} onChange={e => setVolume(parseFloat(e.target.value))} className="w-16 h-1 bg-slate-700 rounded-lg appearance-none cursor-pointer" />
+                                {isEditingTime ? (
+                                    <div className="flex flex-col items-center">
+                                        <input
+                                            autoFocus
+                                            value={tempTime}
+                                            onChange={e => setTempTime(e.target.value)}
+                                            onBlur={() => setTime(tempTime)}
+                                            onKeyDown={e => e.key === 'Enter' && setTime(tempTime)}
+                                            className="text-6xl font-black font-mono bg-transparent text-center text-brand-500 outline-none w-48 border-b-2 border-brand-500 mb-2"
+                                            placeholder="MINS"
+                                        />
+                                        <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Set Minutes</div>
+                                    </div>
+                                ) : (
+                                    <>
+                                        <div
+                                            onClick={() => { setIsEditingTime(true); setTempTime(Math.floor(focus.timeLeft / 60).toString()); }}
+                                            className={`text-7xl font-black font-mono tracking-tighter cursor-pointer transition-all hover:scale-110 active:scale-95 ${focus.isActive ? 'text-slate-900 dark:text-white' : 'text-slate-400 hover:text-brand-500'}`}
+                                        >
+                                            {fmt(focus.timeLeft)}
+                                        </div>
+                                        <div className={`mt-2 text-xs font-bold uppercase tracking-[0.3em] ${focus.isActive ? 'text-brand-500 animate-pulse' : 'text-slate-500'}`}>
+                                            {focus.isActive ? 'SYSTEM ENGAGED' : 'SYSTEM STANDBY'}
+                                        </div>
+                                    </>
                                 )}
                             </div>
                         </div>
+                    </div>
 
-                        {/* Main Buttons */}
-                        <div className="flex gap-4">
-                            <button onClick={toggle} className={`flex-1 py-4 rounded-xl font-bold text-black text-sm uppercase tracking-widest shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-3 ${focus.isActive ? 'bg-amber-400 hover:bg-amber-300' : 'bg-brand-500 hover:bg-brand-400'}`}>
-                                <Icon name={focus.isActive ? "pause" : "power"} size={18} /> {focus.isActive ? "HALT SYSTEM" : "INITIALIZE"}
-                            </button>
-                            <button onClick={reset} className="px-6 rounded-xl bg-surface-800 text-slate-400 hover:text-white hover:bg-surface-700 border border-white/5 transition-colors">
-                                <Icon name="rotate-ccw" size={18} />
-                            </button>
+                    {/* Control Deck: Start/Pause, Custom Time, Sound Controls */}
+                    <div className="w-full max-w-lg space-y-8 px-8 relative z-10">
+                        {/* Intent Input */}
+                        <div className="relative">
+                            <input
+                                value={intent}
+                                onChange={e => setIntent(e.target.value)}
+                                placeholder="INITIALIZE MISSION OBJECTIVE..."
+                                disabled={isIntentLocked}
+                                className={`w-full bg-slate-50 dark:bg-white/5 border-2 p-5 rounded-2xl text-center font-bold outline-none transition-all uppercase tracking-widest text-sm ${isIntentLocked ? 'border-brand-500 text-brand-500 dark:text-brand-400 bg-brand-500/5' : 'border-slate-200 dark:border-white/10 dark:text-white text-slate-900 focus:border-brand-500'}`}
+                            />
+                            {isIntentLocked && <Icon name="lock" size={16} className="absolute right-6 top-1/2 -translate-y-1/2 text-brand-500" />}
                         </div>
 
-                        {/* Presets */}
-                        <div className="flex justify-center gap-3 opacity-60 hover:opacity-100 transition-opacity">
+                        {/* Control Buttons */}
+                        <div className="flex gap-4">
+                            <button
+                                onClick={toggle}
+                                className={`flex-1 py-5 rounded-2xl font-black text-sm uppercase tracking-[0.2em] shadow-[0_15px_30px_-10px_rgba(0,0,0,0.3)] hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-3 ${focus.isActive ? 'bg-amber-400 text-black shadow-amber-400/20' : 'bg-brand-600 text-white shadow-brand-600/30'}`}
+                            >
+                                <Icon name={focus.isActive ? "pause" : "play"} size={20} />
+                                {focus.isActive ? "HALT SYSTEM" : "ENGAGE FOCUS"}
+                            </button>
+
+                            <div className="flex flex-col items-center">
+                                <button
+                                    onClick={reset}
+                                    className="p-5 rounded-2xl bg-slate-100 dark:bg-white/5 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-white/10 hover:text-red-500 hover:border-red-500/50 transition-all group"
+                                >
+                                    <Icon name="rotate-ccw" className="group-hover:rotate-180 transition-transform duration-500" />
+                                </button>
+                                <span className="text-[10px] font-bold text-slate-400 mt-2 uppercase tracking-widest">RESET</span>
+                            </div>
+                        </div>
+
+                        {/* Sound & Proctor Controls */}
+                        <div className="grid grid-cols-2 gap-4">
+                            <div className="bg-slate-50 dark:bg-white/5 p-4 rounded-2xl border border-slate-200 dark:border-white/10 flex items-center justify-between">
+                                <div className="flex items-center gap-3">
+                                    <Icon name="shield" size={16} className={strict ? "text-red-500" : "text-slate-400"} />
+                                    <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Proctor</span>
+                                </div>
+                                <button
+                                    onClick={() => setStrict(!strict)}
+                                    className={`w-12 h-6 rounded-full transition-all relative ${strict ? 'bg-red-500' : 'bg-slate-300 dark:bg-slate-800'}`}
+                                >
+                                    <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-all shadow-sm ${strict ? 'right-1' : 'left-1'}`} />
+                                </button>
+                            </div>
+
+                            <div className="bg-slate-50 dark:bg-white/5 p-4 rounded-2xl border border-slate-200 dark:border-white/10 flex items-center gap-3">
+                                <Icon name="volume-2" size={16} className="text-slate-400" />
+                                <select
+                                    value={audioMode}
+                                    onChange={e => setAudioMode(e.target.value)}
+                                    className="bg-transparent text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase outline-none flex-1 cursor-pointer"
+                                >
+                                    <option value="mute">SOUND MIXER</option>
+                                    <option value="rain">RAIN AMBIENCE</option>
+                                    <option value="white_noise">DEEP WAVES</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        {/* Time Presets */}
+                        <div className="flex justify-center gap-4">
                             {[25, 45, 60, 90].map(m => (
-                                <button key={m} onClick={() => setTime(m)} className="px-4 py-2 rounded border border-white/10 hover:bg-white/10 text-[10px] font-mono font-bold text-slate-500 hover:text-white transition-colors">{m}m</button>
+                                <button
+                                    key={m}
+                                    onClick={() => setTime(m)}
+                                    className="w-14 h-14 rounded-2xl border border-slate-200 dark:border-white/10 flex flex-col items-center justify-center hover:border-brand-500 hover:text-brand-500 transition-all bg-slate-50 dark:bg-white/5 active:scale-95"
+                                >
+                                    <span className="text-sm font-mono font-bold text-slate-900 dark:text-white">{m}</span>
+                                    <span className="text-[8px] font-bold text-slate-400 uppercase">min</span>
+                                </button>
                             ))}
                         </div>
                     </div>
+
+                    {/* Proctor Warning Overlay */}
+                    <AnimatePresence>
+                        {dCount > 0 && strict && (
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.9, y: 50 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.9, y: 50 }}
+                                className="fixed bottom-12 px-8 py-4 bg-red-600 text-white rounded-2xl font-black uppercase tracking-[0.2em] shadow-[0_20px_50px_rgba(220,38,38,0.5)] flex items-center gap-4 z-[60] border-4 border-white/20"
+                            >
+                                <Icon name="alert-triangle" size={24} />
+                                <span className="text-sm">FOCUS BREACH DETECTED: x{dCount}</span>
+                                <button onClick={() => setDCount(0)} className="ml-4 p-2 bg-white/20 hover:bg-white/30 rounded-lg transition-colors">
+                                    <Icon name="x" size={16} />
+                                </button>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+
+                    {/* Mission Complete Modal */}
+                    <AnimatePresence>
+                        {showMissionComplete && (
+                            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-2xl flex items-center justify-center p-6">
+                                <motion.div initial={{ scale: 0.8, y: 20 }} animate={{ scale: 1, y: 0 }} className="max-w-md w-full text-center">
+                                    <div className="w-24 h-24 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-8 border border-emerald-500/30 text-emerald-500">
+                                        <Icon name="award" size={48} />
+                                    </div>
+                                    <h2 className="text-4xl font-black text-white mb-4 tracking-tighter uppercase">Mission Success</h2>
+                                    <p className="text-slate-400 font-mono text-sm mb-12 uppercase tracking-[0.2em] border-y border-white/10 py-4">{intent}</p>
+                                    <button
+                                        onClick={() => setShowMissionComplete(false)}
+                                        className="w-full py-5 bg-emerald-600 hover:bg-emerald-500 text-white font-black rounded-2xl uppercase tracking-[0.2em] shadow-lg shadow-emerald-600/20 transition-all active:scale-95"
+                                    >
+                                        Return to Base
+                                    </button>
+                                </motion.div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
                 </div>
             );
         };
@@ -1034,7 +1167,57 @@
         /* --- SYLLABUS & TRACKER COMPONENT (UPDATED V2) --- */
         const Syllabus = ({ user, update, log }) => {
             const { motion, AnimatePresence } = window.Motion;
-            const [mode, setMode] = useState('GATE'); // GATE, PLACEMENT, INTERVIEW
+
+            const defaultProtocols = ['GATE', 'PLACEMENT', 'INTERVIEW'];
+            const [exams, setExams] = useState(() => {
+                try {
+                    const saved = localStorage.getItem('velosify_exams');
+                    return saved ? JSON.parse(saved) : defaultProtocols;
+                } catch (e) { return defaultProtocols; }
+            });
+
+            // Ensure mode is valid or default to first available
+            const [mode, setMode] = useState(() => {
+                // If we have exams, default to the first one. 
+                // We can't easily access the result of the exams useState initializer here directly in a clean way 
+                // without duplicating logic or relying on the exams variable which works in React.
+                // However, let's just default to 'GATE' or exams[0] safely.
+                return 'GATE';
+            });
+
+            // Sync exams to local storage
+            useEffect(() => {
+                localStorage.setItem('velosify_exams', JSON.stringify(exams));
+            }, [exams]);
+
+            // Create/Delete Handlers
+            const [showExamModal, setShowExamModal] = useState(false);
+            const [newExamName, setNewExamName] = useState("");
+
+            const handleCreateExam = (e) => {
+                e.preventDefault();
+                if (!newExamName.trim()) return;
+                const name = newExamName.trim().toUpperCase();
+                if (!exams.includes(name)) {
+                    setExams(prev => [...prev, name]);
+                    setMode(name);
+                } else {
+                    setMode(name);
+                }
+                setNewExamName("");
+                setShowExamModal(false);
+            };
+
+            const handleDeleteExam = (examToDelete, e) => {
+                e.stopPropagation();
+                if (defaultProtocols.includes(examToDelete)) return;
+                if (confirm(`Delete protocol ${examToDelete}? This cannot be undone.`)) {
+                    const newExams = exams.filter(e => e !== examToDelete);
+                    setExams(newExams);
+                    if (mode === examToDelete) setMode(newExams[0] || 'GATE');
+                }
+            };
+
             const [expandedSubjectId, setExpandedSubjectId] = useState(null);
             const [customTopic, setCustomTopic] = useState({ subject: '', topic: '' });
 
@@ -1137,6 +1320,14 @@
                 setCustomTopic({ subject: '', topic: '' });
             };
 
+            const handleDeleteModule = (id, e) => {
+                e.stopPropagation();
+                if (confirm("Delete this module and all its contents?")) {
+                    const newCustom = (user.customSyllabus || []).filter(s => s.id !== id);
+                    update({ ...user, customSyllabus: newCustom });
+                }
+            };
+
             const toggleAccordion = (id) => {
                 setExpandedSubjectId(expandedSubjectId === id ? null : id);
             };
@@ -1156,16 +1347,35 @@
                         </div>
 
                         {/* MODE SWITCHER */}
-                        <div className="bg-white/5 p-1 rounded-xl flex gap-1 border border-white/10 backdrop-blur-md">
-                            {['GATE', 'PLACEMENT', 'INTERVIEW'].map(m => (
-                                <button
-                                    key={m}
-                                    onClick={() => setMode(m)}
-                                    className={`px-6 py-2.5 rounded-lg text-xs font-bold transition-all uppercase tracking-wider ${mode === m ? 'bg-brand-500 text-white shadow-lg' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
-                                >
-                                    {m}
-                                </button>
-                            ))}
+                        {/* MODE SWITCHER - DYNAMIC & SCROLLABLE */}
+                        <div className="flex items-center gap-2 max-w-full overflow-hidden">
+                            <div className="flex-1 overflow-x-auto flex gap-2 pb-2 scrollbar-thin scrollbar-thumb-brand-500/20 scrollbar-track-transparent px-1">
+                                {exams.map(m => (
+                                    <div
+                                        key={m}
+                                        onClick={() => setMode(m)}
+                                        className={`px-5 py-2.5 rounded-lg text-xs font-bold transition-all uppercase tracking-wider whitespace-nowrap flex items-center gap-3 flex-shrink-0 cursor-pointer border ${mode === m ? 'bg-brand-500 text-white border-brand-500 shadow-lg' : 'bg-surface-900/60 border-white/5 text-slate-400 hover:text-white hover:border-brand-500/50'}`}
+                                    >
+                                        <span>{m}</span>
+                                        {!defaultProtocols.includes(m) && (
+                                            <button
+                                                onClick={(e) => handleDeleteExam(m, e)}
+                                                className="p-1.5 rounded-md text-red-500 hover:bg-red-500 hover:text-white transition-all opacity-70 hover:opacity-100"
+                                                title="Delete Protocol"
+                                            >
+                                                <Icon name="trash" size={14} />
+                                            </button>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                            <button
+                                onClick={() => setShowExamModal(true)}
+                                className="px-4 py-2.5 rounded-lg bg-white/5 border border-white/10 text-slate-400 hover:text-brand-400 hover:border-brand-500/50 transition-all flex-shrink-0 flex items-center gap-2 text-xs font-bold uppercase tracking-wider"
+                                title="Create New Protocol"
+                            >
+                                <Icon name="plus" size={14} /> <span>Create</span>
+                            </button>
                         </div>
                     </div>
 
@@ -1197,16 +1407,28 @@
                                         </div>
 
                                         {/* Right: Stats & Action */}
-                                        <div className="w-full md:w-auto flex items-center justify-between gap-6">
+                                        <div className="w-full md:w-auto flex items-center justify-between gap-4">
                                             <span className="font-mono font-bold text-brand-400 text-sm w-12 text-right">{item.progress}%</span>
-                                            <button
-                                                onClick={() => toggleAccordion(item.id)}
-                                                className={`px-4 py-2 border rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all flex items-center gap-2 group-hover:shadow-[0_0_15px_rgba(var(--brand-500),0.3)]
-                                                    ${expandedSubjectId === item.id ? 'bg-brand-500 text-white border-brand-500' : 'bg-white/5 hover:bg-brand-500 hover:text-white border-white/10'}
-                                                `}
-                                            >
-                                                {expandedSubjectId === item.id ? 'CLOSE' : 'ACCESS'} <Icon name={expandedSubjectId === item.id ? "chevron-up" : "chevron-right"} size={12} />
-                                            </button>
+
+                                            <div className="flex items-center gap-2">
+                                                {item.id.toString().startsWith('custom_') && (
+                                                    <button
+                                                        onClick={(e) => handleDeleteModule(item.id, e)}
+                                                        className="p-2 rounded-lg text-red-500 bg-red-500/10 hover:bg-red-500 hover:text-white transition-all border border-transparent hover:border-red-500/20"
+                                                        title="Delete Section"
+                                                    >
+                                                        <Icon name="trash" size={16} />
+                                                    </button>
+                                                )}
+                                                <button
+                                                    onClick={() => toggleAccordion(item.id)}
+                                                    className={`px-4 py-2 border rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all flex items-center gap-2 group-hover:shadow-[0_0_15px_rgba(var(--brand-500),0.3)]
+                                                        ${expandedSubjectId === item.id ? 'bg-brand-500 text-white border-brand-500' : 'bg-white/5 hover:bg-brand-500 hover:text-white border-white/10'}
+                                                    `}
+                                                >
+                                                    {expandedSubjectId === item.id ? 'CLOSE' : 'ACCESS'} <Icon name={expandedSubjectId === item.id ? "chevron-up" : "chevron-right"} size={12} />
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -1276,7 +1498,49 @@
                             </button>
                         </form>
                     </div>
-                </div>
+                    {/* NEW EXAM MODAL */}
+                    <AnimatePresence>
+                        {showExamModal && (
+                            <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+                                <motion.div
+                                    initial={{ scale: 0.9, opacity: 0 }}
+                                    animate={{ scale: 1, opacity: 1 }}
+                                    exit={{ scale: 0.9, opacity: 0 }}
+                                    className="bg-[#0c0c12] border border-white/10 p-6 rounded-2xl w-full max-w-sm shadow-2xl relative"
+                                >
+                                    <button onClick={() => setShowExamModal(false)} className="absolute top-4 right-4 text-slate-500 hover:text-white"><Icon name="x" size={18} /></button>
+                                    <h3 className="text-lg font-bold text-white mb-1">Initialize Protocol</h3>
+                                    <p className="text-xs text-slate-500 mb-6">Create a new container for logic modules.</p>
+                                    <form onSubmit={handleCreateExam}>
+                                        <input
+                                            autoFocus
+                                            value={newExamName}
+                                            onChange={e => setNewExamName(e.target.value)}
+                                            className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-sm text-white mb-4 outline-none focus:border-brand-500 transition-colors placeholder:text-slate-600 font-mono uppercase"
+                                            placeholder="PROTOCOL NAME (E.G. UPSC)"
+                                        />
+                                        <div className="flex justify-end gap-3">
+                                            <button
+                                                type="button"
+                                                onClick={() => setShowExamModal(false)}
+                                                className="px-4 py-2 text-slate-400 text-xs font-bold hover:text-white transition-colors"
+                                            >
+                                                CANCEL
+                                            </button>
+                                            <button
+                                                type="submit"
+                                                disabled={!newExamName.trim()}
+                                                className="px-6 py-2 bg-brand-600 hover:bg-brand-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold rounded-lg transition-all uppercase text-xs tracking-widest"
+                                            >
+                                                Create
+                                            </button>
+                                        </div>
+                                    </form>
+                                </motion.div>
+                            </div>
+                        )}
+                    </AnimatePresence>
+                </div >
             )
         };
         const Kanban = ({ user, update, log }) => {
@@ -1289,25 +1553,25 @@
 
             // Helper to render a task card
             const TaskCard = ({ t, category }) => (
-                <div key={t.id} className="group flex items-center gap-3 p-4 bg-white/5 border border-white/10 rounded-xl hover:border-brand-500/30 transition-all backdrop-blur-sm active:scale-[0.98]">
+                <div key={t.id} className="group flex items-center gap-3 p-4 dark:bg-white/5 bg-white border dark:border-white/10 border-slate-200 rounded-xl hover:border-brand-500/30 transition-all backdrop-blur-sm active:scale-[0.98] light:shadow-sm">
                     {/* Checkbox (Left) */}
                     <button
                         onClick={() => category !== 'done' ? move(t.id, category, 'done') : move(t.id, category, 'todo')}
-                        className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all flex-shrink-0 ${category === 'done' ? 'bg-emerald-500 border-emerald-500' : 'border-slate-500 hover:border-brand-400'}`}
+                        className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all flex-shrink-0 ${category === 'done' ? 'bg-emerald-500 border-emerald-500' : 'dark:border-slate-500 border-slate-300 hover:border-brand-400'}`}
                     >
                         {category === 'done' && <Icon name="check" size={14} className="text-black" />}
                     </button>
 
                     {/* Text (Middle) */}
-                    <div className={`flex-1 text-sm font-medium ${category === 'done' ? 'text-slate-500 line-through' : 'text-slate-200'}`}>
+                    <div className={`flex-1 text-sm font-medium ${category === 'done' ? 'text-slate-400 line-through' : 'dark:text-slate-200 text-slate-700'}`}>
                         {t.title}
                     </div>
 
                     {/* Actions / Priority (Right) */}
                     <div className="flex items-center gap-2">
                         <div className={`w-2 h-2 rounded-full ${t.id % 2 === 0 ? 'bg-red-500 shadow-[0_0_5px_rgba(239,68,68,0.5)]' : 'bg-blue-500 shadow-[0_0_5px_rgba(59,130,246,0.5)]'}`}></div>
-                        <button onClick={() => del(t.id, category)} className="text-slate-600 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity p-1">
-                            <Icon name="trash-2" size={16} />
+                        <button onClick={() => del(t.id, category)} className="dark:text-slate-400 text-slate-500 hover:text-red-500 dark:hover:text-red-400 transition-colors p-2 hover:bg-red-500/10 rounded-lg" title="Delete Task">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18" /><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" /><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" /></svg>
                         </button>
                     </div>
                 </div>
@@ -1319,8 +1583,8 @@
                     <div className="flex flex-col gap-4 mb-4 pt-2">
                         <div className="flex justify-between items-end px-1">
                             <div>
-                                <h2 className="text-3xl font-bold text-white tracking-tight">Task Manager</h2>
-                                <p className="text-slate-400 text-xs font-mono uppercase tracking-widest">{user.kanban.todo.length} PENDING // {user.kanban.doing.length} IN PROGRESS</p>
+                                <h2 className="text-3xl font-bold dark:text-white text-slate-900 tracking-tight">Task Manager</h2>
+                                <p className="dark:text-slate-400 text-slate-500 text-xs font-mono uppercase tracking-widest">{user.kanban.todo.length} PENDING // {user.kanban.doing.length} IN PROGRESS</p>
                             </div>
                         </div>
 
@@ -1330,7 +1594,7 @@
                                 <button
                                     key={f}
                                     onClick={() => setFilter(f)}
-                                    className={`px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider white-space-nowrap transition-all border ${filter === f ? 'bg-brand-500 text-white border-brand-500 shadow-lg' : 'bg-white/5 border-white/10 text-slate-400 hover:text-white'}`}
+                                    className={`px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider white-space-nowrap transition-all border ${filter === f ? 'bg-brand-500 text-white border-brand-500 shadow-lg' : 'dark:bg-white/5 bg-white dark:border-white/10 border-slate-200 dark:text-slate-400 text-slate-600 hover:dark:text-white hover:text-slate-900'}`}
                                 >
                                     {f}
                                 </button>
@@ -1369,8 +1633,8 @@
                     </div>
 
                     {/* Floating Input (Glass Bar) */}
-                    <div className="absolute bottom-0 left-0 right-0 p-4 pb-6 bg-gradient-to-t from-[#05050a] via-[#05050a]/90 to-transparent z-20">
-                        <form onSubmit={add} className="bg-white/10 backdrop-blur-xl border border-white/10 p-2 rounded-full flex items-center gap-2 shadow-[0_0_30px_rgba(0,0,0,0.5)] ring-1 ring-white/5">
+                    <div className="absolute bottom-0 left-0 right-0 p-4 pb-6 bg-gradient-to-t dark:from-[#05050a] from-slate-100 via-[#05050a]/90 light:via-slate-100/90 to-transparent z-20">
+                        <form onSubmit={add} className="dark:bg-white/10 bg-white backdrop-blur-xl border dark:border-white/10 border-slate-300 p-2 rounded-full flex items-center gap-2 shadow-[0_0_30px_rgba(0,0,0,0.5)] ring-1 dark:ring-white/5 ring-slate-200">
                             <div className="w-8 h-8 rounded-full bg-brand-500/20 text-brand-400 flex items-center justify-center border border-brand-500/30">
                                 <Icon name="plus" size={16} />
                             </div>
@@ -1378,7 +1642,7 @@
                                 value={txt}
                                 onChange={e => setTxt(e.target.value)}
                                 placeholder="Add new neutral task..."
-                                className="flex-1 bg-transparent border-none outline-none text-white text-sm placeholder:text-slate-500 h-10"
+                                className="flex-1 bg-transparent border-none outline-none dark:text-white text-slate-900 text-sm placeholder:text-slate-500 h-10"
                             />
                             <button
                                 type="submit"
@@ -1462,9 +1726,18 @@
                                 style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
                                 <div className="text-xs font-mono text-brand-400 uppercase tracking-widest mb-6">Answer</div>
                                 <div className="text-2xl font-medium text-white mb-10">{back}</div>
-                                <div className="flex gap-4 absolute bottom-8 z-20" onClick={e => e.stopPropagation()}>
-                                    <button onClick={() => onRate(1)} className="px-6 py-2 rounded-lg bg-red-500/20 text-red-300 border border-red-500/30 hover:bg-red-500 hover:text-white font-bold text-xs uppercase transition-colors">Hard</button>
-                                    <button onClick={() => onRate(3)} className="px-6 py-2.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500 hover:text-white font-bold text-[10px] uppercase transition-colors tracking-widest">Easy</button>
+                                <div className="absolute bottom-6 w-full px-8 pb-4" onClick={e => e.stopPropagation()}>
+                                    <div className="flex gap-4 justify-center mb-3">
+                                        <button onClick={() => onRate(1)} className="px-6 py-2 rounded-lg bg-red-500/20 text-red-300 border border-red-500/30 hover:bg-red-500 hover:text-white font-bold text-xs uppercase transition-colors">
+                                            Again (1d)
+                                        </button>
+                                        <button onClick={() => onRate(3)} className="px-6 py-2 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500 hover:text-white font-bold text-xs uppercase transition-colors">
+                                            Good (3d)
+                                        </button>
+                                    </div>
+                                    <p className="text-[10px] text-slate-500 uppercase tracking-wider font-mono opacity-80">
+                                        Spaced Repetition: Scheduling next review.
+                                    </p>
                                 </div>
                             </div>
                         </motion.div>
@@ -1504,7 +1777,7 @@
                         </div>
                     </div>
                     <div className="p-5 flex-1 flex flex-col">
-                        <h3 className="text-lg font-bold text-white mb-1 group-hover:text-brand-400 transition-colors leading-tight">{resource.t}</h3>
+                        <h3 className="text-lg font-bold dark:text-white text-slate-900 mb-1 group-hover:text-brand-400 transition-colors leading-tight">{resource.t}</h3>
                         <div className="text-xs text-slate-500 font-mono mb-4 flex-1 truncate">{resource.l}</div>
                         <div className="flex justify-between items-center mt-auto pt-4 border-t border-white/5">
                             <span className="text-[10px] text-slate-600 font-mono">{new Date(resource.id).toLocaleDateString()}</span>
@@ -1522,14 +1795,14 @@
                     <div className="flex justify-between items-end">
                         <div className="space-y-2">
                             <div className="flex items-center gap-3 mb-2"><span className="px-2 py-0.5 rounded bg-brand-500/20 text-brand-400 text-[10px] font-bold uppercase tracking-widest border border-brand-500/30">Lvl 3 • Access Granted</span></div>
-                            <h2 className="text-4xl font-bold text-white tracking-tight">Data Vault</h2>
-                            <p className="text-slate-400 font-mono text-xs">SECURE STORAGE // ENCRYPTED FRAGMENTS</p>
+                            <h2 className="text-4xl font-bold dark:text-white text-slate-900 tracking-tight">Data Vault</h2>
+                            <p className="dark:text-slate-400 text-slate-600 font-mono text-xs">SECURE STORAGE // ENCRYPTED FRAGMENTS</p>
                         </div>
                     </div>
 
                     {/* CORE MODULES */}
                     <div>
-                        <h3 className="text-sm font-bold text-white uppercase tracking-widest mb-6 flex items-center gap-2"><Icon name="cpu" size={16} className="text-brand-400" /> Core Modules</h3>
+                        <h3 className="text-sm font-bold dark:text-white text-slate-900 uppercase tracking-widest mb-6 flex items-center gap-2"><Icon name="cpu" size={16} className="text-brand-400" /> Core Modules</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             {/* DSA Card */}
                             <div onClick={() => setTab('dsa')} className="holo-card p-6 rounded-2xl group cursor-pointer relative overflow-hidden border-emerald-500/30 hover:border-emerald-500/60 h-48 flex flex-col justify-end bg-gradient-to-br from-emerald-900/10 to-black">
@@ -1555,17 +1828,17 @@
 
                     {/* USER RESOURCES */}
                     <div>
-                        <h3 className="text-sm font-bold text-white uppercase tracking-widest mb-6 flex items-center gap-2"><Icon name="database" size={16} className="text-brand-400" /> Encrypted Fragments</h3>
+                        <h3 className="text-sm font-bold dark:text-white text-slate-900 uppercase tracking-widest mb-6 flex items-center gap-2"><Icon name="database" size={16} className="text-brand-400" /> Encrypted Fragments</h3>
 
                         <Card className="border-brand-500/20 bg-brand-900/5 mb-8">
                             <form onSubmit={add} className="flex flex-col md:flex-row gap-4 items-end">
                                 <div className="flex-1 w-full space-y-2">
                                     <label className="text-[10px] uppercase font-bold text-brand-400 tracking-widest pl-1">Resource Title</label>
-                                    <input value={f.t} onChange={e => setF({ ...f, t: e.target.value })} placeholder="Ex: System Design Notes" className="w-full bg-black/50 border border-white/10 p-3 rounded-xl text-white outline-none focus:border-brand-500 transition-all font-medium text-sm" />
+                                    <input value={f.t} onChange={e => setF({ ...f, t: e.target.value })} placeholder="Ex: System Design Notes" className="w-full bg-black/50 light:bg-white border border-white/10 p-3 rounded-xl dark:text-white text-slate-900 outline-none focus:border-brand-500 transition-all font-medium text-sm" />
                                 </div>
                                 <div className="flex-1 w-full space-y-2">
                                     <label className="text-[10px] uppercase font-bold text-brand-400 tracking-widest pl-1">Target URL</label>
-                                    <input value={f.l} onChange={e => setF({ ...f, l: e.target.value })} placeholder="https://..." className="w-full bg-black/50 border border-white/10 p-3 rounded-xl text-white outline-none focus:border-brand-500 transition-all font-mono text-sm" />
+                                    <input value={f.l} onChange={e => setF({ ...f, l: e.target.value })} placeholder="https://..." className="w-full bg-black/50 light:bg-white border border-white/10 p-3 rounded-xl dark:text-white text-slate-900 outline-none focus:border-brand-500 transition-all font-mono text-sm" />
                                 </div>
                                 <Button type="submit" icon="lock" className="w-full md:w-auto h-[46px] mb-[1px]">Encrypt</Button>
                             </form>
@@ -2609,34 +2882,34 @@ void addEdge(int u, int v) {
             };
 
             return (
-                <div className="relative w-full h-[800px] bg-[#080910] rounded-3xl border border-white/10 overflow-hidden shadow-2xl group flex flex-col font-sans">
+                <div className="relative w-full h-[800px] dark:bg-[#080910] bg-slate-100 rounded-3xl border dark:border-white/10 border-slate-300 overflow-hidden shadow-2xl group flex flex-col font-sans">
                     {/* OVERLAY: MODE TOGGLE (LEFT) */}
                     <div className="absolute top-4 left-4 z-20 flex flex-col gap-2">
-                        <div className="flex bg-black/60 backdrop-blur-md p-1 rounded-xl border border-white/10">
+                        <div className="flex dark:bg-black/60 bg-white/60 backdrop-blur-md p-1 rounded-xl border dark:border-white/10 border-slate-300">
                             <button
                                 onClick={() => setDsaMode('learning')}
-                                className={`px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all ${dsaMode === 'learning' ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/50 shadow-[0_0_15px_rgba(34,211,238,0.3)]' : 'text-slate-500 hover:text-white'}`}
+                                className={`px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all ${dsaMode === 'learning' ? 'bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 border border-cyan-500/50 shadow-[0_0_15px_rgba(34,211,238,0.3)]' : 'dark:text-slate-500 text-slate-400 hover:dark:text-white hover:text-slate-900'}`}
                             >
                                 <Icon name="book-open" size={14} /> Learning
                             </button>
                             <button
                                 onClick={() => setDsaMode('practice')}
-                                className={`px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all ${dsaMode === 'practice' ? 'bg-purple-500/20 text-purple-400 border border-purple-500/50 shadow-[0_0_15px_rgba(168,85,247,0.3)]' : 'text-slate-500 hover:text-white'}`}
+                                className={`px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all ${dsaMode === 'practice' ? 'bg-purple-500/20 text-purple-600 dark:text-purple-400 border border-purple-500/50 shadow-[0_0_15px_rgba(168,85,247,0.3)]' : 'dark:text-slate-500 text-slate-400 hover:dark:text-white hover:text-slate-900'}`}
                             >
                                 <Icon name="crosshair" size={14} /> Practice
                             </button>
                         </div>
-                        <div className="bg-black/40 backdrop-blur px-3 py-1 rounded-lg border border-white/5 text-[10px] text-slate-400 font-mono">
-                            {dsaMode === 'learning' ? '🔒 Strict progression enabled.' : '🔓 Sandbox access unlocked.'}
+                        <div className="dark:bg-black/40 bg-white/90 backdrop-blur px-3 py-1.5 rounded-lg border dark:border-white/5 border-slate-300 text-[10px] dark:text-slate-400 text-slate-700 font-bold font-mono shadow-sm flex items-center gap-2">
+                            {dsaMode === 'learning' ? <><span className="text-orange-500">🔒</span> Strict progression enabled.</> : <><span className="text-emerald-500">🔓</span> Sandbox access unlocked.</>}
                         </div>
                     </div>
 
                     {/* OVERLAY: MASTERY BAR (RIGHT) */}
-                    <div className="absolute top-4 right-4 z-20 w-64 bg-black/80 backdrop-blur-md p-4 rounded-xl border border-white/10 shadow-2xl flex flex-col gap-3">
+                    <div className="absolute top-4 right-4 z-20 w-64 dark:bg-black/80 bg-white/90 backdrop-blur-md p-4 rounded-xl border dark:border-white/10 border-slate-300 shadow-2xl flex flex-col gap-3">
                         <div className="flex justify-between items-end">
                             <div className="flex flex-col">
                                 <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Current Rank</span>
-                                <span className="text-xl font-black text-white">{getRank()}</span>
+                                <span className="text-xl font-black dark:text-white text-slate-900">{getRank()}</span>
                             </div>
                             <div className="text-right">
                                 <span className="text-2xl font-mono font-bold text-cyan-400">{completedQuestions.length}</span>
@@ -2683,9 +2956,9 @@ void addEdge(int u, int v) {
                                     <motion.div
                                         key={node.id}
                                         className={`absolute w-28 h-28 rounded-full flex flex-col items-center justify-center text-center p-2 border-2 cursor-pointer transition-all duration-300 backdrop-blur-md shadow-[0_0_30px_rgba(0,0,0,0.5)] z-10
-                                            ${node.status === 'mastered' ? 'bg-emerald-500/20 border-emerald-500 text-white shadow-[0_0_20px_rgba(16,185,129,0.4)]' :
-                                                node.status === 'unlocked' ? (dsaMode === 'practice' ? 'bg-purple-500/10 border-purple-400 text-purple-300 shadow-[0_0_15px_rgba(168,85,247,0.3)]' : 'bg-cyan-500/10 border-cyan-400 text-cyan-300 shadow-[0_0_15px_rgba(34,211,238,0.3)]') :
-                                                    'bg-slate-800/50 border-slate-700 text-slate-600 grayscale brightness-50'}`}
+                                            ${node.status === 'mastered' ? 'bg-emerald-500/20 border-emerald-500 dark:text-white text-emerald-900 shadow-[0_0_20px_rgba(16,185,129,0.4)]' :
+                                                node.status === 'unlocked' ? (dsaMode === 'practice' ? 'bg-purple-500/10 border-purple-400 dark:text-purple-300 text-purple-900 shadow-[0_0_15px_rgba(168,85,247,0.3)]' : 'bg-cyan-500/10 border-cyan-400 dark:text-cyan-300 text-cyan-900 shadow-[0_0_15px_rgba(34,211,238,0.3)]') :
+                                                    'bg-slate-800/50 dark:bg-slate-800/50 bg-slate-200 border-slate-700 dark:text-slate-600 text-slate-500 grayscale brightness-75'}`}
                                         style={{ left: node.position.x, top: node.position.y }}
                                         onClick={() => handleNodeClick(node)}
                                         animate={shakingNode === node.id ? { x: [0, -5, 5, -5, 5, 0] } : {}}
@@ -2694,11 +2967,11 @@ void addEdge(int u, int v) {
                                     >
                                         <Icon name={node.status === 'locked' ? "lock" : node.status === 'mastered' ? "check-circle" : dsaMode === 'practice' ? "crosshair" : "book"}
                                             size={20}
-                                            className={`mb-1 ${node.status === 'mastered' ? 'text-emerald-400' : node.status === 'unlocked' ? (dsaMode === 'practice' ? 'text-purple-400' : 'text-cyan-400') : 'text-slate-600'}`}
+                                            className={`mb-1 ${node.status === 'mastered' ? 'dark:text-emerald-400 text-emerald-700' : node.status === 'unlocked' ? (dsaMode === 'practice' ? 'dark:text-purple-400 text-purple-700' : 'dark:text-cyan-400 text-cyan-700') : 'dark:text-slate-600 text-slate-500'}`}
                                         />
                                         <span className="text-[10px] font-bold uppercase tracking-wider leading-tight line-clamp-2">{node.label}</span>
                                         {node.status !== 'locked' && (
-                                            <div className="mt-1 text-[8px] font-mono text-slate-400">
+                                            <div className="mt-1 text-[8px] font-mono dark:text-slate-400 text-slate-600">
                                                 {node.questions.filter(q => completedQuestions.includes(q.id)).length}/{node.questions.length}
                                             </div>
                                         )}
@@ -2816,8 +3089,8 @@ void addEdge(int u, int v) {
                 <div className="space-y-8 animate-fade-in pb-12 max-w-4xl mx-auto">
                     <div className="flex justify-between items-end border-b border-white/5 pb-6">
                         <div>
-                            <h2 className="text-4xl font-bold text-white tracking-tight">HR Protocol</h2>
-                            <p className="text-slate-400 mt-2 font-mono text-xs">BEHAVIORAL INTERVIEW PREPARATION</p>
+                            <h2 className="text-4xl font-bold dark:text-white text-slate-900 tracking-tight">HR Protocol</h2>
+                            <p className="dark:text-slate-400 text-slate-600 mt-2 font-mono text-xs">BEHAVIORAL INTERVIEW PREPARATION</p>
                         </div>
                     </div>
 
@@ -2830,7 +3103,7 @@ void addEdge(int u, int v) {
                                 >
                                     <div className="flex items-center gap-4">
                                         <div className="w-8 h-8 rounded-lg bg-pink-500/10 text-pink-400 flex items-center justify-center font-bold border border-pink-500/20">{q.id}</div>
-                                        <h3 className="font-bold text-lg text-slate-200 group-hover:text-white transition-colors">{q.q}</h3>
+                                        <h3 className="font-bold text-lg dark:text-slate-200 text-slate-700 group-hover:dark:text-white group-hover:text-slate-900 transition-colors">{q.q}</h3>
                                     </div>
                                     <Icon name={expanded === q.id ? "chevron-up" : "chevron-down"} className="text-slate-500" />
                                 </button>
@@ -2851,7 +3124,7 @@ void addEdge(int u, int v) {
                                                 value={(user.hrAnswers && user.hrAnswers[q.id]) || ""}
                                                 onChange={(e) => handleAnswerChange(q.id, e.target.value)}
                                                 placeholder="Draft your STAR method answer here..."
-                                                className="w-full h-32 bg-black/40 border border-white/10 rounded-xl p-4 text-slate-300 focus:border-pink-500 focus:ring-1 focus:ring-pink-500 outline-none transition-all font-mono text-sm resize-none"
+                                                className="w-full h-32 bg-black/40 light:bg-white border border-white/10 dark:text-slate-300 text-slate-700 outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 transition-all font-mono text-sm resize-none rounded-xl p-4"
                                             />
                                         </div>
                                     </div>
@@ -2865,166 +3138,936 @@ void addEdge(int u, int v) {
 
         const Settings = ({ user, update, reset }) => {
             const themes = { violet: 'Violet', cyan: 'Cyber', emerald: 'Matrix', rose: 'Neon' };
+            const isDark = !document.documentElement.classList.contains('light');
+
+            const toggleTheme = () => {
+                const html = document.documentElement;
+                if (html.classList.contains('light')) {
+                    html.classList.remove('light');
+                    html.classList.add('dark');
+                } else {
+                    html.classList.remove('dark');
+                    html.classList.add('light');
+                }
+            };
+
             return (
-                <div className="max-w-xl mx-auto space-y-8 animate-fade-in">
-                    <h2 className="text-3xl font-bold text-white">System Configuration</h2>
-                    <Card className="space-y-6">
-                        <div><label className="text-xs text-brand-400 font-bold uppercase tracking-widest block mb-4">Interface Theme</label><div className="flex gap-4">{Object.entries(themes).map(([k, n]) => <button key={k} onClick={() => update({ ...user, themeColor: k })} className={`flex-1 py-3 rounded-xl border font-bold text-xs uppercase transition-all ${user.themeColor === k ? 'border-brand-500 bg-brand-500/20 text-white shadow-[0_0_15px_rgba(var(--brand-500),0.3)]' : 'border-white/10 text-slate-500 hover:bg-white/5'}`}>{n}</button>)}</div></div>
-                        <div><label className="text-xs text-brand-400 font-bold uppercase tracking-widest block mb-2">Primary Objective</label><input value={user.goalName || ''} onChange={e => update({ ...user, goalName: e.target.value })} className="w-full bg-black/50 border border-white/10 p-3 rounded-xl text-white outline-none focus:border-brand-500" /></div>
-                        <div><label className="text-xs text-brand-400 font-bold uppercase tracking-widest block mb-2">Target Date</label><input type="date" value={user.examDate || ''} onChange={e => update({ ...user, examDate: e.target.value })} className="w-full bg-black/50 border border-white/10 p-3 rounded-xl text-white outline-none focus:border-brand-500" /></div>
+                <div className="max-w-xl mx-auto space-y-8 animate-fade-in pb-20">
+                    <div className="space-y-2">
+                        <h2 className="text-4xl font-bold dark:text-white text-slate-900 tracking-tight">System Configuration</h2>
+                        <p className="text-slate-500 font-mono text-xs uppercase tracking-widest">Global Protocol Management</p>
+                    </div>
+
+                    <Card className="space-y-8 !bg-surface-900/40 border-white/5">
+                        {/* THEME MODE */}
+                        <div className="flex items-center justify-between p-4 bg-white/5 rounded-2xl border border-white/5 hover:border-brand-500/30 transition-all">
+                            <div>
+                                <h4 className="dark:text-white text-slate-900 font-bold">Luminescence Mode</h4>
+                                <p className="text-[10px] text-slate-500 uppercase tracking-widest font-mono mt-1">Dark / Light Interface</p>
+                            </div>
+                            <button
+                                onClick={toggleTheme}
+                                className="flex items-center gap-3 px-6 py-3 rounded-xl bg-brand-500 text-white font-black text-[10px] uppercase tracking-[0.2em] shadow-lg shadow-brand-500/20 hover:scale-105 active:scale-95 transition-all"
+                            >
+                                <Icon name={isDark ? "moon" : "sun"} size={16} />
+                                {isDark ? "Override to Light" : "Switch to Dark"}
+                            </button>
+                        </div>
+
+                        {/* ACCENT COLOR */}
+                        <div>
+                            <label className="text-[10px] text-slate-500 font-bold uppercase tracking-[0.2em] block mb-4 ml-1">Accent Protocol</label>
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                                {Object.entries(themes).map(([k, n]) => (
+                                    <button
+                                        key={k}
+                                        onClick={() => update({ ...user, themeColor: k })}
+                                        className={`py-3 rounded-xl border font-bold text-[10px] uppercase tracking-widest transition-all ${user.themeColor === k ? 'border-brand-500 bg-brand-500/20 text-white whitespace-nowrap' : 'border-white/5 text-slate-500 hover:bg-white/5'}`}
+                                    >
+                                        {n}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* INPUTS */}
+                        <div className="space-y-4">
+                            <div>
+                                <label className="text-[10px] text-slate-500 font-bold uppercase tracking-[0.2em] block mb-2 ml-1">Primary Objective</label>
+                                <input
+                                    value={user.goalName || ''}
+                                    onChange={e => update({ ...user, goalName: e.target.value })}
+                                    placeholder="Enter your main mission..."
+                                    className="w-full bg-black/50 light:bg-white light:text-slate-900 border border-white/10 p-4 rounded-xl dark:text-white text-slate-900 outline-none focus:border-brand-500 transition-all font-medium"
+                                />
+                            </div>
+                            <div>
+                                <label className="text-[10px] text-slate-500 font-bold uppercase tracking-[0.2em] block mb-2 ml-1">Target Deadline</label>
+                                <input
+                                    type="date"
+                                    value={user.examDate || ''}
+                                    onChange={e => update({ ...user, examDate: e.target.value })}
+                                    className="w-full bg-black/50 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-brand-500 transition-all font-mono"
+                                />
+                            </div>
+                        </div>
                     </Card>
-                    <div className="border border-red-500/30 bg-red-900/10 rounded-xl p-6 flex justify-between items-center"><div className="text-red-300 font-bold flex gap-2 items-center"><Icon name="alert-triangle" /> DANGER ZONE</div><button onClick={reset} className="px-4 py-2 bg-red-600/20 text-red-400 border border-red-500/50 rounded-lg hover:bg-red-600 hover:text-white transition-all font-bold text-xs uppercase">Factory Reset</button></div>
+
+                    {/* DANGER ZONE */}
+                    <div className="border border-red-500/20 bg-red-500/5 rounded-2xl p-6 flex flex-col md:flex-row justify-between items-center gap-4">
+                        <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center text-red-500 border border-red-500/20">
+                                <Icon name="alert-octagon" size={24} />
+                            </div>
+                            <div>
+                                <div className="text-red-400 font-black text-[10px] uppercase tracking-[0.2em]">Destructive Action</div>
+                                <div className="text-white font-bold">Wipe System Memory</div>
+                            </div>
+                        </div>
+                        <button
+                            onClick={reset}
+                            className="w-full md:w-auto px-8 py-3 bg-red-600/10 hover:bg-red-600 text-red-500 hover:text-white border border-red-500/30 rounded-xl transition-all font-black text-[10px] uppercase tracking-[0.2em]"
+                        >
+                            Factory Reset
+                        </button>
+                    </div>
                 </div>
             )
         };
 
         /* --- ROADMAP ENGINE (NEW MODULE) --- */
+        /* --- ROADMAP ENGINE (SCALABLE & HIGH QUALITY) --- */
         const ROADMAP_MASTER_DATA = {
-            frontend: {
+            "frontend": {
                 id: "frontend",
+                image: "https://images.unsplash.com/photo-1587620962725-abab7fe55159?auto=format&fit=crop&q=80&w=150",
                 title: "Frontend Developer",
-                description: "Master the art of creating beautiful user interfaces.",
+                description: "Master the art of building beautiful, interactive user interfaces for the web.",
                 nodes: [
-                    { id: "internet", label: "Internet & Web", type: "root", status: "unlocked", desc: "How the web works (DNS, HTTP, Browsers)." },
-                    { id: "html", label: "HTML", type: "main", parent: "internet", desc: "The skeleton of all web pages.", resources: [{ title: "MDN HTML", link: "https://developer.mozilla.org/en-US/docs/Web/HTML" }] },
-                    { id: "css", label: "CSS", type: "main", parent: "html", desc: "Styling and layout fundamentals.", resources: [{ title: "CSS Tricks", link: "https://css-tricks.com" }] },
-                    { id: "js", label: "JavaScript", type: "main", parent: "css", desc: "The language of the web.", resources: [{ title: "JS Info", link: "https://javascript.info" }] },
-                    { id: "dom", label: "DOM Manipulation", type: "sub", parent: "js", desc: "Interacting with page elements." },
-                    { id: "fetch", label: "Fetch API / AJAX", type: "sub", parent: "js", desc: "Async data loading." },
-                    { id: "react", label: "React framework", type: "framework", parent: "js", desc: "Component based architecture." },
-                    { id: "hooks", label: "React Hooks", type: "sub", parent: "react", desc: "useState, useEffect, etc." },
-                    { id: "git", label: "Version Control", type: "tool", parent: "js", desc: "Git & GitHub basics." },
-                    { id: "deploy", label: "Deployment", type: "tool", parent: "git", desc: "Vercel, Netlify, CI/CD." }
+                    {
+                        id: "internet",
+                        label: "Internet",
+                        type: "root",
+                        status: 'unlocked',
+                        description: "The underlying network of networks that powers the web. Understanding DNS, HTTP, and how browsers work is non-negotiable.",
+                        whyMatters: "You can't build on top of a system you don't understand. Debugging requires network knowledge.",
+                        timeEstimate: "1-2 Days",
+                        keyConcepts: ["DNS", "HTTP/HTTPS", "Browsers", "Domain Names", "Hosting"],
+                        resources: [
+                            { title: "How the Internet Works (MDN)", link: "https://developer.mozilla.org/en-US/docs/Learn/Common_questions/Web_mechanics/How_does_the_Internet_work", type: "read" },
+                            { title: "DNS in 100 Seconds", link: "https://www.youtube.com/watch?v=27r4B6uy54y", type: "watch" },
+                            { title: "HTTP Crash Course", link: "https://www.youtube.com/watch?v=iYM2zFP3Zn0", type: "watch" }
+                        ]
+                    },
+                    {
+                        id: "html",
+                        label: "HTML5",
+                        parentId: "internet",
+                        status: 'locked',
+                        description: "The skeleton of the web. Learn Semantic HTML, Accessibility (A11y), and SEO basics. Do not just learn tags; learn structure.",
+                        whyMatters: "Bad HTML leads to inaccessible sites and poor SEO rankings.",
+                        timeEstimate: "3-5 Days",
+                        keyConcepts: ["Semantic Tags", "Accessibility", "Forms", "SEO", "DOM Structure"],
+                        resources: [
+                            { title: "HTML Full Course (FreeCodeCamp)", link: "https://www.youtube.com/watch?v=kUMe1FH4CHE", type: "watch" },
+                            { title: "Semantic HTML Guide", link: "https://www.w3schools.com/html/html5_semantic_elements.asp", type: "read" }
+                        ]
+                    },
+                    {
+                        id: "css",
+                        label: "CSS3 & Layouts",
+                        parentId: "internet",
+                        status: 'locked',
+                        description: "Styling the web. Mastery involves Flexbox, Grid, Responsive Design (Media Queries), and the Box Model.",
+                        whyMatters: "If it looks broken, users leave. CSS is the difference between a toy and a product.",
+                        timeEstimate: "7-10 Days",
+                        keyConcepts: ["Box Model", "Flexbox", "Grid", "Media Queries", "Psuedo-classes"],
+                        resources: [
+                            { title: "Flexbox Froggy (Game)", link: "https://flexboxfroggy.com/", type: "practice" },
+                            { title: "CSS Grid Garden", link: "https://cssgridgarden.com/", type: "practice" },
+                            { title: "Kevin Powell CSS Course", link: "https://www.youtube.com/user/KepowOb", type: "watch" }
+                        ]
+                    },
+                    {
+                        id: "js",
+                        label: "JavaScript",
+                        parentId: "html",
+                        status: 'locked',
+                        description: "The brain of the browser. Focus on ES6+, DOM Manipulation, Fetch API, and Asynchronous JS (Promises/Async-Await).",
+                        whyMatters: "It's the only language that runs in the browser. It enables all interactivity.",
+                        timeEstimate: "14-21 Days",
+                        keyConcepts: ["ES6+", "DOM", "Fetch API", "Promises", "Async/Await", "Event Loop"],
+                        resources: [
+                            { title: "Namaste JavaScript (Akshay Saini)", link: "https://www.youtube.com/watch?v=pN6jk0uapqY", type: "watch" },
+                            { title: "You Don't Know JS (Book)", link: "https://github.com/getify/You-Dont-Know-JS", type: "read" },
+                            { title: "JavaScript.info", link: "https://javascript.info/", type: "read" }
+                        ]
+                    },
+                    {
+                        id: "react",
+                        label: "React.js",
+                        parentId: "js",
+                        status: 'locked',
+                        description: "The most popular UI library. Learn Hooks (useState, useEffect), Virtual DOM, and State Management (Redux/Zustand).",
+                        whyMatters: "Industry standard for building complex, scalable user interfaces.",
+                        timeEstimate: "14-20 Days",
+                        keyConcepts: ["Components", "Hooks", "Virtual DOM", "State Mgmt", "Props"],
+                        resources: [
+                            { title: "React Docs (Beta)", link: "https://react.dev/", type: "read" },
+                            { title: "React Course (Chai aur Code)", link: "https://www.youtube.com/watch?v=0f7_f5gS8gs&list=PLu71SKxNbfoDqgPchsyal38CAy2f11rK_", type: "watch" }
+                        ]
+                    },
+                    {
+                        id: "git",
+                        label: "Git & GitHub",
+                        parentId: "react",
+                        status: 'locked',
+                        description: "Version control is mandatory for teams. Learn branching, merging, pull requests, and resolving conflicts.",
+                        whyMatters: "Safety net for your code. collaborative work is impossible without it.",
+                        timeEstimate: "2-3 Days",
+                        keyConcepts: ["Commit", "Branch", "Merge", "Pull Request", "Revert"],
+                        resources: [{ title: "Git & GitHub Crash Course", link: "https://www.youtube.com/watch?v=RGOj5yH7evk", type: "watch" }]
+                    },
+                    {
+                        id: "tailwind",
+                        label: "Tailwind CSS",
+                        parentId: "react",
+                        status: 'locked',
+                        description: "A utility-first CSS framework for rapid UI development. Learn the class-based styling approach.",
+                        whyMatters: "Speed. Once you know it, you can build UIs faster than with any other tool.",
+                        timeEstimate: "3-5 Days",
+                        keyConcepts: ["Utility Classes", "Config", "Responsive Prefixes", "Dark Mode"],
+                        resources: [{ title: "Tailwind Labs", link: "https://www.youtube.com/c/TailwindLabs", type: "watch" }]
+                    }
                 ]
             },
-            backend: {
+            "backend": {
                 id: "backend",
-                title: "Backend Developer",
-                description: "Architect the server-side logic and databases.",
+                image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=150",
+                title: "Backend Architect",
+                description: "Design robust server-side systems, APIs, and database architectures.",
                 nodes: [
-                    { id: "os", label: "OS & Terminal", type: "root", status: "unlocked", desc: "Linux basics and command line." },
-                    { id: "lang", label: "Pick a Language", type: "main", parent: "os", desc: "Node.js, Python, or Go." },
-                    { id: "repo", label: "Git Repo", type: "tool", parent: "lang", desc: "Code management." },
-                    { id: "db-rel", label: "Relational DBs", type: "main", parent: "lang", desc: "PostgreSQL, MySQL." },
-                    { id: "db-nosql", label: "NoSQL DBs", type: "main", parent: "lang", desc: "MongoDB, Redis." },
-                    { id: "api", label: "API Design", type: "main", parent: "lang", desc: "REST & GraphQL." },
-                    { id: "auth", label: "Authentication", type: "sub", parent: "api", desc: "JWT, OAuth, Cookies." },
-                    { id: "caching", label: "Caching", type: "sub", parent: "api", desc: "Redis, CDN." },
-                    { id: "security", label: "Security", type: "sub", parent: "api", desc: "OWASP Top 10." },
-                    { id: "scale", label: "Scaling", type: "root", parent: "api", desc: "Load Balancers, Microservices." }
+                    {
+                        id: "os",
+                        label: "OS & Terminal",
+                        type: "root",
+                        status: 'unlocked',
+                        description: "Linux is the backbone of the internet. Learn file systems, permissions, SSH, and Bash scripting.",
+                        resources: [
+                            { title: "Linux Command Line", link: "https://ubuntu.com/tutorials/command-line-for-beginners", type: "read" },
+                            { title: "The Missing Semester (MIT)", link: "https://missing.csail.mit.edu/", type: "watch" },
+                            { title: "Command Line Power User", link: "https://commandlinepoweruser.com/", type: "watch" }
+                        ]
+                    },
+                    {
+                        id: "lang",
+                        label: "Node/Go/Python",
+                        parentId: "os",
+                        status: 'locked',
+                        description: "Pick a server-side language. Node.js for JS devs, Go for performance, Python for Data/AI.",
+                        resources: [
+                            { title: "Node.js Design Patterns", link: "https://www.nodejsdesignpatterns.com/", type: "read" },
+                            { title: "Go Programming Language", link: "https://go.dev/doc/", type: "read" },
+                            { title: "Node.js Crash Course", link: "https://www.youtube.com/watch?v=fBNz5xF-Kx4", type: "watch" }
+                        ]
+                    },
+                    {
+                        id: "db",
+                        label: "DB (Postgres)",
+                        parentId: "lang",
+                        status: 'locked',
+                        description: "Relational databases are critical. Understand ACID, Normalization, Indexes, and SQL.",
+                        resources: [
+                            { title: "PostgreSQL Tutorial", link: "https://www.postgresqltutorial.com/", type: "read" },
+                            { title: "SQL Bolt", link: "https://sqlbolt.com/", type: "practice" },
+                            { title: "Learn SQL in 1 Hour", link: "https://www.youtube.com/watch?v=HXV3zeQKqGY", type: "watch" }
+                        ]
+                    },
+                    {
+                        id: "redis",
+                        label: "Redis (Caching)",
+                        parentId: "db",
+                        status: 'locked',
+                        description: "Redis is an in-memory key-value store used for caching, queues, and pub/sub.",
+                        resources: [
+                            { title: "Redis Crash Course", link: "https://www.youtube.com/watch?v=XCsS_NVAa1g", type: "watch" },
+                            { title: "Redis Docs", link: "https://redis.io/docs/", type: "read" }
+                        ]
+                    },
+                    {
+                        id: "docker",
+                        label: "Docker",
+                        parentId: "lang",
+                        status: 'locked',
+                        description: "Containerization ensures your app runs the same everywhere. Learn Dockerfiles and Compose.",
+                        resources: [
+                            { title: "Docker for Beginners", link: "https://docker-curriculum.com/", type: "read" },
+                            { title: "Nana's Docker Course", link: "https://www.youtube.com/watch?v=3c-iBn73dDE", type: "watch" },
+                            { title: "Play with Docker", link: "https://labs.play-with-docker.com/", type: "practice" }
+                        ]
+                    }
+                ]
+            },
+            "ai-engineer": {
+                id: "ai-engineer",
+                image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=150",
+                title: "AI Engineer",
+                description: "Build intelligent systems using Machine Learning and Large Language Models.",
+                nodes: [
+                    { id: "math", label: "Math Foundations", type: "root", status: 'unlocked', description: "Linear Algebra, Calculus, and Probability are the prerequisites for understanding ML algorithms.", resources: [{ title: "Khan Academy Math", link: "https://www.khanacademy.org/math", type: "practice" }, { title: "Essential Math for ML", link: "https://www.youtube.com/watch?v=71oMnLY2H56", type: "watch" }] },
+                    { id: "python", label: "Python", parentId: "math", status: 'locked', description: "The lingua franca of AI. Master NumPy, Pandas, and environment management.", resources: [{ title: "Real Python", link: "https://realpython.com/", type: "read" }, { title: "Python for Data Science", link: "https://www.youtube.com/watch?v=LHBE6Q9XlzI", type: "watch" }] },
+                    { id: "ml", label: "Machine Learning", parentId: "python", status: 'locked', description: "Supervised vs Unsupervised learning. Scikit-Learn. Gradient Descent.", resources: [{ title: "Andrew Ng's ML Course", link: "https://www.coursera.org/learn/machine-learning", type: "watch" }, { title: "Scikit-Learn Docs", link: "https://scikit-learn.org/stable/", type: "read" }] },
+                    { id: "dl", label: "Deep Learning", parentId: "ml", status: 'locked', description: "Neural Networks, Backpropagation, CNNs, and RNNs using PyTorch or TensorFlow.", resources: [{ title: "Fast.ai", link: "https://course.fast.ai/", type: "watch" }, { title: "Deep Learning Book", link: "https://www.deeplearningbook.org/", type: "read" }] },
+                    { id: "llm", label: "LLMs & RAG", parentId: "dl", status: 'locked', description: "Large Language Models, Transformers, Attention Mechanism, and Retrieval Augmented Generation.", resources: [{ title: "Karpathy's Zero to Hero", link: "https://karpathy.ai/zero-to-hero.html", type: "watch" }, { title: "LangChain Docs", link: "https://python.langchain.com/", type: "read" }] }
+                ]
+            },
+            "devops": {
+                id: "devops",
+                image: "https://images.unsplash.com/photo-1614624532983-4ce03382d63d?auto=format&fit=crop&q=80&w=150",
+                title: "DevOps Engineer",
+                description: "Bridge the gap between development and operations with CI/CD and Cloud.",
+                nodes: [
+                    { id: "linux", label: "Linux Admin", type: "root", status: 'unlocked', description: "Deep dive into kernel, shell scripting, and process management.", resources: [{ title: "Linux Journey", link: "https://linuxjourney.com/", type: "read" }, { title: "Vim Adventures", link: "https://vim-adventures.com/", type: "practice" }] },
+                    { id: "net", label: "Networking", parentId: "linux", status: 'locked', description: "OSI Model, TCP/IP, DNS, LOAD Balancers. Hardcore networking limits debugging time.", resources: [{ title: "Network Chuck", link: "https://www.youtube.com/c/NetworkChuck", type: "watch" }, { title: "MDN Networking", link: "https://developer.mozilla.org/en-US/docs/Learn/Common_questions/Web_mechanics", type: "read" }] },
+                    { id: "k8s", label: "Kubernetes", parentId: "net", status: 'locked', description: "Container Orchestration. Pods, Services, Ingress, and Helm charts.", resources: [{ title: "Kubernetes The Hard Way", link: "https://github.com/kelseyhightower/kubernetes-the-hard-way", type: "practice" }, { title: "K8s Docs", link: "https://kubernetes.io/docs/home/", type: "read" }] },
+                    { id: "aws", label: "AWS / Cloud", parentId: "net", status: 'locked', description: "EC2, S3, IAM, VPC. The cloud infrastructure standard.", resources: [{ title: "AWS Free Tier", link: "https://aws.amazon.com/free/", type: "practice" }, { title: "AWS Skill Builder", link: "https://explore.skillbuilder.aws/", type: "read" }] },
+                    { id: "cicd", label: "CI/CD Pipeline", parentId: "k8s", status: 'locked', description: "Automated testing and deployment using GitHub Actions or Jenkins.", resources: [{ title: "GitHub Actions Docs", link: "https://docs.github.com/en/actions", type: "read" }, { title: "GitLab CI Course", link: "https://www.youtube.com/watch?v=l5705U8s_nQ", type: "watch" }] }
+                ]
+            },
+            "fullstack": {
+                id: "fullstack",
+                image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=150",
+                title: "Full Stack Developer",
+                description: "The complete package. Handle both client-side and server-side complexity.",
+                nodes: [
+                    { id: "web", label: "Web Core", type: "root", status: 'unlocked', description: "HTML/CSS/JS mastery is the baseline. No shortcuts.", resources: [{ title: "MDN Web Docs", link: "https://developer.mozilla.org", type: "read" }, { title: "CS50 Web Programming", link: "https://cs50.harvard.edu/web/", type: "watch" }] },
+                    { id: "frontend", label: "Frontend Framework", parentId: "web", status: 'locked', description: "React, Vue, or Svelte. Choose one and get deep. Composable UI.", resources: [{ title: "React Docs", link: "https://react.dev", type: "read" }, { title: "Frontend Masters", link: "https://frontendmasters.com/guides/front-end-handbook/2019/", type: "read" }] },
+                    { id: "backend", label: "Backend API", parentId: "web", status: 'locked', description: "RESTful services or GraphQL endpoints. Auth, Middleware, and Controllers.", resources: [{ title: "Express.js Docs", link: "https://expressjs.com/", type: "read" }, { title: "Building REST APIs", link: "https://www.youtube.com/watch?v=pKd0Rpw7O48", type: "watch" }] },
+                    { id: "db", label: "Database", parentId: "backend", status: 'locked', description: "SQL for structure, NoSQL for scale. ORMs like Prisma/Drizzle.", resources: [{ title: "Prisma Docs", link: "https://www.prisma.io/docs", type: "read" }, { title: "PlanetScale Blog", link: "https://planetscale.com/blog", type: "read" }] },
+                    { id: "deploy", label: "Deployment", parentId: "frontend", status: 'locked', description: "Vercel/Netlify for frontend, Railway/Render for backend. CI/CD.", resources: [{ title: "Vercel Docs", link: "https://vercel.com/docs", type: "read" }, { title: "Railway Docs", link: "https://docs.railway.app/", type: "read" }] }
+                ]
+            },
+            "blockchain": {
+                id: "blockchain",
+                image: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&q=80&w=150",
+                title: "Blockchain Dev",
+                description: "Learn to build decentralized applications and smart contracts.",
+                nodes: [
+                    { id: "crypto", label: "Cryptography", type: "root", status: 'unlocked', description: "Hashing (SHA-256), Asymmetric encryption, and Digital Signatures.", resources: [{ title: "Crypto 101", link: "https://www.coursera.org/learn/crypto", type: "watch" }, { title: "Anders Brownworth Demo", link: "https://andersbrownworth.com/blockchain/", type: "practice" }] },
+                    { id: "eth", label: "Ethereum & EVM", parentId: "crypto", status: 'locked', description: "The World Computer. Gas, Transactions, and the account model.", resources: [{ title: "Ethereum.org", link: "https://ethereum.org/en/developers/docs/", type: "read" }, { title: "Mastering Ethereum", link: "https://github.com/ethereumbook/ethereumbook", type: "read" }] },
+                    { id: "solidity", label: "Solidity", parentId: "eth", status: 'locked', description: "The language of Smart Contracts. State variables, mappings, and modifiers.", resources: [{ title: "CryptoZombies", link: "https://cryptozombies.io/", type: "practice" }, { title: "Solidity by Example", link: "https://solidity-by-example.org/", type: "read" }] },
+                    { id: "dapp", label: "DApp Integration", parentId: "solidity", status: 'locked', description: "Connecting Frontend to Blockchain using Ethers.js or Viem.", resources: [{ title: "Scaffold-ETH", link: "https://github.com/scaffold-eth/scaffold-eth-2", type: "practice" }, { title: "Wagmi Hooks", link: "https://wagmi.sh/", type: "read" }] }
                 ]
             }
         };
 
-        const RoadmapRenderer = ({ roadmapId, onBack, userProgress, updateUserProgress }) => {
+
+
+        /* --- ROADMAP ENGINE (SCALABLE) --- */
+
+
+        /* --- AUTO-LAYOUT HOOK --- */
+        const useTreeLayout = (nodes, rootId = "1") => {
+            return useMemo(() => {
+                const layout = [];
+                const levels = {};
+                const adj = {};
+
+                nodes.forEach(n => {
+                    if (n.parentId) {
+                        if (!adj[n.parentId]) adj[n.parentId] = [];
+                        adj[n.parentId].push(n.id);
+                    }
+                });
+
+                const getDepth = (id, d = 0) => {
+                    if (!levels[d]) levels[d] = [];
+                    const node = nodes.find(n => n.id === id);
+                    if (node && !levels[d].find(x => x.id === id)) levels[d].push(node);
+                    (adj[id] || []).forEach(childId => getDepth(childId, d + 1));
+                };
+
+                const root = nodes.find(n => n.type === 'root') || nodes[0];
+                if (root) getDepth(root.id, 0);
+
+                const CANVAS_WIDTH = 1200;
+                const LEVEL_HEIGHT = 180;
+
+                Object.keys(levels).forEach(d => {
+                    const depth = parseInt(d);
+                    const layerNodes = levels[d];
+                    const count = layerNodes.length;
+                    const segment = CANVAS_WIDTH / (count + 1);
+
+                    layerNodes.forEach((node, i) => {
+                        layout.push({
+                            ...node,
+                            x: segment * (i + 1) - 80,
+                            y: 80 + (depth * LEVEL_HEIGHT)
+                        });
+                    });
+                });
+                return layout;
+            }, [nodes]);
+        };
+
+        const RoadmapRenderer = ({ roadmapId, QP, onBack, userProgress, updateUserProgress }) => {
             const { motion, AnimatePresence } = window.Motion;
             const data = ROADMAP_MASTER_DATA[roadmapId];
-            const [selectedNode, setSelectedNode] = useState(null);
+            if (!data) return <div className="p-10 text-white">Roadmap not found: {roadmapId}</div>;
 
-            const isCompleted = (id) => userProgress[roadmapId]?.includes(id);
-            const toggleComplete = (id) => {
-                const current = userProgress[roadmapId] || [];
-                const next = current.includes(id) ? current.filter(x => x !== id) : [...current, id];
-                updateUserProgress(roadmapId, next);
+            const [selectedNode, setSelectedNode] = useState(null);
+            const nodesWithPos = useTreeLayout(data.nodes);
+
+            const lines = useMemo(() => {
+                const edges = [];
+                nodesWithPos.forEach(node => {
+                    if (node.parentId) {
+                        const parent = nodesWithPos.find(n => n.id === node.parentId);
+                        if (parent) {
+                            edges.push({ from: parent, to: node });
+                        }
+                    }
+                });
+                return edges;
+            }, [nodesWithPos]);
+
+            const getStatus = (nodeId) => {
+                return (userProgress[roadmapId] && userProgress[roadmapId][nodeId]) || nodesWithPos.find(n => n.id === nodeId)?.status || 'locked';
+            };
+
+            const toggleStatus = (node) => {
+                const current = (userProgress[roadmapId] && userProgress[roadmapId][node.id]);
+                const newStatus = current === 'mastered' ? 'unlocked' : 'mastered';
+                updateUserProgress(roadmapId, { ...(userProgress[roadmapId] || {}), [node.id]: newStatus });
+            };
+
+            const getResourceIcon = (type) => {
+                switch (type) {
+                    case 'watch': return 'monitor';
+                    case 'practice': return 'tool';
+                    case 'read': default: return 'file-text';
+                }
+            };
+
+            const getResourceColor = (type) => {
+                switch (type) {
+                    case 'watch': return 'text-red-400';
+                    case 'practice': return 'text-emerald-400';
+                    case 'read': default: return 'text-blue-400';
+                }
             };
 
             return (
-                <div className="h-full flex flex-col animate-fade-in relative">
-                    <div className="flex items-center gap-4 mb-6 border-b border-white/5 pb-4 shrink-0">
-                        <button onClick={onBack} className="p-2 hover:bg-white/5 rounded-lg text-slate-400 hover:text-white transition-colors"><Icon name="arrow-left" /></button>
-                        <div>
-                            <h2 className="text-2xl font-bold text-white">{data.title}</h2>
-                            <p className="text-xs text-slate-500 font-mono">ROADMAP ENGINE v1.0</p>
+                <div className="h-full flex flex-col animate-fade-in relative z-10 transition-colors duration-500">
+                    <button
+                        onClick={onBack}
+                        className="fixed top-6 left-6 z-50 bg-black/50 backdrop-blur-md text-white border border-white/10 hover:bg-white hover:text-black rounded-full px-6 py-2 flex items-center gap-2 transition-all duration-300 group shadow-2xl"
+                    >
+                        <Icon name="arrow-left" size={16} className="group-hover:-translate-x-1 transition-transform" />
+                        <span className="text-xs font-bold uppercase tracking-widest">Back to Hub</span>
+                    </button>
+
+                    <div className="absolute top-6 right-6 z-10 text-right pointer-events-none mix-blend-difference">
+                        <h2 className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-500 leading-none">{data.title}</h2>
+                        <p className="text-[10px] text-cyan-400 font-mono mt-1 uppercase tracking-widest">Interactive Protocol</p>
+                    </div>
+
+                    <div className="flex-1 relative overflow-hidden dark:bg-[#050505] bg-slate-50 shadow-inner group cursor-grab active:cursor-grabbing">
+                        <div className="absolute inset-0 overflow-auto no-scrollbar" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                            <style>{` .no-scrollbar::-webkit-scrollbar { display: none; } `}</style>
+                            <div className="relative w-[1200px] mx-auto min-h-[800px] flex justify-center p-20 pt-32">
+                                <svg className="absolute inset-0 w-full h-full pointer-events-none z-0">
+                                    <defs>
+                                        <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                                            <feGaussianBlur stdDeviation="4" result="blur" />
+                                            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                                        </filter>
+                                    </defs>
+                                    {lines.map((l, i) => (
+                                        <path
+                                            key={i}
+                                            d={`M${l.from.x + 80} ${l.from.y + 64} C ${l.from.x + 80} ${l.from.y + 130}, ${l.to.x + 80} ${l.to.y - 50}, ${l.to.x + 80} ${l.to.y}`}
+                                            fill="none"
+                                            stroke="#475569"
+                                            strokeWidth="2"
+                                            className="opacity-50"
+                                        />
+                                    ))}
+                                </svg>
+                                {nodesWithPos.map(node => {
+                                    const status = (userProgress[roadmapId] && userProgress[roadmapId][node.id]) || node.status;
+                                    const isLocked = status === 'locked';
+                                    const isMastered = status === 'mastered';
+
+
+
+                                    return (
+                                        <div
+                                            key={node.id}
+                                            onClick={() => setSelectedNode(node)}
+                                            style={{ left: node.x, top: node.y }}
+                                            className={`
+                                                absolute w-40 min-w-[160px] py-4 rounded-xl text-center cursor-pointer transition-all duration-300 group z-10
+                                                bg-black/80 backdrop-blur-md border-2 
+                                                ${isMastered
+                                                    ? 'border-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.6)]'
+                                                    : !isLocked
+                                                        ? 'border-cyan-500 shadow-[0_0_20px_rgba(6,182,212,0.6)]'
+                                                        : 'border-white/10 hover:border-purple-500 hover:shadow-[0_0_15px_rgba(168,85,247,0.5)] opacity-80 hover:opacity-100 grayscale hover:grayscale-0'
+                                                }
+                                            `}
+                                        >
+                                            <div className="flex items-center justify-center gap-2 mb-1 px-2">
+                                                {isLocked && <Icon name="lock" size={12} className="text-slate-500 group-hover:text-purple-400 transition-colors" />}
+                                                {isMastered && <Icon name="check" size={12} className="text-emerald-400" />}
+                                                <span className={`text-xs font-bold uppercase tracking-wider transition-colors ${isMastered ? 'text-emerald-400' : isLocked ? 'text-slate-500 group-hover:text-purple-400' : 'text-white'}`}>{node.label}</span>
+                                            </div>
+                                            {!isLocked && <div className="text-[9px] text-slate-400 font-mono">{node.timeEstimate || 'View Details'}</div>}
+                                            {(!isMastered && !isLocked) && (
+                                                <span className="absolute -top-1 -right-1 flex h-3 w-3">
+                                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                                                    <span className="relative inline-flex rounded-full h-3 w-3 bg-cyan-500"></span>
+                                                </span>
+                                            )}
+                                        </div>
+                                    );
+                                })}
+                            </div>
                         </div>
                     </div>
 
-                    <div className="flex-1 overflow-y-auto relative custom-scrollbar pb-20">
-                        {/* Vertical Spine */}
-                        <div className="absolute left-6 top-4 bottom-4 w-1 bg-white/5 rounded-full z-0"></div>
+                    <AnimatePresence>
+                        {selectedNode && (
+                            <>
+                                <motion.div
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    onClick={() => setSelectedNode(null)}
+                                    className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm cursor-pointer"
+                                />
 
-                        <div className="space-y-8 pl-14 pr-4">
-                            {data.nodes.map((node, idx) => {
-                                const done = isCompleted(node.id);
-                                const isNext = !done && (!node.parent || isCompleted(node.parent));
-                                const isLocked = !done && !isNext;
+                                <motion.div
+                                    initial={{ x: "100%" }}
+                                    animate={{ x: 0 }}
+                                    exit={{ x: "100%" }}
+                                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                                    className="fixed top-0 right-0 bottom-0 w-full md:w-[450px] dark:bg-[#0a0a0c] bg-white border-l dark:border-white/10 border-slate-200 shadow-2xl z-50 p-8 flex flex-col"
+                                >
+                                    <button onClick={() => setSelectedNode(null)} className="absolute top-6 right-6 p-2 rounded-full hover:bg-white/10 text-slate-400 hover:text-white transition-colors">
+                                        <Icon name="x" size={24} />
+                                    </button>
 
-                                return (
-                                    <div key={node.id} className="relative group">
-                                        {/* Connector Dot */}
-                                        <div className={`absolute -left-[38px] top-6 w-4 h-4 rounded-full border-2 transition-all z-10 ${done ? 'bg-emerald-500 border-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]' :
-                                            isNext ? 'bg-black border-brand-400 animate-pulse' :
-                                                'bg-black border-slate-700'
-                                            }`}></div>
+                                    <div className="mb-8 mt-4">
+                                        <div className="flex items-center gap-3 mb-4">
+                                            <span className="px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 text-[10px] font-bold uppercase tracking-widest">{selectedNode.timeEstimate || "Self-Paced"}</span>
+                                            {(userProgress[roadmapId] && userProgress[roadmapId][selectedNode.id] === 'mastered') &&
+                                                <span className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px] font-bold uppercase tracking-widest">Completed</span>
+                                            }
+                                        </div>
+                                        <h3 className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400 leading-tight">{selectedNode.label}</h3>
+                                        {selectedNode.description && <p className="text-sm dark:text-slate-400 text-slate-600 mt-4 leading-relaxed">{selectedNode.description}</p>}
+                                    </div>
 
-                                        <div
-                                            onClick={() => !isLocked && setSelectedNode(node)}
-                                            className={`relative p-5 rounded-xl border transition-all cursor-pointer ${done ? 'bg-emerald-900/10 border-emerald-500/30' :
-                                                isNext ? 'bg-brand-500/5 border-brand-500/50 hover:bg-brand-500/10 shadow-[0_0_20px_rgba(var(--brand-500),0.1)]' :
-                                                    'bg-white/5 border-white/5 opacity-50 grayscale hover:opacity-75'
-                                                }`}
-                                        >
-                                            <div className="flex justify-between items-start">
-                                                <div>
-                                                    <span className={`text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded mb-2 inline-block ${node.type === 'root' ? 'bg-pink-500/20 text-pink-400' :
-                                                        node.type === 'framework' ? 'bg-cyan-500/20 text-cyan-400' :
-                                                            'bg-white/10 text-slate-400'
-                                                        }`}>{node.type}</span>
-                                                    <h3 className="text-lg font-bold text-white mb-1">{node.label}</h3>
-                                                    <p className="text-sm text-slate-400">{node.desc}</p>
+                                    <div className="space-y-6 flex-1 overflow-y-auto custom-scrollbar pr-2">
+                                        {selectedNode.whyMatters && (
+                                            <div className="p-4 rounded-xl bg-orange-500/5 border border-orange-500/10">
+                                                <h4 className="flex items-center gap-2 text-xs font-bold text-orange-400 uppercase tracking-widest mb-2">
+                                                    <Icon name="zap" size={14} /> Why It Matters
+                                                </h4>
+                                                <p className="text-sm text-orange-200/80 leading-relaxed">
+                                                    {selectedNode.whyMatters}
+                                                </p>
+                                            </div>
+                                        )}
+
+                                        {selectedNode.keyConcepts && selectedNode.keyConcepts.length > 0 && (
+                                            <div>
+                                                <h4 className="text-xs font-bold dark:text-slate-500 text-slate-400 uppercase tracking-widest mb-3">Key Concepts</h4>
+                                                <div className="flex flex-wrap gap-2">
+                                                    {selectedNode.keyConcepts.map((concept, i) => (
+                                                        <span key={i} className="px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-700 text-slate-300 text-xs font-medium hover:border-cyan-500/50 hover:text-cyan-400 transition-colors cursor-default">
+                                                            {concept}
+                                                        </span>
+                                                    ))}
                                                 </div>
-                                                {done && <Icon name="check-circle" className="text-emerald-500" />}
+                                            </div>
+                                        )}
+
+                                        <div>
+                                            <h4 className="text-xs font-bold dark:text-slate-500 text-slate-400 uppercase tracking-widest mb-4">Mastery Resources</h4>
+                                            <div className="space-y-3">
+                                                {(selectedNode.resources && selectedNode.resources.length > 0) ? (
+                                                    selectedNode.resources.map((r, i) => (
+                                                        <a key={i} href={r.link} target="_blank" className="flex items-start gap-4 p-4 rounded-xl dark:bg-white/5 bg-slate-100 border dark:border-white/5 border-slate-200 hover:border-cyan-500 hover:shadow-lg hover:shadow-cyan-500/10 transition-all group">
+                                                            <div className={`mt-0.5 p-2 rounded-lg bg-black/40 ${getResourceColor(r.type)}`}>
+                                                                <Icon name={getResourceIcon(r.type)} size={16} />
+                                                            </div>
+                                                            <div className="flex-1 text-left">
+                                                                <div className="text-sm font-bold dark:text-slate-200 text-slate-800 group-hover:text-cyan-400 transition-colors mb-1">{r.title}</div>
+                                                                <div className="text-[10px] uppercase font-bold tracking-wider opacity-50 dark:text-slate-400 text-slate-500">{r.type || 'Read'}</div>
+                                                            </div>
+                                                            <Icon name="external-link" size={14} className="text-slate-600 dark:text-slate-500 group-hover:text-cyan-400" />
+                                                        </a>
+                                                    ))
+                                                ) : (
+                                                    <div className="text-center py-8 border border-dashed dark:border-white/10 border-slate-300 rounded-xl">
+                                                        <span className="text-xs text-slate-500">No resources available.</span>
+                                                    </div>
+                                                )}
                                             </div>
                                         </div>
                                     </div>
-                                )
-                            })}
+
+                                    <div className="mt-auto pt-6 border-t dark:border-white/10 border-slate-200 bg-gradient-to-t from-[#0a0a0c] to-transparent">
+                                        <button
+                                            onClick={() => toggleStatus(selectedNode)}
+                                            className={`w-full py-4 rounded-xl font-bold uppercase tracking-widest text-xs flex items-center justify-center gap-2 transition-all shadow-lg
+                                                ${(userProgress[roadmapId] && userProgress[roadmapId][selectedNode.id] === 'mastered')
+                                                    ? 'bg-red-500/10 text-red-500 border border-red-500/20 hover:bg-red-500/20'
+                                                    : 'bg-gradient-to-r from-cyan-600 to-blue-600 text-white hover:shadow-cyan-500/30 border border-cyan-500/50 hover:scale-[1.02]'}`}
+                                        >
+                                            {(userProgress[roadmapId] && userProgress[roadmapId][selectedNode.id] === 'mastered') ? (
+                                                <>
+                                                    <Icon name="x-circle" size={16} /> Mark Incomplete
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <Icon name="check-circle" size={16} /> Mark as Complete
+                                                </>
+                                            )}
+                                        </button>
+                                    </div>
+                                </motion.div>
+                            </>
+                        )}
+                    </AnimatePresence>
+                </div>
+            );
+        };
+
+        const RoadmapRenderer_Legacy = ({ roadmapId, QP, onBack, userProgress, updateUserProgress }) => {
+            const { motion, AnimatePresence } = window.Motion;
+            const data = ROADMAP_MASTER_DATA[roadmapId];
+            if (!data) return <div className="p-10 text-white">Roadmap not found: {roadmapId}</div>;
+
+            const [selectedNode, setSelectedNode] = useState(null);
+            const nodesWithPos = useTreeLayout(data.nodes);
+
+            const lines = useMemo(() => {
+                const edges = [];
+                nodesWithPos.forEach(node => {
+                    if (node.parentId) {
+                        const parent = nodesWithPos.find(n => n.id === node.parentId);
+                        if (parent) {
+                            edges.push({ from: parent, to: node });
+                        }
+                    }
+                });
+                return edges;
+            }, [nodesWithPos]);
+
+            const getStatus = (nodeId) => {
+                return (userProgress[roadmapId] && userProgress[roadmapId][nodeId]) || node.status || 'locked';
+            };
+
+            const toggleStatus = (node) => {
+                const current = (userProgress[roadmapId] && userProgress[roadmapId][node.id]);
+                const newStatus = current === 'mastered' ? 'unlocked' : 'mastered';
+                updateUserProgress(roadmapId, { ...(userProgress[roadmapId] || {}), [node.id]: newStatus });
+            };
+
+            const getResourceIcon = (type) => {
+                switch (type) {
+                    case 'watch': return 'monitor';
+                    case 'practice': return 'tool';
+                    case 'read': default: return 'file-text';
+                }
+            };
+
+            const getResourceColor = (type) => {
+                switch (type) {
+                    case 'watch': return 'text-red-400';
+                    case 'practice': return 'text-emerald-400';
+                    case 'read': default: return 'text-blue-400';
+                }
+            };
+
+            return (
+                <div className="h-full flex flex-col animate-fade-in relative z-10">
+                    <div className="flex items-center justify-between border-b border-white/5 pb-4 mb-4">
+                        <button onClick={onBack} className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors hover:bg-white/5 px-3 py-2 rounded-lg">
+                            <Icon name="arrow-left" size={18} /> <span className="text-xs font-bold uppercase tracking-widest">Back to Hub</span>
+                        </button>
+                        <div className="text-right">
+                            <h2 className="text-2xl font-bold dark:text-white text-slate-900 leading-none">{data.title}</h2>
+                            <p className="text-[10px] text-brand-400 font-mono mt-1 uppercase tracking-wider">Interactive Protocol</p>
                         </div>
                     </div>
 
-                    {/* Detail Drawer */}
+                    <div className="flex-1 relative overflow-hidden rounded-2xl dark:bg-[#080910] bg-slate-50 border dark:border-white/5 border-slate-300 shadow-inner group">
+                        <div className="absolute inset-0 overflow-auto custom-scrollbar cursor-grab active:cursor-grabbing">
+                            <div className="relative min-w-[1200px] min-h-[800px] flex justify-center p-20">
+                                <svg className="absolute inset-0 w-full h-full pointer-events-none z-0">
+                                    <defs>
+                                        <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                                            <feGaussianBlur stdDeviation="4" result="blur" />
+                                            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                                        </filter>
+                                    </defs>
+                                    {lines.map((l, i) => (
+                                        <path
+                                            key={i}
+                                            d={`M${l.from.x + 64} ${l.from.y + 64} C ${l.from.x + 64} ${l.from.y + 130}, ${l.to.x + 64} ${l.to.y - 50}, ${l.to.x + 64} ${l.to.y}`}
+                                            fill="none"
+                                            stroke="#334155"
+                                            strokeWidth="2"
+                                            className="opacity-50"
+                                        />
+                                    ))}
+                                </svg>
+                                {nodesWithPos.map(node => {
+                                    const status = (userProgress[roadmapId] && userProgress[roadmapId][node.id]) || node.status;
+                                    const isLocked = status === 'locked';
+                                    const isMastered = status === 'mastered';
+
+                                    return (
+                                        <div
+                                            key={node.id}
+                                            onClick={() => setSelectedNode(node)}
+                                            style={{ left: node.x, top: node.y }}
+                                            className={`absolute w-32 h-16 rounded-xl border-2 flex items-center justify-center text-center p-2 text-xs font-bold transition-all duration-200 cursor-pointer shadow-lg z-10 hover:scale-110 active:scale-95
+                                                ${isMastered
+                                                    ? 'bg-emerald-500 text-white border-emerald-400 shadow-emerald-500/30'
+                                                    : isLocked
+                                                        ? 'dark:bg-slate-800 bg-slate-200 dark:border-slate-700 border-slate-300 dark:text-slate-500 text-slate-400 grayscale'
+                                                        : 'dark:bg-[#0a0a0f] bg-white border-brand-500 dark:text-cyan-300 text-brand-600 shadow-brand-500/20 hover:shadow-brand-500/50'
+                                                }`}
+                                        >
+                                            {isLocked && <Icon name="lock" size={12} className="mr-1 opacity-50" />}
+                                            {isMastered && <Icon name="check" size={12} className="mr-1" />}
+                                            {node.label}
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    </div>
+
                     <AnimatePresence>
                         {selectedNode && (
                             <motion.div
-                                initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }}
-                                className="absolute inset-y-0 right-0 w-full md:w-96 bg-[#05050a] border-l border-white/10 shadow-2xl z-50 p-6 overflow-y-auto"
-                                onClick={(e) => e.stopPropagation()}
+                                initial={{ x: "100%" }}
+                                animate={{ x: 0 }}
+                                exit={{ x: "100%" }}
+                                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                                className="absolute top-0 right-0 bottom-0 w-full md:w-96 dark:bg-[#0c0c12] bg-white border-l dark:border-white/10 border-slate-200 shadow-2xl z-50 p-6 flex flex-col"
                             >
-                                <button onClick={() => setSelectedNode(null)} className="mb-6 text-slate-400 hover:text-white"><Icon name="x" /></button>
+                                <div className="flex items-center justify-between mb-8">
+                                    <h3 className="text-2xl font-black dark:text-white text-slate-900 tracking-tight leading-tight">{selectedNode.label}</h3>
+                                    <button onClick={() => setSelectedNode(null)} className="p-2 rounded-full hover:bg-white/10"><Icon name="x" size={20} className="dark:text-slate-400 text-slate-500" /></button>
+                                </div>
 
-                                <h2 className="text-2xl font-bold text-white mb-2">{selectedNode.label}</h2>
-                                <p className="text-slate-400 text-sm leading-relaxed mb-6">{selectedNode.desc}</p>
-
-                                <div className="space-y-6">
-                                    <button
-                                        onClick={() => { toggleComplete(selectedNode.id); setSelectedNode(null); }}
-                                        className={`w-full py-3 rounded-xl font-bold uppercase tracking-widest text-xs border transition-all ${isCompleted(selectedNode.id)
-                                            ? 'border-emerald-500 text-emerald-400 hover:bg-emerald-500/10'
-                                            : 'bg-brand-600 border-transparent text-white hover:bg-brand-500 shadow-[0_0_20px_rgba(var(--brand-500),0.4)]'
-                                            }`}
-                                    >
-                                        {isCompleted(selectedNode.id) ? 'Mark Incomplete' : 'Mark as Done'}
-                                    </button>
-
-                                    {selectedNode.resources && (
-                                        <div>
-                                            <h4 className="text-xs font-bold text-brand-400 uppercase tracking-widest mb-3">Resources</h4>
-                                            <div className="space-y-2">
-                                                {selectedNode.resources.map((r, i) => (
-                                                    <a key={i} href={r.link} target="_blank" className="block p-3 bg-white/5 rounded-lg border border-white/5 hover:border-brand-500/30 text-sm text-slate-300 hover:text-white transition-colors">
-                                                        <div className="flex items-center justify-between">
-                                                            <span>{r.title}</span>
-                                                            <Icon name="external-link" size={12} />
-                                                        </div>
-                                                    </a>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    )}
-
-                                    <div className="p-4 rounded-xl bg-purple-500/10 border border-purple-500/20">
-                                        <h4 className="flex items-center gap-2 text-xs font-bold text-purple-400 uppercase tracking-widest mb-2"><Icon name="zap" size={14} /> Project Idea</h4>
-                                        <p className="text-xs text-purple-200">Build a mini-demo using {selectedNode.label} concepts to verify your learning.</p>
+                                <div className="space-y-6 flex-1 overflow-y-auto custom-scrollbar">
+                                    <div className="p-5 rounded-xl dark:bg-brand-900/10 bg-brand-50 border dark:border-brand-500/20 border-brand-200">
+                                        <h4 className="text-xs font-bold text-brand-500 uppercase tracking-widest mb-3">Module Description</h4>
+                                        <p className="text-sm dark:text-brand-100 text-slate-700 leading-relaxed whitespace-pre-wrap">
+                                            {selectedNode.description || "No description available."}
+                                        </p>
                                     </div>
+
+                                    <div>
+                                        <h4 className="text-xs font-bold dark:text-slate-500 text-slate-400 uppercase tracking-widest mb-4">Mastery Resources</h4>
+                                        <div className="space-y-3">
+                                            {(selectedNode.resources && selectedNode.resources.length > 0) ? (
+                                                selectedNode.resources.map((r, i) => (
+                                                    <a key={i} href={r.link} target="_blank" className="flex items-start gap-4 p-4 rounded-xl dark:bg-white/5 bg-slate-100 border dark:border-white/5 border-slate-200 hover:border-brand-500 hover:shadow-lg hover:shadow-brand-500/10 transition-all group">
+                                                        <div className={`mt-0.5 p-2 rounded-lg bg-black/20 ${getResourceColor(r.type)}`}>
+                                                            <Icon name={getResourceIcon(r.type)} size={16} />
+                                                        </div>
+                                                        <div className="flex-1 text-left">
+                                                            <div className="text-sm font-bold dark:text-slate-200 text-slate-800 group-hover:text-brand-500 transition-colors mb-1">{r.title}</div>
+                                                            <div className="text-[10px] uppercase font-bold tracking-wider opacity-50 dark:text-slate-400 text-slate-500">{r.type || 'Read'}</div>
+                                                        </div>
+                                                        <Icon name="external-link" size={14} className="text-slate-600 dark:text-slate-500 group-hover:text-brand-500" />
+                                                    </a>
+                                                ))
+                                            ) : (
+                                                <div className="text-center py-8 border border-dashed dark:border-white/10 border-slate-300 rounded-xl">
+                                                    <span className="text-xs text-slate-500">No resources available.</span>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="mt-auto pt-6 border-t dark:border-white/10 border-slate-200">
+                                    <button
+                                        onClick={() => toggleStatus(selectedNode)}
+                                        className={`w-full py-4 rounded-xl font-bold uppercase tracking-widest text-xs flex items-center justify-center gap-2 transition-all
+                                            ${(userProgress[roadmapId] && userProgress[roadmapId][selectedNode.id] === 'mastered')
+                                                ? 'bg-red-500/10 text-red-500 border border-red-500/20 hover:bg-red-500/20'
+                                                : 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/30 hover:bg-emerald-400'}`}
+                                    >
+                                        {(userProgress[roadmapId] && userProgress[roadmapId][selectedNode.id] === 'mastered') ? (
+                                            <>
+                                                <Icon name="x-circle" size={16} /> Mark Incomplete
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Icon name="check-circle" size={16} /> Mark as Complete
+                                            </>
+                                        )}
+                                    </button>
+                                </div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </div>
+            );
+        };
+
+        const RoadmapRenderer_Old = ({ roadmapId, QP, onBack, userProgress, updateUserProgress }) => {
+            const { motion, AnimatePresence } = window.Motion;
+            const data = ROADMAP_MASTER_DATA[roadmapId];
+            if (!data) return <div className="p-10 text-white">Roadmap not found: {roadmapId}</div>;
+
+            const [selectedNode, setSelectedNode] = useState(null);
+            const nodesWithPos = useTreeLayout(data.nodes);
+
+            const lines = useMemo(() => {
+                const edges = [];
+                nodesWithPos.forEach(node => {
+                    if (node.parentId) {
+                        const parent = nodesWithPos.find(n => n.id === node.parentId);
+                        if (parent) {
+                            edges.push({ from: parent, to: node });
+                        }
+                    }
+                });
+                return edges;
+            }, [nodesWithPos]);
+
+            const getStatus = (nodeId) => {
+                return (userProgress[roadmapId] && userProgress[roadmapId][nodeId]) || node.status || 'locked';
+            };
+
+            const toggleStatus = (node) => {
+                const newStatus = 'mastered';
+                updateUserProgress(roadmapId, { ...(userProgress[roadmapId] || {}), [node.id]: newStatus });
+            };
+
+            return (
+                <div className="h-full flex flex-col animate-fade-in relative z-10">
+                    <div className="flex items-center justify-between border-b border-white/5 pb-4 mb-4">
+                        <button onClick={onBack} className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors hover:bg-white/5 px-3 py-2 rounded-lg">
+                            <Icon name="arrow-left" size={18} /> <span className="text-xs font-bold uppercase tracking-widest">Back to Hub</span>
+                        </button>
+                        <div className="text-right">
+                            <h2 className="text-2xl font-bold dark:text-white text-slate-900 leading-none">{data.title}</h2>
+                            <p className="text-[10px] text-brand-400 font-mono mt-1 uppercase tracking-wider">Interactive Protocol</p>
+                        </div>
+                    </div>
+
+                    <div className="flex-1 relative overflow-hidden rounded-2xl dark:bg-[#080910] bg-slate-50 border dark:border-white/5 border-slate-300 shadow-inner group">
+                        <div className="absolute inset-0 overflow-auto custom-scrollbar cursor-grab active:cursor-grabbing">
+                            <div className="relative min-w-[1200px] min-h-[800px] flex justify-center p-20">
+                                <svg className="absolute inset-0 w-full h-full pointer-events-none z-0">
+                                    {lines.map((l, i) => (
+                                        <path
+                                            key={i}
+                                            d={`M${l.from.x + 64} ${l.from.y + 64} C ${l.from.x + 64} ${l.from.y + 130}, ${l.to.x + 64} ${l.to.y - 50}, ${l.to.x + 64} ${l.to.y}`}
+                                            fill="none"
+                                            stroke="#334155"
+                                            strokeWidth="2"
+                                            className="opacity-50"
+                                        />
+                                    ))}
+                                </svg>
+                                {nodesWithPos.map(node => {
+                                    const status = (userProgress[roadmapId] && userProgress[roadmapId][node.id]) || node.status;
+                                    const isLocked = status === 'locked';
+                                    const isMastered = status === 'mastered';
+
+                                    return (
+                                        <div
+                                            key={node.id}
+                                            onClick={() => setSelectedNode(node)}
+                                            style={{ left: node.x, top: node.y }}
+                                            className={`absolute w-32 h-16 rounded-xl border-2 flex items-center justify-center text-center p-2 text-xs font-bold transition-all duration-200 cursor-pointer shadow-lg z-10 hover:scale-110 active:scale-95
+                                                ${isMastered
+                                                    ? 'bg-emerald-500 text-white border-emerald-400 shadow-emerald-500/30'
+                                                    : isLocked
+                                                        ? 'dark:bg-slate-800 bg-slate-200 dark:border-slate-700 border-slate-300 dark:text-slate-500 text-slate-400 grayscale'
+                                                        : 'dark:bg-[#0a0a0f] bg-white border-brand-500 dark:text-cyan-300 text-brand-600 shadow-brand-500/20 hover:shadow-brand-500/50'
+                                                }`}
+                                        >
+                                            {isLocked && <Icon name="lock" size={12} className="mr-1 opacity-50" />}
+                                            {isMastered && <Icon name="check" size={12} className="mr-1" />}
+                                            {node.label}
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    </div>
+
+                    <AnimatePresence>
+                        {selectedNode && (
+                            <motion.div
+                                initial={{ x: "100%" }}
+                                animate={{ x: 0 }}
+                                exit={{ x: "100%" }}
+                                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                                className="absolute top-0 right-0 bottom-0 w-full md:w-96 dark:bg-[#0c0c12] bg-white border-l dark:border-white/10 border-slate-200 shadow-2xl z-50 p-6 flex flex-col"
+                            >
+                                <div className="flex items-center justify-between mb-8">
+                                    <h3 className="text-xl font-black dark:text-white text-slate-900 tracking-tight">{selectedNode.label}</h3>
+                                    <button onClick={() => setSelectedNode(null)} className="p-2 rounded-full hover:bg-white/10"><Icon name="x" size={20} className="dark:text-slate-400 text-slate-500" /></button>
+                                </div>
+
+                                <div className="space-y-6 flex-1 overflow-y-auto">
+                                    <div className="p-4 rounded-xl dark:bg-brand-900/10 bg-brand-50 border dark:border-brand-500/20 border-brand-200">
+                                        <h4 className="text-xs font-bold text-brand-500 uppercase tracking-widest mb-2">Concept Definition</h4>
+                                        <p className="text-sm dark:text-brand-100 text-brand-900 leading-relaxed">
+                                            Core fundamental knowledge required for {data.title}. Understanding this node is a prerequisite for advanced modules.
+                                        </p>
+                                    </div>
+
+                                    <div>
+                                        <h4 className="text-xs font-bold dark:text-slate-500 text-slate-400 uppercase tracking-widest mb-3">Curated Resources</h4>
+                                        <div className="space-y-3">
+                                            {(data.resources[selectedNode.id] || []).length > 0 ? (
+                                                data.resources[selectedNode.id].map((r, i) => (
+                                                    <a key={i} href={r.link} target="_blank" className="flex items-center gap-3 p-3 rounded-xl dark:bg-white/5 bg-slate-100 border dark:border-white/5 border-slate-200 hover:border-brand-500 transition-all group">
+                                                        <div className="p-2 rounded-lg bg-red-500/10 text-red-500"><Icon name="youtube" size={16} /></div>
+                                                        <div className="flex-1">
+                                                            <div className="text-sm font-bold dark:text-slate-200 text-slate-800 group-hover:text-brand-500 transition-colors">{r.title}</div>
+                                                            <div className="text-[10px] text-slate-500">Video Tutorial</div>
+                                                        </div>
+                                                        <Icon name="external-link" size={12} className="text-slate-600" />
+                                                    </a>
+                                                ))
+                                            ) : (
+                                                <div className="text-center py-8 border border-dashed border-white/10 rounded-xl">
+                                                    <span className="text-xs text-slate-500">No resources linked yet.</span>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="mt-auto pt-6 border-t dark:border-white/10 border-slate-200">
+                                    <button
+                                        onClick={() => toggleStatus(selectedNode)}
+                                        className={`w-full py-4 rounded-xl font-bold uppercase tracking-widest text-xs flex items-center justify-center gap-2 transition-all
+                                            ${(userProgress[roadmapId] && userProgress[roadmapId][selectedNode.id] === 'mastered')
+                                                ? 'bg-red-500/10 text-red-500 border border-red-500/20 hover:bg-red-500/20'
+                                                : 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/30 hover:bg-emerald-400'}`}
+                                    >
+                                        {(userProgress[roadmapId] && userProgress[roadmapId][selectedNode.id] === 'mastered') ? 'Mark Incomplete' : 'Mark as Complete'}
+                                    </button>
                                 </div>
                             </motion.div>
                         )}
@@ -3056,8 +4099,8 @@ void addEdge(int u, int v) {
                 <div className="space-y-8 animate-fade-in">
                     <div className="flex items-end justify-between border-b border-white/5 pb-6">
                         <div>
-                            <h2 className="text-4xl font-bold text-white tracking-tight">Roadmap Engine</h2>
-                            <p className="text-slate-400 mt-2 font-mono text-xs">CHOOSE YOUR CAREER PATHWAY</p>
+                            <h2 className="text-4xl font-bold dark:text-white text-slate-900 tracking-tight">Roadmap Engine</h2>
+                            <p className="dark:text-slate-400 text-slate-600 mt-2 font-mono text-xs">CHOOSE YOUR CAREER PATHWAY</p>
                         </div>
                     </div>
 
@@ -3066,19 +4109,21 @@ void addEdge(int u, int v) {
                             <div
                                 key={map.id}
                                 onClick={() => { setActiveId(map.id); setView('roadmap'); }}
-                                className="group relative h-64 bg-[#0a0a0f] border border-white/10 rounded-2xl overflow-hidden cursor-pointer hover:border-brand-500/50 transition-all duration-300 hover:shadow-[0_0_30px_rgba(var(--brand-500),0.15)]"
+                                className="group relative h-64 dark:bg-[#0a0a0f] bg-white border dark:border-white/10 border-slate-200 rounded-2xl overflow-hidden cursor-pointer hover:border-brand-500/50 transition-all duration-300 hover:shadow-[0_0_30px_rgba(var(--brand-500),0.15)] light:shadow-sm"
                             >
-                                <div className="absolute inset-0 bg-gradient-to-br from-brand-500/5 to-transparent group-hover:from-brand-500/10 transition-colors"></div>
-                                <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black to-transparent"></div>
+                                <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-brand-500/5 to-transparent group-hover:from-brand-500/10 transition-colors pointer-events-none"></div>
+                                <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t dark:from-black from-slate-100/50 to-transparent"></div>
 
-                                <div className="absolute inset-0 p-6 flex flex-col justify-end">
-                                    <div className="mb-4 w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:scale-110 transition-transform text-brand-400">
-                                        <Icon name="map" />
+                                <div className="absolute inset-0 p-6 flex flex-col">
+                                    <div>
+                                        <div className="mb-4 w-12 h-12 rounded-xl overflow-hidden border dark:border-white/10 border-slate-200 group-hover:scale-110 transition-transform">
+                                            <img src={map.image} alt={map.title} className="w-full h-full object-cover" />
+                                        </div>
+                                        <h3 className="text-xl font-bold dark:text-white text-slate-900 mb-1">{map.title}</h3>
+                                        <p className="text-sm dark:text-slate-400 text-slate-600 line-clamp-2">{map.description}</p>
                                     </div>
-                                    <h3 className="text-xl font-bold text-white mb-1">{map.title}</h3>
-                                    <p className="text-sm text-slate-400 line-clamp-2">{map.description}</p>
 
-                                    <div className="mt-4 flex items-center gap-2 text-xs font-mono text-brand-400 opacity-0 group-hover:opacity-100 transition-opacity translate-y-2 group-hover:translate-y-0 duration-300">
+                                    <div className="mt-auto flex items-center gap-2 text-xs font-mono text-brand-400 opacity-0 group-hover:opacity-100 transition-opacity translate-y-2 group-hover:translate-y-0 duration-300">
                                         INITIALIZE PROTOCOL <Icon name="arrow-right" size={12} />
                                     </div>
                                 </div>
@@ -3086,7 +4131,7 @@ void addEdge(int u, int v) {
                         ))}
 
                         {/* Coming Soon Card */}
-                        <div className="h-64 border border-white/5 border-dashed rounded-2xl flex flex-col items-center justify-center text-slate-600 gap-4">
+                        <div className="h-64 border dark:border-white/5 border-slate-300 border-dashed rounded-2xl flex flex-col items-center justify-center dark:text-slate-600 text-slate-400 gap-4">
                             <Icon name="lock" size={24} />
                             <span className="text-xs font-bold uppercase tracking-widest">More Paths Locked</span>
                         </div>
@@ -3181,9 +4226,16 @@ void addEdge(int u, int v) {
             const resetData = () => { if (confirm("This will include your saved data.")) { localStorage.removeItem(storageKey); window.location.reload(); } };
 
             return (
-                <div className="relative h-screen w-screen overflow-hidden bg-[#05050a]">
+                <div className="relative h-screen w-screen overflow-hidden dark:bg-[#05050a] bg-slate-100 transition-colors duration-500">
+                    {/* LIVING BACKGROUND */}
+                    <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
+                        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob bg-purple-900/20 dark:bg-purple-900/20 bg-blue-100/50 dark:bg-transparent"></div>
+                        <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000 bg-cyan-900/20 dark:bg-cyan-900/20 bg-purple-100/50 dark:bg-transparent"></div>
+                        <div className="absolute bottom-[-10%] left-[20%] w-[50%] h-[50%] rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-4000 bg-brand-900/20 dark:bg-brand-900/20 bg-pink-100/50 dark:bg-transparent"></div>
+                    </div>
+
                     {panicMode && <GhostProtocol exit={() => setPanicMode(false)} />}
-                    <div className={`flex h-screen overflow-hidden font-sans text-slate-200 transition-all duration-700 ${panicMode ? 'opacity-0 scale-95 blur-sm brightness-50 pointer-events-none' : 'opacity-100 scale-100'}`}>
+                    <div className={`relative z-10 flex h-screen overflow-hidden font-sans dark:text-slate-200 text-slate-800 transition-all duration-700 ${panicMode ? 'opacity-0 scale-95 blur-sm brightness-50 pointer-events-none' : 'opacity-100 scale-100'}`}>
                         {/* Command Palette Modal */}
                         {cmdOpen && (
                             <div className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm flex items-start justify-center pt-32 animate-fade-in" onClick={() => setCmdOpen(false)}>
@@ -3225,14 +4277,14 @@ void addEdge(int u, int v) {
                         {mobileOpen && <div className="fixed inset-0 z-40 bg-black/80 backdrop-blur-sm lg:hidden" onClick={() => setMobileOpen(false)}></div>}
 
                         {/* Sidebar */}
-                        <aside className={`fixed inset-y-0 left-0 z-50 bg-surface-900/95 backdrop-blur-xl border-r border-white/5 flex flex-col transition-all duration-300 ease-in-out lg:static lg:translate-x-0 ${mobileOpen ? 'translate-x-0 shadow-2xl w-64' : '-translate-x-full w-64'} ${isExpanded ? 'lg:w-64' : 'lg:w-20'}`}>
+                        <aside className={`fixed inset-y-0 left-0 z-50 dark:bg-surface-900/95 bg-white/95 backdrop-blur-xl border-r dark:border-white/5 border-slate-200 flex flex-col transition-all duration-300 ease-in-out lg:static lg:translate-x-0 ${mobileOpen ? 'translate-x-0 shadow-2xl w-64' : '-translate-x-full w-64'} ${isExpanded ? 'lg:w-64' : 'lg:w-20'}`}>
                             <div className={`p-6 md:p-8 flex items-center justify-between gap-3 ${!isExpanded && 'lg:justify-center lg:px-2'}`}>
                                 <div className="flex items-center gap-3">
                                     <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-600 to-brand-500 flex items-center justify-center text-white font-bold text-xl shadow-[0_0_20px_rgba(var(--brand-500),0.4)] flex-shrink-0">V</div>
-                                    <span className={`font-bold text-xl tracking-tighter text-white transition-opacity duration-300 ${!isExpanded && 'lg:opacity-0 lg:w-0 lg:hidden'}`}>VELOSIFY</span>
+                                    <span className={`font-bold text-xl tracking-tighter dark:text-white text-slate-900 transition-opacity duration-300 ${!isExpanded && 'lg:opacity-0 lg:w-0 lg:hidden'}`}>VELOSIFY</span>
                                 </div>
                                 <button onClick={() => setMobileOpen(false)} className="lg:hidden text-slate-400 hover:text-white"><Icon name="x" size={24} /></button>
-                                <button onClick={() => setIsExpanded(!isExpanded)} className={`hidden lg:block text-slate-400 hover:text-white transition-transform ${!isExpanded && 'rotate-180'}`}>
+                                <button onClick={() => setIsExpanded(!isExpanded)} className={`hidden lg:block text-slate-400 hover:dark:text-white hover:text-slate-900 transition-transform ${!isExpanded && 'rotate-180'}`}>
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
                                 </button>
                             </div>
@@ -3244,7 +4296,7 @@ void addEdge(int u, int v) {
                                     { id: 'dsa', i: 'code', l: 'DSA Tracker' },
                                     { id: 'syllabus', i: 'book-open', l: 'Syllabus' }
                                 ].map(x => (
-                                    <button key={x.id} onClick={() => { setTab(x.id); setMobileOpen(false); }} className={`w-full flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all group relative overflow-hidden ${tab === x.id ? 'text-white bg-white/5 shadow-inner' : 'text-slate-400 hover:text-white hover:bg-white/5'} ${!isExpanded && 'lg:justify-center'}`}>
+                                    <button key={x.id} onClick={() => { setTab(x.id); setMobileOpen(false); }} className={`w-full flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all group relative overflow-hidden ${tab === x.id ? 'dark:text-white text-brand-600 dark:bg-white/5 bg-brand-50 shadow-inner' : 'dark:text-slate-400 text-slate-500 hover:dark:text-white hover:text-slate-900 hover:dark:bg-white/5 hover:bg-slate-100'} ${!isExpanded && 'lg:justify-center'}`}>
                                         {tab === x.id && <div className="absolute left-0 top-1/2 -translate-y-1/2 h-6 w-1 bg-brand-500 rounded-r-full shadow-[0_0_10px_rgba(var(--brand-500),0.8)]"></div>}
                                         <Icon name={x.i} size={18} className={tab === x.id ? "text-brand-400" : ""} />
                                         <span className={`text-xs font-medium transition-all duration-300 ${!isExpanded && 'lg:hidden'}`}>{x.l}</span>
@@ -3274,7 +4326,7 @@ void addEdge(int u, int v) {
                                                     { id: 'resources', i: 'lock', l: 'Data Vault' },
                                                     { id: 'projects', i: 'trello', l: 'Task Manager' }
                                                 ].map(x => (
-                                                    <button key={x.id} onClick={() => { setTab(x.id); setMobileOpen(false); }} className={`w-full flex items-center gap-4 px-4 py-3 rounded-xl transition-all group relative overflow-hidden ${tab === x.id ? 'text-white bg-white/5 shadow-inner' : 'text-slate-400 hover:text-white hover:bg-white/5'} ${!isExpanded ? 'lg:justify-center' : 'pl-10'}`}>
+                                                    <button key={x.id} onClick={() => { setTab(x.id); setMobileOpen(false); }} className={`w-full flex items-center gap-4 px-4 py-3 rounded-xl transition-all group relative overflow-hidden ${tab === x.id ? 'dark:text-white text-brand-600 dark:bg-white/5 bg-brand-50 shadow-inner' : 'dark:text-slate-400 text-slate-500 hover:dark:text-white hover:text-slate-900 hover:dark:bg-white/5 hover:bg-slate-100'} ${!isExpanded ? 'lg:justify-center' : 'pl-10'}`}>
                                                         {tab === x.id && <div className="absolute left-0 top-1/2 -translate-y-1/2 h-4 w-1 bg-brand-500 rounded-r-full shadow-[0_0_10px_rgba(var(--brand-500),0.8)]"></div>}
                                                         <Icon name={x.i} size={16} className={tab === x.id ? "text-brand-400" : ""} />
                                                         <span className={`text-xs font-medium transition-all duration-300 ${!isExpanded && 'lg:hidden'}`}>{x.l}</span>
@@ -3323,7 +4375,7 @@ void addEdge(int u, int v) {
 
                             <div className="p-6 lg:p-10 max-w-7xl mx-auto min-h-full w-full">
                                 {tab === 'dashboard' && <Dashboard user={data} setTab={setTab} />}
-                                {tab === 'focus' && <FocusMode focus={data.focus} setFocus={f => setData(d => ({ ...d, focus: (typeof f === 'function' ? f(d.focus) : f) }))} />}
+                                {tab === 'focus' && <FocusEngine focus={data.focus} setFocus={f => setData(d => ({ ...d, focus: (typeof f === 'function' ? f(d.focus) : f) }))} setTab={setTab} />}
                                 {tab === 'roadmaps' && <RoadmapHub user={data} update={setData} />}
                                 {tab === 'syllabus' && <Syllabus user={data} update={setData} log={log} />}
                                 {tab === 'projects' && <Kanban user={data} update={setData} log={log} />}
@@ -3335,7 +4387,7 @@ void addEdge(int u, int v) {
                             </div>
                         </main>
                     </div>
-                </div>
+                </div >
             );
         };
 
