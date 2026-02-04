@@ -16,7 +16,10 @@ export default {
                     900: '#05050a',
                     800: '#0a0a0f',
                     700: '#11111a',
-                }
+                },
+                'neon-blue': '#00f3ff',
+                'neon-purple': '#a855f7',
+                'neon-green': '#22c55e',
             },
         },
     },

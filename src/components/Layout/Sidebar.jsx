@@ -17,6 +17,7 @@ import {
     Target
 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Logo } from '../Logo';
 
 const Sidebar = ({ tab, setTab, isExpanded, setIsExpanded, logout }) => {
     const [mobileOpen, setMobileOpen] = useState(false);
@@ -56,9 +57,7 @@ const Sidebar = ({ tab, setTab, isExpanded, setIsExpanded, logout }) => {
             >
                 {/* Logo Section */}
                 <div className={`p-8 flex items-center gap-4 ${!isExpanded && 'lg:justify-center lg:px-4'}`}>
-                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-brand-600 to-brand-500 flex items-center justify-center text-white font-black text-2xl shadow-[0_0_20px_rgba(var(--brand-500),0.4)] ring-1 ring-white/20 shrink-0">
-                        V
-                    </div>
+                    <Logo className="w-12 h-12 text-white shadow-[0_0_20px_rgba(var(--brand-500),0.4)] ring-1 ring-white/20 shrink-0" />
                     {isExpanded && (
                         <motion.span
                             initial={{ opacity: 0, x: -10 }}

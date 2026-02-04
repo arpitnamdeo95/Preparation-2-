@@ -4,6 +4,7 @@ import * as LucideIcons from 'lucide-react';
 import { supabase } from './lib/supabase';
 import Sidebar from './components/Layout/Sidebar';
 import RoadmapHub from './components/Roadmap/RoadmapHub';
+import SystemSyllabus from './components/SystemSyllabus';
 
 // Bridge for legacy icon usage
 const Icon = ({ name, size = 18, className = "" }) => {
@@ -73,7 +74,6 @@ const App = () => {
             </div>
         </div>
     );
-
     return (
         <div className="flex h-screen w-screen overflow-hidden bg-[#05050a] text-slate-200">
             <Sidebar
@@ -117,6 +117,13 @@ const App = () => {
                             transition={{ duration: 0.3 }}
                         >
                             {tab === 'roadmaps' && <RoadmapHub />}
+                            {tab === 'syllabus' && (
+                                <SystemSyllabus
+                                    user={data}
+                                    update={setData}
+                                    log={() => console.log('Knowledge Update Logged')}
+                                />
+                            )}
                             {tab === 'dashboard' && (
                                 <div className="py-20 text-center flex flex-col items-center gap-6">
                                     <Icon name="layout-dashboard" size={64} className="text-slate-800" />

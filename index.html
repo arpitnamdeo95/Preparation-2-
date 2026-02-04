@@ -5,12 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Velosify | Neural Study OS</title>
+    <link rel="icon" type="image/svg+xml" href="velosify-logo.svg?v=4" />
+    <link rel="shortcut icon" href="velosify-logo.svg?v=4" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
     <script crossorigin
         src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
-    <script src="https://unpkg.com/lucide@0.263.1/dist/umd/lucide.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.1/dist/umd/lucide.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -233,7 +235,10 @@
                         surface: {
                             800: '#1e293b',
                             900: '#0f172a'
-                        }
+                        },
+                        'neon-blue': '#00f3ff',
+                        'neon-purple': '#a855f7',
+                        'neon-green': '#22c55e',
                     },
                     fontFamily: {
                         mono: ['JetBrains Mono', 'monospace']
@@ -311,22 +316,46 @@
             const ref = useRef(null);
             useEffect(() => {
                 if (!window.lucide) return;
-                const pascal = name.replace(/(^|-)([a-z])/g, (_, __, c) => c.toUpperCase());
-                const iconDef = window.lucide.icons?.[pascal];
-                if (iconDef && ref.current) {
-                    const svg = window.lucide.createElement(iconDef);
-                    svg.setAttribute('width', size);
-                    svg.setAttribute('height', size);
-                    ref.current.innerHTML = '';
-                    ref.current.appendChild(svg);
-                } else if (ref.current) {
-                    // Fallback for direct replacement if createElement not available
-                    ref.current.innerHTML = `<i data-lucide="${name}" width="${size}" height="${size}"></i>`;
-                    window.lucide.createIcons({ root: ref.current });
+                try {
+                    // Try PascalCase
+                    const pascal = name.replace(/(^|-)([a-z])/g, (_, __, c) => c.toUpperCase());
+                    const iconDef = window.lucide.icons?.[pascal] || window.lucide[pascal];
+
+                    if (iconDef && ref.current) {
+                        const svg = window.lucide.createElement(iconDef);
+                        svg.setAttribute('width', size);
+                        svg.setAttribute('height', size);
+                        svg.setAttribute('stroke-width', '2');
+                        ref.current.innerHTML = '';
+                        ref.current.appendChild(svg);
+                    } else if (ref.current) {
+                        ref.current.innerHTML = `<i data-lucide="${name}" style="width: ${size}px; height: ${size}px;"></i>`;
+                        window.lucide.createIcons({
+                            attrs: { width: size, height: size, "stroke-width": 2 },
+                            root: ref.current
+                        });
+                    }
+                } catch (e) {
+                    console.error("Icon error:", name, e);
                 }
             }, [name, size]);
-            return <span ref={ref} className={className} style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }} />;
+            return <span ref={ref} className={className} style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', minWidth: size, minHeight: size }} />;
         };
+
+        const Logo = ({ className = "w-8 h-8" }) => (
+            <svg
+                viewBox="0 0 512 512"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className={className}
+            >
+                <path d="M128 128 L256 384 L384 128" stroke="currentColor" strokeWidth="60" strokeLinecap="round" strokeLinejoin="round" />
+                <circle cx="128" cy="128" r="40" fill="#00f3ff" />
+                <circle cx="384" cy="128" r="40" fill="#a855f7" />
+                <circle cx="256" cy="384" r="40" fill="#22c55e" />
+            </svg>
+        );
+
         const cn = (...c) => c.filter(Boolean).join(" ");
         const Card = ({ children, className = "", onClick }) => <div onClick={onClick} className={cn("holo-card rounded-2xl p-6 relative overflow-hidden group transition-all duration-200 ease-out hover:scale-[1.02] active:scale-[0.98] hover:shadow-lg hover:shadow-blue-500/10 dark:hover:shadow-black/50", className)}>{children}</div>;
         const Button = ({ children, onClick, variant = 'primary', className = "", icon = null, type = "button" }) => {
@@ -362,8 +391,8 @@
                     <div onClick={e => e.stopPropagation()} className="w-full max-w-md holo-card rounded-2xl p-8 border-t border-white/20 relative shadow-[0_0_50px_rgba(var(--brand-500),0.2)]">
                         <button onClick={onClose} className="absolute top-4 right-4 text-slate-500 hover:text-white transition-colors bg-white/5 hover:bg-white/10 p-2 rounded-full"><Icon name="x" size={20} /></button>
                         <div className="text-center mb-10">
-                            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-500 to-brand-600 flex items-center justify-center text-white font-bold text-3xl shadow-[0_0_30px_rgba(var(--brand-500),0.4)] mx-auto mb-6 animate-pulse">V</div>
-                            <h2 className="text-3xl font-extrabold text-white tracking-tight">Velosify</h2>
+                            <Logo className="w-16 h-16 mx-auto mb-6 shadow-[0_0_30px_rgba(var(--brand-500),0.4)] animate-pulse" />
+                            <h2 className="text-3xl font-extrabold text-white tracking-tight uppercase">Velosify</h2>
                             <p className="text-brand-400 text-[10px] font-mono tracking-[0.3em] mt-3 uppercase opacity-80">Identity Verification</p>
                         </div>
                         {errorMsg && <div className="mb-6 bg-red-500/10 border border-red-500/20 rounded-xl p-4 text-red-300 text-xs font-mono">{errorMsg}</div>}
@@ -380,46 +409,996 @@
             );
         };
 
-        /* --- LANDING PAGE --- */
-        const LandingPage = ({ onLogin }) => {
-            const [typedText, setTypedText] = useState("");
+        /* --- LANDING PAGE COMPONENTS --- */
+
+        const TiltContainer = ({ children }) => {
+            const { useMotionValue, useSpring, useTransform, motion } = window.Motion;
+            const x = useMotionValue(0);
+            const y = useMotionValue(0);
+            const mouseX = useSpring(x, { stiffness: 150, damping: 15 });
+            const mouseY = useSpring(y, { stiffness: 150, damping: 15 });
+
+            function handleMouseMove({ currentTarget, clientX, clientY }) {
+                const { left, top, width, height } = currentTarget.getBoundingClientRect();
+                x.set(clientX - left - width / 2);
+                y.set(clientY - top - height / 2);
+            }
+
+            return (
+                <motion.div
+                    onMouseMove={handleMouseMove}
+                    onMouseLeave={() => { x.set(0); y.set(0); }}
+                    style={{
+                        rotateX: useTransform(mouseY, [-100, 100], [5, -5]), // Subtle tilt
+                        rotateY: useTransform(mouseX, [-100, 100], [-5, 5]),
+                        transformStyle: "preserve-3d",
+                    }}
+                    whileHover={{ scale: 1.02 }}
+                    className="relative perspective-1000"
+                >
+                    {children}
+                    {/* Glare Effect */}
+                    <motion.div
+                        style={{
+                            opacity: useTransform(mouseX, [-300, 300], [0, 0.4]),
+                            background: "linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.4) 45%, rgba(255,255,255,0.2) 50%, transparent 54%)",
+                            filter: "blur(5px)"
+                        }}
+                        className="absolute inset-0 pointer-events-none z-50 rounded-3xl mix-blend-overlay"
+                    />
+                </motion.div>
+            );
+        };
+
+        const HeroTerminal = ({ onLogin }) => {
+            const [text, setText] = useState("");
+            const [phase, setPhase] = useState("idle"); // idle, typing, ready, focusing, complete
+            const [timeLeft, setTimeLeft] = useState(10.0);
+            const [showCursor, setShowCursor] = useState(true);
+            const fullCommand = "start focus --mode=deep-work";
 
             useEffect(() => {
-                const textOptions = ["System Initialization...", "Optimizing for TCS NQT...", "DSA Protocol Ready."];
-                let textIdx = 0, charIdx = 0, isDeleting = false, timeout;
-                const type = () => {
-                    const currentText = textOptions[textIdx];
-                    if (isDeleting) { setTypedText(currentText.substring(0, charIdx - 1)); charIdx--; }
-                    else { setTypedText(currentText.substring(0, charIdx + 1)); charIdx++; }
-                    if (!isDeleting && charIdx === currentText.length) timeout = setTimeout(() => { isDeleting = true; type(); }, 2000);
-                    else if (isDeleting && charIdx === 0) { isDeleting = false; textIdx = (textIdx + 1) % textOptions.length; timeout = setTimeout(type, 500); }
-                    else timeout = setTimeout(type, isDeleting ? 50 : 100);
-                };
-                timeout = setTimeout(type, 100);
-                return () => clearTimeout(timeout);
+                const c = setInterval(() => setShowCursor(p => !p), 500);
+                return () => clearInterval(c);
             }, []);
 
+            useEffect(() => {
+                if (phase === 'idle') {
+                    let i = 0;
+                    // Initial delay
+                    const startDelay = setTimeout(() => {
+                        const typeInterval = setInterval(() => {
+                            setText(fullCommand.substring(0, i + 1));
+                            i++;
+                            if (i === fullCommand.length) {
+                                clearInterval(typeInterval);
+                                setPhase('ready');
+                            }
+                        }, 50); // Typing speed
+                    }, 1000);
+                    return () => clearTimeout(startDelay);
+                }
+            }, []);
 
+            useEffect(() => {
+                let interval;
+                if (phase === 'focusing') {
+                    interval = setInterval(() => {
+                        setTimeLeft(t => {
+                            if (t <= 0) {
+                                clearInterval(interval);
+                                setPhase('complete');
+                                return 0;
+                            }
+                            return (t - 0.1).toFixed(1);
+                        });
+                    }, 100);
+                }
+                return () => clearInterval(interval);
+            }, [phase]);
+
+            const run = () => setPhase('focusing');
+
+            return (
+                <div className="w-full max-w-lg mx-auto mt-8 font-mono text-left">
+                    <div className={`
+                        relative bg-[#1e1e1e]/90 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden shadow-2xl transition-all duration-500
+                        ${phase === 'focusing' ? 'shadow-[0_0_50px_rgba(220,38,38,0.3)] border-red-500/30' : 'hover:shadow-[0_0_30px_rgba(var(--brand-500),0.2)] hover:border-brand-500/30'}
+                    `}>
+                        {/* Header */}
+                        <div className={`h-8 bg-white/5 border-b border-white/5 flex items-center px-4 justify-between ${phase === 'focusing' ? 'bg-red-500/10' : ''}`}>
+                            <div className="flex gap-1.5 basic-0">
+                                <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
+                                <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                                <div className="w-3 h-3 rounded-full bg-emerald-500/80"></div>
+                            </div>
+                            <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">
+                                {phase === 'focusing' ? 'LOCKDOWN ACTIVE' : 'user@velosify:~'}
+                            </div>
+                            <div className="w-10"></div>
+                        </div>
+
+                        {/* Body */}
+                        <div className="p-6 h-40 flex flex-col justify-between relative overflow-hidden">
+                            {phase === 'focusing' && (
+                                <div className="absolute inset-0 bg-red-500/5 animate-pulse z-0"></div>
+                            )}
+
+                            <div className="z-10 relative">
+                                <div className="flex items-center gap-2 text-sm text-slate-300">
+                                    <span className="text-brand-400">➜</span>
+                                    <span className="text-emerald-400">~</span>
+                                    <span>{text}{phase === 'idle' || phase === 'ready' ? (showCursor && <span className="text-slate-500 w-2 inline-block bg-slate-500 h-4 align-middle ml-1"></span>) : ''}</span>
+                                </div>
+                                {phase === 'ready' && (
+                                    <button
+                                        onClick={run}
+                                        className="mt-4 px-4 py-1.5 bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold uppercase tracking-widest rounded animate-fade-in flex items-center gap-2"
+                                    >
+                                        <Icon name="play" size={12} /> Execute
+                                    </button>
+                                )}
+                                {phase === 'focusing' && (
+                                    <div className="mt-4 animate-fade-in">
+                                        <div className="text-xs text-red-500 font-bold uppercase tracking-[0.2em] mb-1">Warning: Lockdown Mode</div>
+                                        <div className="text-4xl font-black text-white tracking-tighter">{timeLeft}s</div>
+                                    </div>
+                                )}
+                                {phase === 'complete' && (
+                                    <div className="mt-4 animate-fade-in pb-2">
+                                        <div className="text-emerald-400 font-bold text-sm mb-1">✅ SESSION COMPLETE</div>
+                                        <div className="text-slate-400 text-xs mb-3">+50 XP Gained.</div>
+                                        <button onClick={onLogin} className="text-xs underline text-white hover:text-brand-400">Join to track stats &rarr;</button>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const LiveActivityTicker = () => {
+            const events = [
+                "🔥 Arpit just finished a 4h Deep Work session.",
+                "🏆 Rahul reached Level 10 in Python.",
+                "🚀 1,240 bugs fixed globally today.",
+                "💎 Sara unlocked 'Clean Coder' badge.",
+                "⚡ System optimizing 24,000+ operations.",
+                "🧠 New 'System Design' protocol available."
+            ];
+
+            return (
+                <div className="fixed bottom-0 w-full z-40 bg-[#05050a]/90 backdrop-blur-md border-t border-white/10 h-8 flex items-center overflow-hidden pointer-events-none select-none">
+                    <div className="whitespace-nowrap animate-[marquee_40s_linear_infinite] flex items-center gap-12">
+                        {[...events, ...events, ...events].map((e, i) => (
+                            <span key={i} className="text-[10px] font-mono font-bold text-slate-400 flex items-center gap-2">
+                                <span className={`w-1.5 h-1.5 rounded-full ${i % 2 === 0 ? 'bg-brand-500' : 'bg-emerald-500'} animate-pulse`}></span>
+                                {e}
+                            </span>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        const SonicFocusWidget = () => {
+            const [isPlaying, setIsPlaying] = useState(false);
+            const [isMuted, setIsMuted] = useState(false);
+            const audioRef = useRef(null);
+
+            const togglePlay = () => {
+                if (!audioRef.current) return;
+                if (isPlaying) {
+                    audioRef.current.pause();
+                } else {
+                    audioRef.current.play().catch(e => console.log("Audio play failed", e));
+                }
+                setIsPlaying(!isPlaying);
+            };
+
+            const toggleMute = (e) => {
+                e.stopPropagation();
+                if (!audioRef.current) return;
+                audioRef.current.muted = !isMuted;
+                setIsMuted(!isMuted);
+            };
+
+            return (
+                <div className="fixed bottom-12 right-6 z-50 animate-slide-up">
+                    <audio
+                        ref={audioRef}
+                        src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112762.mp3"
+                        loop
+                        crossOrigin="anonymous"
+                    />
+                    <div className="relative group">
+                        <div className={`absolute inset-0 bg-brand-500 blur-xl transition-opacity duration-1000 ${isPlaying ? 'opacity-40 animate-pulse' : 'opacity-0'}`}></div>
+                        <div
+                            onClick={togglePlay}
+                            className="relative bg-black/90 border border-brand-500/30 backdrop-blur-xl rounded-full p-1 pr-6 flex items-center gap-4 cursor-pointer hover:border-brand-500/80 transition-all shadow-2xl h-14 w-62 overflow-hidden"
+                        >
+                            {/* Tape visual */}
+                            <div className={`w-12 h-12 rounded-full bg-surface-800 border-2 border-brand-500/20 flex items-center justify-center relative ${isPlaying ? 'animate-spin-slow' : ''}`}>
+                                <div className="w-4 h-4 rounded-full bg-brand-500/50 blur-[2px]"></div>
+                                <div className="absolute inset-0 border-t-2 border-brand-500/60 rounded-full opacity-50"></div>
+                            </div>
+
+                            {/* Controls & Visualizer */}
+                            <div className="flex flex-col">
+                                <div className="text-[10px] font-mono text-brand-400 font-bold uppercase tracking-widest flex items-center gap-2">
+                                    {isPlaying ? 'Sonic Focus' : 'Start Focus'}
+                                    {isPlaying && (
+                                        <div className="flex gap-0.5 items-end h-3">
+                                            {[1, 2, 3, 4].map(i => (
+                                                <div key={i} className="w-0.5 bg-brand-500 animate-[bounce_0.5s_infinite]" style={{ height: `${Math.random() * 100}%`, animationDelay: `${i * 0.1}s` }}></div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                                <div className="text-[8px] text-slate-500 uppercase tracking-wider">Lofi // 90.4 MHz</div>
+                            </div>
+
+                            {/* Mute Button */}
+                            <button
+                                onClick={toggleMute}
+                                className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 hover:bg-white/10 rounded-full text-slate-400 hover:text-white transition-colors z-20"
+                            >
+                                <Icon name={isMuted ? "volume-x" : "volume-2"} size={14} />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const ComparisonDiff = () => {
+            return (
+                <section className="py-24 px-6 relative z-10 bg-[#0b0c15]">
+                    <div className="max-w-6xl mx-auto">
+                        <div className="text-center mb-16">
+                            <h2 className="text-3xl md:text-4xl font-black mb-4 tracking-tighter">GIT <span className="text-brand-400">DIFF</span> YOUR LIFE</h2>
+                            <p className="text-slate-400 font-mono text-sm">Commit the new version of you.</p>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-0 border border-white/10 rounded-xl overflow-hidden font-mono text-sm shadow-2xl">
+                            {/* LEFT PANE: OLD WAY */}
+                            <div className="bg-[#1e1e1e] p-0 relative">
+                                <div className="bg-[#2d2d2d] border-b border-black/50 px-4 py-2 text-xs text-slate-500 flex justify-between">
+                                    <span>a/user-v1.0.js</span>
+                                    <span className="text-red-400">- 4 lines</span>
+                                </div>
+                                <div className="p-4 space-y-1">
+                                    <div className="flex bg-red-900/10 -mx-4 px-4 border-l-2 border-red-500/50">
+                                        <div className="text-slate-600 select-none w-6 text-right mr-4">1</div>
+                                        <div className="text-slate-400"><span className="text-red-500 mr-2">-</span><span className="line-through decoration-red-500/50">Distracted by YouTube recommendations</span></div>
+                                    </div>
+                                    <div className="flex bg-red-900/10 -mx-4 px-4 border-l-2 border-red-500/50">
+                                        <div className="text-slate-600 select-none w-6 text-right mr-4">2</div>
+                                        <div className="text-slate-400"><span className="text-red-500 mr-2">-</span><span className="line-through decoration-red-500/50">Manual Timer setting (forgotten often)</span></div>
+                                    </div>
+                                    <div className="flex bg-red-900/10 -mx-4 px-4 border-l-2 border-red-500/50">
+                                        <div className="text-slate-600 select-none w-6 text-right mr-4">3</div>
+                                        <div className="text-slate-400"><span className="text-red-500 mr-2">-</span><span className="line-through decoration-red-500/50">Zero accountability or tracking</span></div>
+                                    </div>
+                                    <div className="flex bg-red-900/10 -mx-4 px-4 border-l-2 border-red-500/50">
+                                        <div className="text-slate-600 select-none w-6 text-right mr-4">4</div>
+                                        <div className="text-slate-400"><span className="text-red-500 mr-2">-</span><span className="line-through decoration-red-500/50">Random LeetCode solving</span></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* RIGHT PANE: VELOSIFY WAY */}
+                            <div className="bg-[#1e1e1e] p-0 relative border-l border-white/5">
+                                <div className="bg-[#2d2d2d] border-b border-black/50 px-4 py-2 text-xs text-slate-500 flex justify-between">
+                                    <span>b/user-v2.0.js</span>
+                                    <span className="text-emerald-400">+ 4 lines</span>
+                                </div>
+                                <div className="p-4 space-y-1">
+                                    <div className="flex bg-emerald-900/10 -mx-4 px-4 border-l-2 border-emerald-500/50">
+                                        <div className="text-slate-600 select-none w-6 text-right mr-4">1</div>
+                                        <div className="text-emerald-100"><span className="text-emerald-500 mr-2">+</span>Deep Work Protocols (90min blocks)</div>
+                                    </div>
+                                    <div className="flex bg-emerald-900/10 -mx-4 px-4 border-l-2 border-emerald-500/50">
+                                        <div className="text-slate-600 select-none w-6 text-right mr-4">2</div>
+                                        <div className="text-emerald-100"><span className="text-emerald-500 mr-2">+</span>Auto-Lockdown & Task forcing</div>
+                                    </div>
+                                    <div className="flex bg-emerald-900/10 -mx-4 px-4 border-l-2 border-emerald-500/50">
+                                        <div className="text-slate-600 select-none w-6 text-right mr-4">3</div>
+                                        <div className="text-emerald-100"><span className="text-emerald-500 mr-2">+</span>Gamified XP System & Leaderboards</div>
+                                    </div>
+                                    <div className="flex bg-emerald-900/10 -mx-4 px-4 border-l-2 border-emerald-500/50">
+                                        <div className="text-slate-600 select-none w-6 text-right mr-4">4</div>
+                                        <div className="text-emerald-100"><span className="text-emerald-500 mr-2">+</span>Structured DSA Sheets & Tracking</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        const FocusToggle = ({ isFocusMode, toggle }) => {
+            return (
+                <button
+                    onClick={toggle}
+                    className={`
+                        relative px-3 py-1.5 rounded-full flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest transition-all
+                        ${isFocusMode ? 'bg-brand-500 text-white shadow-[0_0_20px_rgba(var(--brand-500),0.6)]' : 'bg-white/10 text-slate-400 hover:bg-white/20'}
+                    `}
+                >
+                    <div className={`w-2 h-2 rounded-full ${isFocusMode ? 'bg-white animate-pulse' : 'bg-slate-500'}`}></div>
+                    {isFocusMode ? 'Focus Active' : 'Try Focus'}
+                </button>
+            );
+        };
+
+        const SystemArchitecture = () => {
+            const { motion } = window.Motion;
+
+            // Brand SVGs
+            const icons = {
+                react: <svg viewBox="0 0 24 24" className="w-6 h-6 fill-sky-400"><circle cx="12" cy="12" r="2" /><g stroke="currentColor" strokeWidth="1.5" fill="none"><ellipse cx="12" cy="12" rx="10" ry="4" /><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)" /><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)" /></g></svg>,
+                tailwind: <svg viewBox="0 0 24 24" className="w-6 h-6 fill-sky-400"><path d="M12.001 4.8c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624C13.666 10.618 15.027 12 18.001 12c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C16.337 6.182 14.976 4.8 12.001 4.8zm-6 7.2c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624C7.666 17.818 9.027 19.2 12.001 19.2c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C10.337 13.382 8.976 12 6.001 12z" /></svg>,
+                framer: <svg viewBox="0 0 24 24" className="w-6 h-6 fill-white"><path d="M4 0h16v8h-8zM4 12h8v8zM4 8h8l8 8H4z" /></svg>,
+                supabase: <svg viewBox="0 0 24 24" className="w-6 h-6 fill-emerald-400"><path d="M11.666 10.833H2.667L13.333 0v8.333h9L11.666 19.167z" /></svg>,
+                python: <svg viewBox="0 0 24 24" className="w-6 h-6 fill-yellow-400"><path d="M14.25.75a6.25 6.25 0 00-6.25 6.25v2.5h2.5a1.25 1.25 0 110 2.5H2.385A2.385 2.385 0 010 9.615V6.75A6.75 6.75 0 016.75 0h5a2.5 2.5 0 012.5 2.5v1.875a1.875 1.875 0 01-3.75 0V2.5a1.25 1.25 0 011.25-1.25h2.5zM9.75 23.25a6.25 6.25 0 006.25-6.25v-2.5h-2.5a1.25 1.25 0 110-2.5H21.615A2.385 2.385 0 0124 14.385v2.865A6.75 6.75 0 0117.25 24h-5a2.5 2.5 0 01-2.5-2.5v-1.875a1.875 1.875 0 013.75 0v1.875a1.25 1.25 0 01-1.25 1.25h-2.5z" /></svg>,
+                openai: <svg viewBox="0 0 24 24" className="w-6 h-6 fill-white"><path d="M22.282 9.821a5.98 5.98 0 00-.516-4.91 6.046 6.046 0 00-6.51-2.9A6.065 6.065 0 004.981 4.18a5.985 5.985 0 00-3.998 2.9 6.046 6.046 0 00.743 7.097 5.98 5.98 0 00.51 4.911 6.05 6.05 0 006.515 2.9A6.05 6.05 0 0019.02 19.82a6 6 0 003.997-2.9 6.06 6.06 0 00-.735-7.1zM12 21a9 9 0 110-18 9 9 0 010 18z" /></svg>,
+                vercel: <svg viewBox="0 0 24 24" className="w-6 h-6 fill-white"><path d="M12 1L24 22H0L12 1z" /></svg>,
+                git: <svg viewBox="0 0 24 24" className="w-6 h-6 fill-orange-500"><path d="M2.6,10.6L10.6,2.6C10.9,2.3 11.5,2.3 11.9,2.6L21.4,12.1C21.7,12.5 21.7,13.1 21.4,13.5L13.5,21.4C13.1,21.7 12.5,21.7 12.1,21.4L2.6,11.9C2.3,11.5 2.3,10.9 2.6,10.6ZM13.4,7L7,13.4" stroke="currentColor" strokeWidth="2" fill="none" /></svg>,
+                leetcode: <svg viewBox="0 0 24 24" className="w-6 h-6 fill-orange-400"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z" /></svg>,
+                postgres: <svg viewBox="0 0 24 24" className="w-6 h-6 fill-blue-400"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 14h-4v-2h4v2zm0-4h-4V6h4v6z" /></svg>,
+                edge: <svg viewBox="0 0 24 24" className="w-6 h-6 fill-yellow-400"><path d="M7 2v11h3v9l7-12h-4l4-8z" /></svg>,
+                docker: <svg viewBox="0 0 24 24" className="w-6 h-6 fill-sky-500"><path d="M13.983 11.078h2.119c.695 0 1.259.564 1.259 1.259 0 .695-.564 1.259-1.259 1.259h-2.119a1.259 1.259 0 0 1-1.259-1.259c0-.695.564-1.259 1.259-1.259z" /></svg>,
+                redis: <svg viewBox="0 0 24 24" className="w-6 h-6 fill-red-500"><path d="M12 0L2 6v12l10 6 10-6V6L12 0zm0 2.2l8 4.8v9l-8 4.8-8-4.8v-9l8-4.8z" /></svg>,
+                shield: <svg viewBox="0 0 24 24" className="w-6 h-6 fill-emerald-500"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>,
+                zap: <svg viewBox="0 0 24 24" className="w-6 h-6 fill-yellow-400"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" /></svg>
+            };
+
+            const modules = [
+                {
+                    id: 1, span: "", category: "Frontend Core", desc: "High-performance reactive UI", color: "border-sky-500/50",
+                    techs: [{ n: "React 18", i: icons.react }, { n: "Tailwind", i: icons.tailwind }, { n: "Framer Motion", i: icons.framer }]
+                },
+                {
+                    id: 2, span: "", category: "Neural Brain", desc: "AI Judgment Engine", color: "border-purple-500/50",
+                    techs: [{ n: "Python", i: icons.python }, { n: "OpenAI", i: icons.openai }, { n: "LeetCode Graph", i: icons.leetcode }]
+                },
+                {
+                    id: 3, span: "", category: "Data Backbone", desc: "Scalable Real-time DB", color: "border-emerald-500/50",
+                    techs: [{ n: "Supabase", i: icons.supabase }, { n: "PostgreSQL", i: icons.postgres }, { n: "Edge Func", i: icons.edge }]
+                },
+                {
+                    id: 4, span: "", category: "Global Infra", desc: "Edge Network Deployment", color: "border-orange-500/50",
+                    techs: [{ n: "Vercel", i: icons.vercel }, { n: "Git Flow", i: icons.git }, { n: "Docker", i: icons.docker }]
+                },
+                {
+                    id: 5, span: "", category: "Security Logic", desc: "Neural Privacy Protocol", color: "border-emerald-500/50",
+                    techs: [{ n: "Shield Auth", i: icons.shield }, { n: "JWT Sync", i: icons.openai }, { n: "Data Sanitizer", i: icons.edge }]
+                },
+                {
+                    id: 6, span: "", category: "Efficiency Core", desc: "High-Velocity Caching", color: "border-red-500/50",
+                    techs: [{ n: "Redis 7.0", i: icons.redis }, { n: "Fast API", i: icons.zap }, { n: "Compression", i: icons.framer }]
+                }
+            ];
+
+            return (
+                <section className="py-24 px-6 relative z-10 bg-[#08080c]">
+                    <div className="max-w-5xl mx-auto">
+                        <div className="text-center mb-16">
+                            <h2 className="text-3xl md:text-4xl font-black mb-4 tracking-tighter uppercase">System <span className="text-brand-400">Architecture</span></h2>
+                            <p className="text-slate-400 font-mono text-sm max-w-xl mx-auto">
+                                Built on a modern, type-safe stack designed for speed, scalability, and neural-like responsiveness.
+                            </p>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            {modules.map((m) => (
+                                <motion.div
+                                    key={m.id}
+                                    whileHover={{ y: -5, boxShadow: "0 10px 30px -10px rgba(0,0,0,0.5)" }}
+                                    className={`${m.span} bg-black/50 backdrop-blur-xl border border-white/10 rounded-2xl p-6 relative group overflow-hidden hover:${m.color} transition-all duration-300`}
+                                >
+                                    {/* Circuit Background Pattern */}
+                                    <div className="absolute inset-0 opacity-10 pointer-events-none group-hover:opacity-20 transition-opacity">
+                                        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                                            <pattern id={`grid-${m.id}`} width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="currentColor" strokeWidth="0.5" /></pattern>
+                                            <rect width="100%" height="100%" fill={`url(#grid-${m.id})`} />
+                                        </svg>
+                                    </div>
+
+                                    <h3 className="text-lg font-bold text-white mb-1 relative z-10">{m.category}</h3>
+                                    <p className="text-xs text-slate-400 mb-6 font-mono -mt-1 relative z-10">{m.desc}</p>
+
+                                    <div className="flex flex-wrap gap-4 relative z-10">
+                                        {m.techs.map((t, i) => (
+                                            <div key={i} className="flex flex-col items-center gap-2 group/icon">
+                                                <motion.div
+                                                    animate={{ y: [0, -4, 0] }}
+                                                    transition={{ repeat: Infinity, duration: 4, ease: "easeInOut", delay: i * 0.5 }}
+                                                    className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center group-hover/icon:bg-white/10 group-hover/icon:border-brand-500/30 transition-all text-white p-2"
+                                                >
+                                                    {t.i}
+                                                </motion.div>
+                                                <span className="text-[10px] uppercase font-bold text-slate-500 group-hover/icon:text-slate-300 transition-colors">{t.n}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    {/* Connecting Lines Pulse */}
+                                    <div className="absolute top-1/2 right-0 w-8 h-[1px] bg-white/20 group-hover:bg-brand-500/50 transition-colors"></div>
+                                    <div className="absolute bottom-0 left-1/2 w-[1px] h-8 bg-white/20 group-hover:bg-brand-500/50 transition-colors"></div>
+                                </motion.div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        const CodeReviews = () => {
+            const testimonials = [
+                { user: "Sarah_Dev", role: "Full Stack Engineer", impact: "Shipped MVP in 2 weeks", rating: 5 },
+                { user: "Alex_Algo", role: "Competitive Coder", impact: "Solved 500+ LeetCode", rating: 5 },
+                { user: "Rohan_AI", role: "ML Researcher", impact: "Focus increased by 300%", rating: 5 },
+            ];
+
+            return (
+                <section className="py-24 px-6 relative z-10 bg-[#08080c]">
+                    <div className="max-w-5xl mx-auto">
+                        <div className="text-center mb-16">
+                            <h2 className="text-3xl md:text-4xl font-black mb-4 tracking-tighter">SUCCESS <span className="text-emerald-400">LOGS</span></h2>
+                            <p className="text-slate-400 font-mono text-sm">Validating user protocols...</p>
+                        </div>
+
+                        <div className="bg-[#1e1e1e] rounded-xl overflow-hidden shadow-2xl border border-white/5 font-mono text-sm max-w-3xl mx-auto transform hover:scale-[1.01] transition-transform duration-500">
+                            {/* Window Header */}
+                            <div className="bg-[#2d2d2d] px-4 py-2 flex items-center justify-between border-b border-black/50">
+                                <div className="flex gap-2">
+                                    <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                                    <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                    <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                                </div>
+                                <div className="text-slate-400 text-xs">testimonials.json</div>
+                                <div className="w-10"></div>
+                            </div>
+
+                            {/* Code Area */}
+                            <div className="p-6 text-slate-300 overflow-x-auto">
+                                <div className="flex">
+                                    <div className="text-slate-600 select-none text-right pr-4 border-r border-white/10 mr-4">
+                                        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(n => <div key={n}>{n}</div>)}
+                                    </div>
+                                    <div className="w-full">
+                                        <div><span className="text-pink-400">const</span> <span className="text-blue-400">successStories</span> <span className="text-white">=</span> [</div>
+                                        {testimonials.map((t, i) => (
+                                            <div key={i} className="pl-4 py-0.5 group hover:bg-white/5 rounded">
+                                                <span className="text-yellow-400">{`{`}</span>
+                                                <div className="pl-4">
+                                                    <span className="text-sky-300">user</span>: <span className="text-green-400">"{t.user}"</span>,
+                                                </div>
+                                                <div className="pl-4">
+                                                    <span className="text-sky-300">role</span>: <span className="text-green-400">"{t.role}"</span>,
+                                                </div>
+                                                <div className="pl-4">
+                                                    <span className="text-sky-300">impact</span>: <span className="text-green-400">"{t.impact}"</span>,
+                                                </div>
+                                                <div className="pl-4">
+                                                    <span className="text-sky-300">rating</span>: <span className="text-purple-400">{t.rating}</span> <span className="text-slate-500">// ★★★★★</span>
+                                                </div>
+                                                <span className="text-yellow-400">{`},`}</span>
+                                            </div>
+                                        ))}
+                                        <div>];</div>
+                                        <div className="mt-2 text-slate-500">// System status: OPTIMAL</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        const FocusCalculator = () => {
+            const [rate, setRate] = useState(50);
+            const [hours, setHours] = useState(2);
+
+            const loss = rate * hours * 250;
+            // 250 working days approx
+
+            return (
+                <section className="py-24 px-6 relative z-10 border-t border-white/5 bg-gradient-to-b from-[#05050a] to-[#0a0a12]">
+                    <div className="max-w-4xl mx-auto text-center">
+                        <h2 className="text-3xl md:text-4xl font-black mb-12 tracking-tighter uppercase">Calculate <span className="text-red-500">Distraction Cost</span></h2>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                            {/* Inputs */}
+                            <div className="space-y-8 text-left bg-white/5 p-8 rounded-2xl border border-white/10 backdrop-blur-sm">
+                                <div>
+                                    <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Hourly Value ($)</label>
+                                    <div className="flex items-center gap-4">
+                                        <input
+                                            type="range" min="10" max="500" step="10"
+                                            value={rate} onChange={e => setRate(Number(e.target.value))}
+                                            className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-brand-500"
+                                        />
+                                        <span className="text-xl font-mono font-bold w-16 text-right">${rate}</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Distracted Hours / Day</label>
+                                    <div className="flex items-center gap-4">
+                                        <input
+                                            type="range" min="0.5" max="8" step="0.5"
+                                            value={hours} onChange={e => setHours(Number(e.target.value))}
+                                            className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-red-500"
+                                        />
+                                        <span className="text-xl font-mono font-bold w-16 text-right text-red-400">{hours}h</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Output */}
+                            <div className="relative group">
+                                <div className="absolute inset-0 bg-red-500/10 blur-3xl rounded-full opacity-50 group-hover:opacity-80 transition-opacity"></div>
+                                <div className="relative z-10 flex flex-col items-center">
+                                    <div className="text-sm font-mono text-slate-500 mb-2 uppercase tracking-tight">Annual Revenue Lost</div>
+                                    <div className="text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-b from-red-400 to-red-600 mb-2 font-mono">
+                                        -${loss.toLocaleString()}
+                                    </div>
+                                    <p className="text-xs text-slate-400 max-w-xs mx-auto">
+                                        Or reclaim <span className="text-emerald-400 font-bold">+${loss.toLocaleString()}</span> with Velosify protocols.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        const BiosLoader = ({ onComplete }) => {
+            const [lines, setLines] = useState([]);
+            const bootText = [
+                "INITIALIZING VELOSIFY KERNEL...",
+                "LOADING NEURAL INTERFACES...",
+                "MOUNTING DOPAMINE BLOCKERS... [OK]",
+                "OPTIMIZING FOCUS ALGORITHMS...",
+                "ESTABLISHING SECURE CONNECTION...",
+                "SYSTEM READY."
+            ];
+
+            useEffect(() => {
+                let delay = 0;
+                bootText.forEach((text, i) => {
+                    delay += Math.random() * 500 + 200;
+                    setTimeout(() => {
+                        setLines(prev => [...prev, text]);
+                        if (i === bootText.length - 1) {
+                            setTimeout(onComplete, 800);
+                        }
+                    }, delay);
+                });
+            }, []);
+
+            return (
+                <div className="fixed inset-0 z-[100] bg-black text-brand-400 font-mono text-xs p-10 flex flex-col justify-end pointer-events-none">
+                    {lines.map((line, i) => (
+                        <div key={i}>{`> ${line}`}</div>
+                    ))}
+                    <div className="animate-pulse mt-2">_</div>
+                </div>
+            );
+        };
+
+        const CommandMenu = ({ isOpen, onClose }) => {
+            const [query, setQuery] = useState("");
+            const menuRef = useRef(null);
+
+            useEffect(() => {
+                if (isOpen) {
+                    menuRef.current?.focus();
+                }
+            }, [isOpen]);
+
+            const commands = [
+                { id: 'pricing', label: 'Go to Pricing', icon: 'credit-card', action: () => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' }) },
+                { id: 'roadmap', label: 'Go to Roadmap', icon: 'map', action: () => console.log('Roadmap') },
+                { id: 'login', label: 'Login', icon: 'log-in', action: () => document.querySelector("button[class*='Access Terminal']").click() },
+                { id: 'theme', label: 'Toggle Theme', icon: 'sun', action: () => document.documentElement.classList.toggle('light') },
+                { id: 'focus', label: 'Run Focus Test', icon: 'zap', action: () => document.querySelector('.perspective-1000')?.scrollIntoView({ behavior: 'smooth' }) },
+            ];
+
+            const filtered = commands.filter(c => c.label.toLowerCase().includes(query.toLowerCase()));
+
+            if (!isOpen) return null;
+
+            return (
+                <div className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-md flex items-start justify-center pt-[20vh]" onClick={onClose}>
+                    <div
+                        className="w-full max-w-lg bg-surface-900 border border-slate-700 rounded-xl shadow-2xl overflow-hidden flex flex-col"
+                        onClick={e => e.stopPropagation()}
+                    >
+                        <div className="flex items-center gap-3 px-4 py-3 border-b border-white/10">
+                            <Icon name="search" size={16} className="text-slate-500" />
+                            <input
+                                ref={menuRef}
+                                className="flex-1 bg-transparent border-none outline-none text-white text-sm font-mono placeholder:text-slate-600"
+                                placeholder="Type a command..."
+                                autoFocus
+                                value={query}
+                                onChange={e => setQuery(e.target.value)}
+                            />
+                            <span className="text-[10px] bg-white/10 text-slate-400 px-1.5 py-0.5 rounded border border-white/5">ESC</span>
+                        </div>
+                        <div className="py-2 max-h-[300px] overflow-y-auto">
+                            {filtered.length === 0 && <div className="px-4 py-2 text-slate-500 text-xs">No commands found.</div>}
+                            {filtered.map((cmd, i) => (
+                                <button
+                                    key={cmd.id}
+                                    onClick={() => { cmd.action(); onClose(); }}
+                                    className="w-full text-left px-4 py-2 hover:bg-brand-500 hover:text-white text-slate-300 text-sm flex items-center gap-3 transition-colors group"
+                                >
+                                    <Icon name={cmd.icon} size={14} className="text-slate-500 group-hover:text-white" />
+                                    {cmd.label}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const DopamineQuarantine = () => {
+            const apps = [
+                { name: "INSTA-DOOM", slug: "instagram", color: "from-pink-500 to-purple-500", saved: "45m" },
+                { name: "TIK-TRAP", slug: "tiktok", color: "from-cyan-400 to-blue-500", saved: "60m" },
+                { name: "YT-BLACKHOLES", slug: "youtube", color: "from-red-500 to-red-700", saved: "90m" },
+                { name: "X-SCROLL", slug: "x", color: "from-slate-400 to-slate-600", saved: "30m" },
+            ];
+
+            return (
+                <>
+                    <section className="py-24 px-6 relative overflow-hidden bg-[#05050a]">
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(220,38,38,0.05),transparent)] pointer-events-none"></div>
+
+                        <div className="max-w-5xl mx-auto text-center relative z-10">
+                            <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full border border-red-500/20 bg-red-500/5 text-red-500 text-[10px] font-mono uppercase tracking-[0.3em]">
+                                <Logo className="w-3.5 h-3.5" />
+                                <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse ml-1"></span>
+                                Containment Level: Maximum
+                            </div>
+                            <div className="relative inline-block mb-16">
+                                <Logo className="absolute -top-16 left-1/2 -translate-x-1/2 w-32 h-32 opacity-20 text-red-600 blur-[12px] animate-pulse" />
+                                <h2 className="text-3xl md:text-5xl font-black text-white tracking-tighter uppercase relative z-10">Dopamine <span className="text-red-600 drop-shadow-[0_0_15px_rgba(220,38,38,0.5)]">Quarantine</span></h2>
+                            </div>
+
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                                {apps.map((app, i) => (
+                                    <div key={i} className="group relative">
+                                        {/* Digital Containment Cell */}
+                                        <div className="relative aspect-square rounded-3xl bg-white/[0.02] border border-white/5 p-6 flex flex-col items-center justify-center gap-4 transition-all duration-500 group-hover:bg-red-500/[0.03] group-hover:border-red-500/30 overflow-hidden">
+                                            {/* Scanner Grid Overlay */}
+                                            <div className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-500 bg-[linear-gradient(rgba(220,38,38,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(220,38,38,0.1)_1px,transparent_1px)] bg-[size:10px_10px]"></div>
+
+                                            <Logo className="absolute inset-0 w-full h-full p-8 opacity-[0.02] group-hover:opacity-[0.05] transition-opacity" />
+
+                                            <div className="p-4 rounded-2xl bg-white/5 group-hover:bg-red-500/10 transition-all duration-500 relative z-10">
+                                                <img
+                                                    src={`https://cdn.simpleicons.org/${app.slug}/white`}
+                                                    alt={app.name}
+                                                    className="w-10 h-10 opacity-50 group-hover:opacity-100 transition-opacity"
+                                                    onError={(e) => {
+                                                        e.target.onerror = null;
+                                                        e.target.src = "https://cdn.simpleicons.org/speedtest/white";
+                                                    }}
+                                                />
+                                            </div>
+
+                                            <div className="text-center">
+                                                <div className="text-[10px] font-mono text-slate-600 mb-1 tracking-widest uppercase group-hover:text-red-400 transition-colors">{app.name}</div>
+                                                <div className="text-xs font-black text-slate-400 group-hover:text-white transition-colors">PURGED: {app.saved}</div>
+                                            </div>
+
+                                            {/* Glitch Overlay Effect */}
+                                            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none overflow-hidden">
+                                                <div className="w-full h-full animate-glitch-active bg-red-500/5"></div>
+                                            </div>
+                                        </div>
+
+                                        {/* Status Indicator */}
+                                        <div className="absolute -top-2 -right-2 px-2 py-0.5 rounded-md bg-red-900/80 border border-red-500/50 text-[8px] font-mono text-red-200 opacity-0 group-hover:opacity-100 transition-opacity uppercase tracking-tighter">
+                                            Offline
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+                    <style>{`
+                    @keyframes glitch-active {
+                        0% { transform: translate(0); }
+                        20% { transform: translate(-2px, 2px); }
+                        40% { transform: translate(-2px, -2px); }
+                        60% { transform: translate(2px, 2px); }
+                        80% { transform: translate(2px, -2px); }
+                        100% { transform: translate(0); }
+                    }
+                    .animate-glitch-active {
+                        animation: glitch-active 0.2s infinite;
+                    }
+                `}</style>
+                </>
+            );
+        };
+
+        const ScienceSection = () => {
+            const phases = [
+                {
+                    id: "01",
+                    title: "The Purge",
+                    desc: "Blocks cheap dopamine triggers (Insta/Shorts) to reset baseline focus.",
+                    color: "red",
+                    icon: "shield-alert",
+                    tag: "DOPAMINE DETOX"
+                },
+                {
+                    id: "02",
+                    title: "The Tunnel",
+                    desc: "Induces Alpha Brain Waves via 40Hz Binaural Beats.",
+                    color: "brand",
+                    icon: "zap",
+                    tag: "FLOW STATE"
+                },
+                {
+                    id: "03",
+                    title: "The Reward",
+                    desc: "High-stakes XP system replaces scrolling addiction with work addiction.",
+                    color: "emerald",
+                    icon: "trophy",
+                    tag: "NEURAL REWARD"
+                }
+            ];
+
+            return (
+                <section className="py-32 px-6 relative overflow-hidden" id="science">
+                    {/* Background decorative elements */}
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full opacity-10 pointer-events-none">
+                        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-500 rounded-full blur-[120px]"></div>
+                        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-red-500 rounded-full blur-[120px]"></div>
+                    </div>
+
+                    <div className="max-w-6xl mx-auto relative z-10">
+                        <div className="text-center mb-24 animate-fade-in relative">
+                            <Logo className="absolute -top-16 left-1/2 -translate-x-1/2 w-32 h-32 opacity-10 text-brand-500 blur-[15px] animate-pulse" />
+                            <h2 className="text-sm font-mono text-brand-400 uppercase tracking-[0.5em] mb-4 relative z-10">Neural Rewiring Protocol</h2>
+                            <h1 className="text-4xl md:text-6xl font-black tracking-tighter text-white relative z-10">SYSTEMATIC <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-emerald-400">EVOLUTION</span></h1>
+                        </div>
+
+                        <div className="relative">
+                            {/* Connecting Line (Desktop) */}
+                            <div className="hidden md:block absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-red-500/20 via-brand-500/50 to-emerald-500/20 -translate-y-1/2 z-0"></div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 relative z-10">
+                                {phases.map((p, i) => (
+                                    <div key={i} className="group relative">
+                                        {/* Background large number */}
+                                        <div className="absolute -top-12 -left-4 text-9xl font-black text-white/[0.03] select-none group-hover:text-white/[0.06] transition-colors duration-500">
+                                            {p.id}
+                                        </div>
+
+                                        <div className="relative bg-[#0a0a12]/80 backdrop-blur-2xl rounded-3xl p-8 border border-white/5 hover:border-white/20 transition-all duration-500 shadow-2xl overflow-hidden group">
+                                            {/* Glow effect on hover */}
+                                            <div className={`absolute -inset-1 bg-gradient-to-br transition-opacity duration-500 opacity-0 group-hover:opacity-10 pointer-events-none ${p.color === 'red' ? 'from-red-500 to-transparent' :
+                                                p.color === 'brand' ? 'from-brand-500 to-transparent' : 'from-emerald-500 to-transparent'
+                                                }`}></div>
+
+                                            {/* Scanner line animation */}
+                                            <div className="absolute left-0 top-0 w-full h-[2px] bg-white/20 -translate-y-full group-hover:animate-[scan_2s_linear_infinite]"></div>
+
+                                            <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+                                                <Logo className={`absolute -bottom-4 -right-4 w-32 h-32 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity duration-700 ${p.color === 'red' ? 'text-red-500' :
+                                                    p.color === 'brand' ? 'text-brand-500' : 'text-emerald-500'
+                                                    }`} />
+                                            </div>
+
+                                            <div className="relative z-10">
+                                                <div className={`mb-8 p-4 rounded-2xl bg-white/5 w-fit shadow-inner ring-1 ring-white/10 ${p.color === 'red' ? 'text-red-500' :
+                                                    p.color === 'brand' ? 'text-brand-500' : 'text-emerald-500'
+                                                    }`}>
+                                                    <Logo className="w-10 h-10" />
+                                                </div>
+
+                                                <div className="flex items-center gap-3 mb-4">
+                                                    <div className={`w-1.5 h-1.5 rounded-full animate-pulse ${p.color === 'red' ? 'bg-red-500' :
+                                                        p.color === 'brand' ? 'bg-brand-500' : 'bg-emerald-500'
+                                                        }`}></div>
+                                                    <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest font-bold">{p.tag}</span>
+                                                </div>
+
+                                                <h3 className="text-3xl font-black text-white mb-4 tracking-tight uppercase">{p.title}</h3>
+                                                <p className="text-slate-400 leading-relaxed text-sm font-medium">
+                                                    {p.desc}
+                                                </p>
+                                            </div>
+
+                                            {/* Corner Accents */}
+                                            <div className={`absolute bottom-0 right-0 w-16 h-16 opacity-20 transition-opacity group-hover:opacity-100 ${p.color === 'red' ? 'text-red-500' :
+                                                p.color === 'brand' ? 'text-brand-500' : 'text-emerald-500'
+                                                }`}>
+                                                <svg viewBox="0 0 100 100" className="w-full h-full fill-none stroke-current" strokeWidth="2">
+                                                    <path d="M 80 100 L 100 100 L 100 80" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                    <style>{`
+                        @keyframes scan {
+                            0% { transform: translateY(-100%); opacity: 0; }
+                            50% { opacity: 1; }
+                            100% { transform: translateY(500%); opacity: 0; }
+                        }
+                    `}</style>
+                </section>
+            );
+        };
+
+
+
+        const Integrations = () => {
+            const tools = [
+                { name: "GITHUB", slug: "github", color: "text-white" },
+                { name: "VSCODE", slug: "visualstudiocode", color: "text-sky-400" },
+                { name: "LEETCODE", slug: "leetcode", color: "text-orange-500" },
+                { name: "SPOTIFY", slug: "spotify", color: "text-emerald-500" },
+                { name: "CHROME", slug: "googlechrome", color: "text-blue-500" },
+                { name: "SLACK", slug: "slack", color: "text-amber-400" },
+                { name: "LINEAR", slug: "linear", color: "text-purple-400" },
+                { name: "NOTION", slug: "notion", color: "text-slate-200" }
+            ];
+
+            return (
+                <section className="py-32 px-6 relative overflow-hidden bg-[#0a0a12]">
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(var(--brand-500),0.05),transparent)] pointer-events-none"></div>
+
+                    <div className="max-w-6xl mx-auto text-center relative z-10">
+                        <h2 className="text-sm font-mono text-brand-400 uppercase tracking-[0.6em] mb-4">Neural Data Bus</h2>
+                        <div className="relative inline-block mb-24">
+                            <Logo className="absolute -top-20 left-1/2 -translate-x-1/2 w-40 h-40 opacity-30 text-brand-500 blur-[15px] animate-pulse" />
+                            <h1 className="text-4xl md:text-6xl font-black text-white tracking-tighter uppercase leading-tight relative z-10">
+                                The Central <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-brand-600">Nervous System</span> <br />
+                                <span className="text-2xl text-slate-500 font-mono tracking-[0.3em] flex items-center justify-center gap-4 mt-4">
+                                    <div className="h-px w-12 bg-brand-500/30"></div>
+                                    Neural Connectivity Matrix
+                                    <div className="h-px w-12 bg-brand-500/30"></div>
+                                </span>
+                            </h1>
+                        </div>
+
+                        <div className="relative inline-block px-10 py-20">
+                            {/* Central Core Hub */}
+                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 z-20">
+                                <div className="absolute inset-0 bg-brand-500 rounded-full blur-[40px] opacity-20 animate-pulse"></div>
+                                <div className="relative w-full h-full rounded-full bg-black border-2 border-brand-500/50 flex items-center justify-center shadow-[0_0_30px_rgba(var(--brand-500),0.3)]">
+                                    <Logo className="w-16 h-16 text-white" />
+                                </div>
+                                <div className="absolute -inset-4 border border-brand-500/10 rounded-full animate-[spin_10s_linear_infinite]"></div>
+                                <div className="absolute -inset-8 border border-brand-500/5 rounded-full animate-[spin_15s_linear_infinite_reverse]"></div>
+                            </div>
+
+                            {/* Connection Matrix */}
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-x-24 gap-y-16 relative z-10">
+                                {tools.map((t, i) => (
+                                    <div key={i} className="group relative flex flex-col items-center">
+                                        {/* Connection Line to Core */}
+                                        <div className="absolute hidden md:block top-1/2 left-1/2 w-48 h-px bg-gradient-to-r from-brand-500/0 via-brand-500/20 to-brand-500/0 origin-left -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+
+                                        <div className="relative w-24 h-24 rounded-2xl bg-white/[0.03] border border-white/5 flex items-center justify-center group-hover:border-brand-500/50 group-hover:bg-brand-500/5 transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-[0_0_25px_rgba(var(--brand-500),0.2)]">
+                                            <Logo className="absolute inset-0 w-full h-full p-6 opacity-[0.03] group-hover:opacity-10 transition-opacity" />
+                                            <div className="group-hover:scale-110 transition-transform duration-500 relative z-10">
+                                                <img
+                                                    src={`https://cdn.simpleicons.org/${t.slug}/white`}
+                                                    alt={t.name}
+                                                    className="w-9 h-9 opacity-40 group-hover:opacity-100 transition-opacity"
+                                                    onError={(e) => {
+                                                        e.target.onerror = null;
+                                                        e.target.src = "https://cdn.simpleicons.org/codefactor/white";
+                                                    }}
+                                                />
+                                            </div>
+
+                                            {/* Data transmission pulse */}
+                                            <div className="absolute inset-0 rounded-2xl border-2 border-brand-400 opacity-0 group-hover:animate-ping-once transition-all"></div>
+                                        </div>
+
+                                        <div className="mt-4">
+                                            <div className="text-[10px] font-mono text-slate-500 font-bold uppercase tracking-widest group-hover:text-brand-400 transition-colors">{t.name}</div>
+                                            <div className="text-[8px] font-mono text-slate-700 opacity-0 group-hover:opacity-100 transition-opacity">LINK: STABLE</div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+
+                    <style>{`
+                        @keyframes ping-once {
+                            0% { transform: scale(1); opacity: 0.5; }
+                            100% { transform: scale(1.5); opacity: 0; }
+                        }
+                        .animate-ping-once {
+                            animation: ping-once 0.6s cubic-bezier(0, 0, 0.2, 1) forwards;
+                        }
+                    `}</style>
+                </section>
+            );
+        };
+
+        const LandingPage = ({ onLogin }) => {
+            const [isFocusMode, setIsFocusMode] = useState(false);
+            const [showBios, setShowBios] = useState(!sessionStorage.getItem('velosify_booted'));
+            const [showCmd, setShowCmd] = useState(false);
+
+            useEffect(() => {
+                const handleKeyDown = (e) => {
+                    if (e.metaKey && e.key === 'k' || e.ctrlKey && e.key === 'k') {
+                        e.preventDefault();
+                        setShowCmd(p => !p);
+                    }
+                    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+                    switch (e.key.toLowerCase()) {
+                        case 's':
+                            if (!showCmd) document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' });
+                            break;
+                        case 'l':
+                            if (!showCmd) onLogin();
+                            break;
+                        case 'd':
+                            if (!showCmd) document.querySelector('.perspective-1000')?.scrollIntoView({ behavior: 'smooth' });
+                            break;
+                    }
+                };
+                window.addEventListener('keydown', handleKeyDown);
+                return () => window.removeEventListener('keydown', handleKeyDown);
+            }, [onLogin, showCmd]);
+
+            const handleBiosComplete = () => {
+                setShowBios(false);
+                sessionStorage.setItem('velosify_booted', 'true');
+            };
 
             return (
                 <div className="min-h-screen text-white font-sans selection:bg-brand-500/30 overflow-hidden relative">
+                    {showBios && <BiosLoader onComplete={handleBiosComplete} />}
+                    <CommandMenu isOpen={showCmd} onClose={() => setShowCmd(false)} />
+
                     {/* Background Ambience / Digital Rain Placeholder */}
-                    <div className="fixed inset-0 z-0 pointer-events-none">
+                    <div className={`fixed inset-0 z-0 pointer-events-none transition-all duration-1000 ${isFocusMode ? 'opacity-0' : 'opacity-100'}`}>
                         <div className="scifi-grid-animated absolute inset-0"></div>
                         <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-[#05050a] to-transparent z-10"></div>
                         <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-[#05050a] to-transparent z-10"></div>
                     </div>
 
                     {/* Navigation */}
-                    <nav className="fixed top-0 w-full z-50 transition-all duration-500 bg-transparent py-6">
+                    <nav className={`fixed top-0 w-full z-50 transition-all duration-1000 py-6 ${isFocusMode ? 'grayscale opacity-50 blur-[2px]' : 'bg-transparent'}`}>
                         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
                             <div className="flex items-center gap-3">
-                                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-500 to-brand-600 flex items-center justify-center font-bold text-white shadow-[0_0_15px_rgba(var(--brand-500),0.5)]">V</div>
+                                <Logo className="w-9 h-9" />
                                 <span className="font-bold text-lg tracking-tight">VELOSIFY</span>
                             </div>
                             <div className="flex items-center gap-6">
+                                <FocusToggle isFocusMode={isFocusMode} toggle={() => setIsFocusMode(!isFocusMode)} />
                                 <button onClick={() => document.getElementById('features').scrollIntoView({ behavior: 'smooth' })} className="hidden md:block text-slate-400 hover:text-white text-sm font-medium transition-colors">Modules</button>
-                                <button onClick={onLogin} className="px-4 py-2 bg-white text-black hover:bg-brand-500 hover:text-white font-bold rounded-lg transition-all text-[10px] uppercase tracking-widest transform hover:scale-105 active:scale-95">Access Terminal</button>
+                                <button onClick={onLogin} className="px-4 py-2 bg-white text-black hover:bg-brand-500 hover:text-white font-bold rounded-lg transition-all text-[10px] uppercase tracking-widest transform hover:scale-105 active:scale-95 flex items-center gap-2">
+                                    Access Terminal <span className="hidden md:inline-block border border-black/20 rounded px-1 text-[8px] font-mono opacity-50">L</span>
+                                </button>
                             </div>
                         </div>
                     </nav>
@@ -427,216 +1406,122 @@
                     {/* SECTION 1: HERO */}
                     <section className="relative min-h-screen flex flex-col justify-center items-center overflow-hidden">
                         <div className="z-10 text-center max-w-5xl px-6 relative">
-                            <div className="mb-6 inline-flex items-center gap-2 px-3 py-1 rounded-full border border-brand-500/30 bg-brand-500/10 text-brand-400 text-xs font-mono uppercase tracking-widest animate-pulse">
+                            {/* Focus Mode Overlay Effect */}
+                            {isFocusMode && <div className="absolute inset-0 z-50 pointer-events-none bg-gradient-to-t from-[#05050a] via-transparent to-[#05050a]"></div>}
+
+                            <div className={`mb-6 inline-flex items-center gap-2 px-3 py-1 rounded-full border border-brand-500/30 bg-brand-500/10 text-brand-400 text-xs font-mono uppercase tracking-widest animate-pulse transition-all duration-1000 ${isFocusMode ? 'opacity-0' : ''}`}>
                                 <span className="w-2 h-2 rounded-full bg-brand-500"></span> Neural Link Established
                             </div>
                             <h1 className="text-6xl md:text-8xl font-black tracking-tighter mb-4 leading-none text-transparent bg-clip-text bg-gradient-to-r from-white via-brand-400 to-slate-400 drop-shadow-[0_0_30px_rgba(255,255,255,0.2)]">UPGRADE YOUR BRAIN.</h1>
                             <h1 className="text-6xl md:text-8xl font-black tracking-tighter mb-8 leading-none text-transparent bg-clip-text bg-gradient-to-r from-brand-600 via-brand-400 to-brand-600 drop-shadow-[0_0_30px_rgba(var(--brand-500),0.4)]">HACK YOUR PLACEMENT.</h1>
-                            <div className="h-8 mb-12 font-mono text-brand-400 text-lg md:text-xl tracking-[0.2em] uppercase">&gt; {typedText}<span className="animate-blink">_</span></div>
-                            <button onClick={onLogin} className="group relative px-8 py-4 bg-brand-600 text-white font-bold text-lg rounded-xl overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-[0_0_40px_rgba(var(--brand-500),0.5)] border border-brand-400/50">
-                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:animate-[shimmer_0.5s_infinite]"></div>
-                                <span className="relative flex items-center gap-3 uppercase tracking-widest text-sm"><Icon name="zap" size={20} className="fill-white" /> Initialize System</span>
-                            </button>
+
+                            <HeroTerminal onLogin={onLogin} />
                         </div>
                     </section>
+
+                    <ScienceSection />
+                    <DopamineQuarantine />
+                    <Integrations />
 
                     {/* SECTION 2: VISUAL SHOWCASE */}
-                    <section className="py-20 px-6 relative z-20 -mt-20">
+                    <section className={`py-20 px-6 relative z-20 -mt-20 transition-all duration-1000 ${isFocusMode ? 'blur-lg opacity-20 pointer-events-none' : ''}`}>
                         <div className="max-w-6xl mx-auto">
-                            <div className="relative rounded-3xl border border-white/10 bg-surface-900/80 backdrop-blur-xl shadow-[0_0_100px_rgba(var(--brand-500),0.15)] overflow-hidden">
-                                <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-50 pointer-events-none"></div>
-                                <div className="h-12 border-b border-white/10 flex items-center px-6 gap-4 bg-black/40">
-                                    <div className="flex gap-2"><div className="w-3 h-3 rounded-full bg-red-500/50"></div><div className="w-3 h-3 rounded-full bg-yellow-500/50"></div><div className="w-3 h-3 rounded-full bg-emerald-500/50"></div></div>
-                                    <div className="flex-1 text-center font-mono text-[10px] text-slate-500 uppercase tracking-widest flex items-center justify-center gap-2"><Icon name="lock" size={10} /> Velosify v2.0 // Neural Interface Active</div>
-                                </div>
-                                <div className="relative overflow-hidden">
-                                    <div className="absolute inset-0 bg-brand-500/10 mix-blend-overlay z-10 pointer-events-none"></div>
-                                    <img
-                                        src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=3540&auto=format&fit=crop"
-                                        alt="Dashboard Interface"
-                                        className="w-full h-auto object-cover opacity-90"
-                                    />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-surface-900 via-transparent to-transparent z-20"></div>
+                            <TiltContainer>
+                                <div className="relative rounded-3xl border border-white/10 bg-surface-900/80 backdrop-blur-xl shadow-[0_0_100px_rgba(var(--brand-500),0.15)] overflow-hidden">
+                                    <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-50 pointer-events-none"></div>
+                                    <div className="h-12 border-b border-white/10 flex items-center px-6 gap-4 bg-black/40">
+                                        <div className="flex gap-2"><div className="w-3 h-3 rounded-full bg-red-500/50"></div><div className="w-3 h-3 rounded-full bg-yellow-500/50"></div><div className="w-3 h-3 rounded-full bg-emerald-500/50"></div></div>
+                                        <div className="flex-1 text-center font-mono text-[10px] text-slate-500 uppercase tracking-widest flex items-center justify-center gap-2"><Icon name="lock" size={10} /> Velosify v2.0 // Neural Interface Active</div>
+                                    </div>
+                                    <div className="relative overflow-hidden">
+                                        <div className="absolute inset-0 bg-brand-500/10 mix-blend-overlay z-10 pointer-events-none"></div>
+                                        <img
+                                            src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=3540&auto=format&fit=crop"
+                                            alt="Dashboard Interface"
+                                            className="w-full h-auto object-cover opacity-90"
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-surface-900 via-transparent to-transparent z-20"></div>
 
-                                    {/* Floating Graphics Overlay - Advanced Metrics */}
-                                    <div className="absolute bottom-8 left-8 right-8 z-30 grid grid-cols-1 md:grid-cols-3 gap-4">
-                                        {/* Metric 1: CPU Intelligence */}
-                                        <div className="bg-[#05050a]/90 backdrop-blur-xl border border-white/10 p-4 rounded-xl shadow-2xl relative overflow-hidden group">
-                                            <div className="absolute inset-0 bg-brand-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                                            <div className="flex justify-between items-start mb-2 relative z-10">
-                                                <div className="flex items-center gap-2">
-                                                    <div className="p-1.5 bg-brand-500/10 rounded-md text-brand-400"><Icon name="cpu" size={14} /></div>
-                                                    <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest font-bold">Neural CPU</span>
+                                        {/* Floating Graphics Overlay - Advanced Metrics */}
+                                        <div className="absolute bottom-8 left-8 right-8 z-30 grid grid-cols-1 md:grid-cols-3 gap-4">
+                                            {/* Metric 1: CPU Intelligence */}
+                                            <div className="bg-[#05050a]/90 backdrop-blur-xl border border-white/10 p-4 rounded-xl shadow-2xl relative overflow-hidden group">
+                                                <div className="absolute inset-0 bg-brand-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                                <div className="flex justify-between items-start mb-2 relative z-10">
+                                                    <div className="flex items-center gap-2">
+                                                        <div className="p-1.5 bg-brand-500/10 rounded-md text-brand-400"><Icon name="cpu" size={14} /></div>
+                                                        <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest font-bold">Neural CPU</span>
+                                                    </div>
+                                                    <span className="text-xs font-mono font-bold text-brand-400">84%</span>
                                                 </div>
-                                                <span className="text-xs font-mono font-bold text-brand-400">84%</span>
+                                                <div className="h-12 w-full relative z-10">
+                                                    <svg className="w-full h-full" viewBox="0 0 100 40" preserveAspectRatio="none">
+                                                        <path d="M0,35 L10,30 L20,38 L30,20 L40,30 L50,10 L60,25 L70,15 L80,30 L90,10 L100,25" fill="none" stroke="currentColor" className="text-brand-500" strokeWidth="1.5" vectorEffect="non-scaling-stroke" />
+                                                        <path d="M0,35 L10,30 L20,38 L30,20 L40,30 L50,10 L60,25 L70,15 L80,30 L90,10 L100,25 V40 H0 Z" fill="currentColor" className="text-brand-500/10" />
+                                                    </svg>
+                                                </div>
                                             </div>
-                                            <div className="h-12 w-full relative z-10">
-                                                <svg className="w-full h-full" viewBox="0 0 100 40" preserveAspectRatio="none">
-                                                    <path d="M0,35 L10,30 L20,38 L30,20 L40,30 L50,10 L60,25 L70,15 L80,30 L90,10 L100,25" fill="none" stroke="currentColor" className="text-brand-500" strokeWidth="1.5" vectorEffect="non-scaling-stroke" />
-                                                    <path d="M0,35 L10,30 L20,38 L30,20 L40,30 L50,10 L60,25 L70,15 L80,30 L90,10 L100,25 V40 H0 Z" fill="currentColor" className="text-brand-500/10" />
-                                                </svg>
-                                            </div>
-                                        </div>
 
-                                        {/* Metric 2: Network Flux */}
-                                        <div className="bg-[#05050a]/90 backdrop-blur-xl border border-white/10 p-4 rounded-xl shadow-2xl relative overflow-hidden group">
-                                            <div className="absolute inset-0 bg-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                                            <div className="flex justify-between items-start mb-2 relative z-10">
-                                                <div className="flex items-center gap-2">
-                                                    <div className="p-1.5 bg-emerald-500/10 rounded-md text-emerald-400"><Icon name="activity" size={14} /></div>
-                                                    <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest font-bold">Data Flux</span>
+                                            {/* Metric 2: Network Flux */}
+                                            <div className="bg-[#05050a]/90 backdrop-blur-xl border border-white/10 p-4 rounded-xl shadow-2xl relative overflow-hidden group">
+                                                <div className="absolute inset-0 bg-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                                <div className="flex justify-between items-start mb-2 relative z-10">
+                                                    <div className="flex items-center gap-2">
+                                                        <div className="p-1.5 bg-emerald-500/10 rounded-md text-emerald-400"><Icon name="activity" size={14} /></div>
+                                                        <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest font-bold">Data Flux</span>
+                                                    </div>
+                                                    <span className="text-xs font-mono font-bold text-emerald-400">4.2 GB/s</span>
                                                 </div>
-                                                <span className="text-xs font-mono font-bold text-emerald-400">4.2 GB/s</span>
+                                                <div className="h-12 w-full flex items-end gap-1 relative z-10 px-1">
+                                                    <div className="w-1/12 bg-emerald-500/20 h-[40%] rounded-sm"></div>
+                                                    <div className="w-1/12 bg-emerald-500/40 h-[70%] rounded-sm"></div>
+                                                    <div className="w-1/12 bg-emerald-500/30 h-[50%] rounded-sm"></div>
+                                                    <div className="w-1/12 bg-emerald-500/60 h-[80%] rounded-sm"></div>
+                                                    <div className="w-1/12 bg-emerald-500/40 h-[60%] rounded-sm"></div>
+                                                    <div className="w-1/12 bg-emerald-500/80 h-[90%] rounded-sm animate-pulse"></div>
+                                                    <div className="w-1/12 bg-emerald-500/50 h-[50%] rounded-sm"></div>
+                                                    <div className="w-1/12 bg-emerald-500/30 h-[40%] rounded-sm"></div>
+                                                    <div className="w-1/12 bg-emerald-500/60 h-[70%] rounded-sm"></div>
+                                                    <div className="w-1/12 bg-emerald-500/40 h-[50%] rounded-sm"></div>
+                                                    <div className="w-1/12 bg-emerald-500/20 h-[30%] rounded-sm"></div>
+                                                    <div className="w-1/12 bg-emerald-500/10 h-[20%] rounded-sm"></div>
+                                                </div>
                                             </div>
-                                            <div className="h-12 w-full flex items-end gap-1 relative z-10 px-1">
-                                                <div className="w-1/12 bg-emerald-500/20 h-[40%] rounded-sm"></div>
-                                                <div className="w-1/12 bg-emerald-500/40 h-[70%] rounded-sm"></div>
-                                                <div className="w-1/12 bg-emerald-500/30 h-[50%] rounded-sm"></div>
-                                                <div className="w-1/12 bg-emerald-500/60 h-[80%] rounded-sm"></div>
-                                                <div className="w-1/12 bg-emerald-500/40 h-[60%] rounded-sm"></div>
-                                                <div className="w-1/12 bg-emerald-500/80 h-[90%] rounded-sm animate-pulse"></div>
-                                                <div className="w-1/12 bg-emerald-500/50 h-[50%] rounded-sm"></div>
-                                                <div className="w-1/12 bg-emerald-500/30 h-[40%] rounded-sm"></div>
-                                                <div className="w-1/12 bg-emerald-500/60 h-[70%] rounded-sm"></div>
-                                                <div className="w-1/12 bg-emerald-500/40 h-[50%] rounded-sm"></div>
-                                                <div className="w-1/12 bg-emerald-500/20 h-[30%] rounded-sm"></div>
-                                                <div className="w-1/12 bg-emerald-500/10 h-[20%] rounded-sm"></div>
-                                            </div>
-                                        </div>
 
-                                        {/* Metric 3: System Stability */}
-                                        <div className="bg-[#05050a]/90 backdrop-blur-xl border border-white/10 p-4 rounded-xl shadow-2xl relative overflow-hidden group">
-                                            <div className="absolute inset-0 bg-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                                            <div className="flex justify-between items-start mb-4 relative z-10">
-                                                <div className="flex items-center gap-2">
-                                                    <div className="p-1.5 bg-pink-500/10 rounded-md text-pink-400"><Icon name="zap" size={14} /></div>
-                                                    <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest font-bold">Core Stability</span>
+                                            {/* Metric 3: System Stability */}
+                                            <div className="bg-[#05050a]/90 backdrop-blur-xl border border-white/10 p-4 rounded-xl shadow-2xl relative overflow-hidden group">
+                                                <div className="absolute inset-0 bg-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                                <div className="flex justify-between items-start mb-4 relative z-10">
+                                                    <div className="flex items-center gap-2">
+                                                        <div className="p-1.5 bg-pink-500/10 rounded-md text-pink-400"><Icon name="zap" size={14} /></div>
+                                                        <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest font-bold">Core Stability</span>
+                                                    </div>
+                                                    <span className="text-xs font-mono font-bold text-pink-400">99.9%</span>
                                                 </div>
-                                                <span className="text-xs font-mono font-bold text-pink-400">99.9%</span>
-                                            </div>
-                                            <div className="h-2 w-full bg-slate-800 rounded-full overflow-hidden relative z-10">
-                                                <div className="h-full w-[99.9%] bg-gradient-to-r from-pink-600 to-pink-400 shadow-[0_0_15px_rgba(236,72,153,0.5)]"></div>
-                                            </div>
-                                            <div className="mt-2 flex justify-between text-[8px] font-mono text-slate-500 uppercase tracking-widest">
-                                                <span>Lat: 12ms</span>
-                                                <span>Uptime: 42d</span>
+                                                <div className="h-2 w-full bg-slate-800 rounded-full overflow-hidden relative z-10">
+                                                    <div className="h-full w-[99.9%] bg-gradient-to-r from-pink-600 to-pink-400 shadow-[0_0_15px_rgba(236,72,153,0.5)]"></div>
+                                                </div>
+                                                <div className="mt-2 flex justify-between text-[8px] font-mono text-slate-500 uppercase tracking-widest">
+                                                    <span>Lat: 12ms</span>
+                                                    <span>Uptime: 42d</span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </TiltContainer>
                         </div>
                     </section>
 
-                    <section id="features" className="py-24 px-6 max-w-7xl mx-auto relative z-10">
-                        <h2 className="text-4xl md:text-5xl font-black text-center mb-16 tracking-tighter">
-                            SYSTEM <span className="text-brand-400">ARCHETYPE</span>
-                        </h2>
-                        <div className="grid grid-cols-1 md:grid-cols-4 grid-rows-2 gap-6 h-[800px] md:h-[600px]">
-                            {/* Box 1: Deep Work Protocol */}
-                            <div className="md:col-span-2 md:row-span-2 relative group overflow-hidden rounded-3xl border border-white/10 bg-surface-900/60 backdrop-blur-md p-8 hover:border-brand-500/50 transition-all">
-                                {/* Logo Graphic */}
-                                <div className="absolute -bottom-10 -right-10 text-brand-500/5 group-hover:text-brand-500/10 transition-colors pointer-events-none">
-                                    <Icon name="brain-circuit" size={240} strokeWidth={0.5} />
-                                </div>
-                                <div className="relative z-10 h-full flex flex-col">
-                                    <div className="w-14 h-14 rounded-2xl bg-brand-500/20 flex items-center justify-center text-brand-400 mb-6 group-hover:scale-110 transition-transform backdrop-blur-sm border border-brand-500/20"><Icon name="monitor" size={28} /></div>
-                                    <h3 className="text-2xl font-bold mb-3 z-10">Deep Work Protocol</h3>
-                                    <p className="text-slate-400 text-sm leading-relaxed mb-8 z-10">Engage the Focus Engine. High-intensity 90-minute sprints. Block distractions and enter pure flow state.</p>
-                                    <div className="mt-auto rounded-xl bg-black/40 border border-white/5 h-48 relative overflow-hidden flex items-center justify-center backdrop-blur-md">
-                                        <div className="text-4xl font-mono text-white font-black tracking-tighter z-10">25:00</div>
-                                        <div className="absolute inset-0 border-2 border-brand-500/20 rounded-xl"></div>
-                                        <div className="absolute inset-0 bg-brand-500/5 animate-pulse"></div>
-                                    </div>
-                                </div>
-                            </div>
+                    <ComparisonDiff />
+                    <SystemArchitecture />
 
-                            {/* Box 2: DSA Tracker */}
-                            <div className="md:col-span-2 relative group overflow-hidden rounded-3xl border border-white/10 bg-surface-900/60 backdrop-blur-md p-8 hover:border-emerald-500/50 transition-all">
-                                {/* Logo Graphic */}
-                                <div className="absolute -bottom-6 -right-6 text-emerald-500/5 group-hover:text-emerald-500/10 transition-colors pointer-events-none">
-                                    <Icon name="binary" size={180} strokeWidth={0.5} />
-                                </div>
-                                <div className="relative z-10 flex flex-col h-full justify-between">
-                                    <div>
-                                        <div className="flex justify-between items-start mb-4">
-                                            <div className="w-12 h-12 rounded-xl bg-emerald-500/20 flex items-center justify-center text-emerald-400 backdrop-blur-sm border border-emerald-500/20"><Icon name="database" size={24} /></div>
-                                            <span className="bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full text-[10px] font-bold uppercase border border-emerald-500/20">Striver Sheet</span>
-                                        </div>
-                                        <h3 className="text-xl font-bold mb-2">DSA Tracker</h3>
-                                        <p className="text-slate-400 text-xs">Curated algorithm sheets. Track progress through graphs and heaps.</p>
-                                    </div>
-                                    <div className="w-full h-2 bg-white/10 rounded-full mt-4 overflow-hidden"><div className="h-full bg-emerald-500 w-[65%] shadow-[0_0_10px_currentColor]"></div></div>
-                                </div>
-                            </div>
+                    {/* NEW CONVERSION SECTIONS */}
+                    <CodeReviews />
+                    <FocusCalculator />
 
-                            {/* Box 3: Neural Flashcards */}
-                            <div className="relative group overflow-hidden rounded-3xl border border-white/10 bg-surface-900/60 backdrop-blur-md p-6 hover:border-pink-500/50 transition-all">
-                                {/* Logo Graphic */}
-                                <div className="absolute -bottom-4 -right-4 text-pink-500/5 group-hover:text-pink-500/10 transition-colors pointer-events-none">
-                                    <Icon name="layers" size={120} strokeWidth={0.5} />
-                                </div>
-                                <div className="relative z-10">
-                                    <div className="w-10 h-10 rounded-lg bg-pink-500/20 flex items-center justify-center text-pink-400 mb-4 backdrop-blur-sm border border-pink-500/20"><Icon name="zap" size={20} /></div>
-                                    <h3 className="text-lg font-bold mb-2">Neural Flashcards</h3>
-                                    <p className="text-slate-400 text-xs">Spaced repetition for long-term retention.</p>
-                                </div>
-                            </div>
-
-                            {/* Box 4: Analytics - Visualized */}
-                            <div className="relative group overflow-hidden rounded-3xl border border-white/10 bg-[#0B0C15] p-0 hover:border-blue-500/50 transition-all flex flex-col">
-                                {/* Header / Stats */}
-                                <div className="p-5 border-b border-white/5 bg-surface-900/40 backdrop-blur-md relative z-10">
-                                    <div className="flex items-center justify-between mb-4">
-                                        <div className="flex items-center gap-3">
-                                            <div className="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400 border border-blue-500/20"><Icon name="activity" size={16} /></div>
-                                            <h3 className="text-sm font-bold text-slate-200">Session Analytics</h3>
-                                        </div>
-                                        <Icon name="more-horizontal" className="text-slate-600" size={16} />
-                                    </div>
-                                    <div className="grid grid-cols-2 gap-4">
-                                        <div><div className="text-[10px] text-slate-500 uppercase tracking-wider font-bold">Bounce Rate</div><div className="text-lg font-mono font-bold text-white">40.6%</div></div>
-                                        <div><div className="text-[10px] text-slate-500 uppercase tracking-wider font-bold">Page Views</div><div className="text-lg font-mono font-bold text-emerald-400">2.7M</div></div>
-                                    </div>
-                                </div>
-
-                                {/* Chart Area */}
-                                <div className="relative flex-1 p-5 pt-8 flex items-end gap-1.5 overflow-hidden">
-                                    {/* Grid Background */}
-                                    <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)', backgroundSize: '20px 20px' }}></div>
-
-                                    {/* Bars */}
-                                    <div className="w-full bg-sky-500/20 h-[30%] rounded-sm group-hover:bg-sky-500/40 transition-all duration-500 delay-0"></div>
-                                    <div className="w-full bg-sky-500/30 h-[50%] rounded-sm group-hover:bg-sky-500/50 transition-all duration-500 delay-75"></div>
-                                    <div className="w-full bg-sky-500/40 h-[40%] rounded-sm group-hover:bg-sky-500/60 transition-all duration-500 delay-100"></div>
-                                    <div className="w-full bg-sky-500/30 h-[70%] rounded-sm group-hover:bg-sky-500/50 transition-all duration-500 delay-150 relative group/bar">
-                                        {/* Tooltip */}
-                                        <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-white text-black text-[9px] font-bold py-1 px-2 rounded opacity-0 group-hover/bar:opacity-100 transition-opacity whitespace-nowrap z-20 shadow-xl pointer-events-none transform translate-y-2 group-hover/bar:translate-y-0 duration-300">
-                                            57.1% <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-white rotate-45"></div>
-                                        </div>
-                                        <div className="absolute inset-0 bg-sky-400 opacity-0 group-hover/bar:opacity-100 transition-opacity"></div>
-                                    </div>
-                                    <div className="w-full bg-sky-500/50 h-[45%] rounded-sm group-hover:bg-sky-500/70 transition-all duration-500 delay-200"></div>
-                                    <div className="w-full bg-sky-500/30 h-[35%] rounded-sm group-hover:bg-sky-500/50 transition-all duration-500 delay-300"></div>
-                                    <div className="w-full bg-sky-500/40 h-[60%] rounded-sm group-hover:bg-sky-500/60 transition-all duration-500 delay-400"></div>
-                                    <div className="w-full bg-sky-500/20 h-[80%] rounded-sm group-hover:bg-sky-500/40 transition-all duration-500 delay-500"></div>
-                                    <div className="w-full bg-sky-500/40 h-[55%] rounded-sm group-hover:bg-sky-500/60 transition-all duration-500 delay-600"></div>
-                                    <div className="w-full bg-sky-500/30 h-[40%] rounded-sm group-hover:bg-sky-500/50 transition-all duration-500 delay-700"></div>
-
-                                    {/* Line Graph SVG Overlay */}
-                                    <svg className="absolute inset-0 w-full h-full pointer-events-none z-10" preserveAspectRatio="none">
-                                        <path d="M0,100 C20,90 40,60 60,80 S100,40 120,50 S160,20 180,40 S220,10 300,30"
-                                            fill="none"
-                                            stroke="#F472B6"
-                                            strokeWidth="3"
-                                            strokeLinecap="round"
-                                            className="drop-shadow-[0_0_6px_rgba(244,114,182,0.6)]"
-                                            vectorEffect="non-scaling-stroke" />
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
+                    <SonicFocusWidget />
+                    <LiveActivityTicker />
 
                     {/* SECTION 4: FOOTER */}
                     <footer className="border-t border-white/5 bg-[#030305] relative z-10">
@@ -647,7 +1532,13 @@
                             </div>
                         </div>
                         <div className="max-w-7xl mx-auto px-6 py-12 flex flex-col md:flex-row justify-between items-center gap-8">
-                            <div className="flex items-center gap-3"><div className="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-600 to-brand-500 flex items-center justify-center text-white font-bold">V</div><div><div className="font-bold text-white tracking-tight">VELOSIFY</div><div className="text-[10px] text-slate-500">Neural Study OS</div></div></div>
+                            <div className="flex items-center gap-3">
+                                <Logo className="w-9 h-9" />
+                                <div>
+                                    <div className="font-bold text-white tracking-tight uppercase">Velosify</div>
+                                    <div className="text-[10px] text-slate-500 font-mono uppercase tracking-widest">Neural Study OS</div>
+                                </div>
+                            </div>
                             <div className="flex gap-6 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-500">
                                 <div className="flex items-center gap-2 text-xs font-bold text-slate-400"><Icon name="globe" size={14} /> React</div>
                                 <div className="flex items-center gap-2 text-xs font-bold text-slate-400"><Icon name="database" size={14} /> Firebase</div>
@@ -1342,7 +2233,12 @@
                 <div className="space-y-8 animate-fade-in pb-12 w-full max-w-5xl mx-auto">
                     <div className="flex flex-col md:flex-row justify-between items-end gap-6 border-b border-white/5 pb-6">
                         <div>
-                            <h2 className="text-4xl font-bold text-white tracking-tight">System Syllabus</h2>
+                            <div className="flex items-center gap-3 mb-2">
+                                <Logo className="w-10 h-10 text-white" />
+                                <h1 className="text-4xl font-black tracking-tighter text-white">
+                                    System Syllabus
+                                </h1>
+                            </div>
                             <p className="text-slate-400 mt-2 font-mono text-xs">KNOWLEDGE GRAPH // {mode} PROTOCOL</p>
                         </div>
 
