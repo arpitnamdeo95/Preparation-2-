@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnostic Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+    <script crossorigin
+        src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.1/dist/umd/lucide.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #0a0a0a;
+            color: white;
+            padding: 20px;
+        }
+
+        .status {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .success {
+            background: #064e3b;
+            border: 1px solid #10b981;
+        }
+
+        .error {
+            background: #7f1d1d;
+            border: 1px solid #ef4444;
+        }
+
+        .info {
+            background: #1e3a8a;
+            border: 1px solid #3b82f6;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🔍 Diagnostic Test</h1>
+    <div id="results"></div>
+    <div id="root"></div>
+
+    <script>
+        const results = document.getElementById('results');
+
+        function addResult(message, type = 'info') {
+            const div = document.createElement('div');
+            div.className = `status ${type}`;
+            div.textContent = message;
+            results.appendChild(div);
+        }
+
+        // Test 1: Basic JavaScript
+        addResult('✅ Basic JavaScript is working', 'success');
+
+        // Test 2: React
+        if (window.React) {
+            addResult('✅ React loaded: ' + React.version, 'success');
+        } else {
+            addResult('❌ React NOT loaded', 'error');
+        }
+
+        // Test 3: ReactDOM
+        if (window.ReactDOM) {
+            addResult('✅ ReactDOM loaded', 'success');
+        } else {
+            addResult('❌ ReactDOM NOT loaded', 'error');
+        }
+
+        // Test 4: Babel
+        if (window.Babel) {
+            addResult('✅ Babel loaded', 'success');
+        } else {
+            addResult('❌ Babel NOT loaded', 'error');
+        }
+
+        // Test 5: Lucide
+        if (window.lucide) {
+            addResult('✅ Lucide icons loaded', 'success');
+        } else {
+            addResult('❌ Lucide NOT loaded', 'error');
+        }
+
+        // Test 6: Supabase
+        if (window.supabase) {
+            addResult('✅ Supabase loaded', 'success');
+        } else {
+            addResult('❌ Supabase NOT loaded', 'error');
+        }
+
+        // Test 7: Framer Motion
+        if (window.FramerMotion) {
+            addResult('✅ Framer Motion loaded as window.FramerMotion', 'success');
+        } else if (window.Motion) {
+            addResult('⚠️ Framer Motion loaded as window.Motion (needs fix)', 'error');
+        } else {
+            addResult('❌ Framer Motion NOT loaded', 'error');
+        }
+
+        // Test 8: Tailwind
+        if (window.tailwind) {
+            addResult('✅ Tailwind CSS loaded', 'success');
+        } else {
+            addResult('❌ Tailwind NOT loaded', 'error');
+        }
+    </script>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        const TestComponent = () => {
+            const [count, setCount] = useState(0);
+
+            return (
+                <div style={{ marginTop: '20px', padding: '20px', background: '#1e293b', borderRadius: '10px' }}>
+                    <h2>React Component Test</h2>
+                    <p>If you can see this, React is rendering correctly!</p>
+                    <button
+                        onClick={() => setCount(count + 1)}
+                        style={{
+                            padding: '10px 20px',
+                            background: '#3b82f6',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '5px',
+                            cursor: 'pointer'
+                        }}
+                    >
+                        Clicked {count} times
+                    </button>
+                </div>
+            );
+        };
+
+        try {
+            const root = ReactDOM.createRoot(document.getElementById('root'));
+            root.render(<TestComponent />);
+
+            setTimeout(() => {
+                const div = document.createElement('div');
+                div.className = 'status success';
+                div.textContent = '✅ React rendering is working!';
+                results.appendChild(div);
+            }, 100);
+        } catch (error) {
+            const div = document.createElement('div');
+            div.className = 'status error';
+            div.textContent = '❌ React rendering failed: ' + error.message;
+            results.appendChild(div);
+        }
+    </script>
+</body>
+
+</html>

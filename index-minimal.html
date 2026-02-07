@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Velosify - Loading Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+    <script crossorigin
+        src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #05050a;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script>
+        window.SUPABASE_URL = "https://wgjwgovcarpsvvmwuaww.supabase.co";
+        window.SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indnandnb3ZjYXJwc3Z2bXd1YXd3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwNDQ3NTksImV4cCI6MjA4NTYyMDc1OX0.Up0WU1xqUH5ZqAPpz0lVypZrcr9RJOjcMEKwG399f_A";
+        window.sb = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+    </script>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        const SimpleApp = () => {
+            const [session, setSession] = useState(null);
+            const [loading, setLoading] = useState(true);
+
+            useEffect(() => {
+                window.sb.auth.getSession().then(({ data: { session } }) => {
+                    setSession(session);
+                    setLoading(false);
+                });
+
+                const { data: { subscription } } = window.sb.auth.onAuthStateChange((_event, session) => {
+                    setSession(session);
+                });
+
+                return () => subscription.unsubscribe();
+            }, []);
+
+            if (loading) {
+                return (
+                    <div className="flex items-center justify-center min-h-screen">
+                        <div className="text-center">
+                            <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                            <h2 className="text-2xl font-bold">Loading Velosify...</h2>
+                        </div>
+                    </div>
+                );
+            }
+
+            if (!session) {
+                return (
+                    <div className="flex items-center justify-center min-h-screen">
+                        <div className="text-center max-w-md p-8 bg-gray-900 rounded-xl">
+                            <h1 className="text-4xl font-bold mb-4 text-blue-400">Velosify</h1>
+                            <p className="text-gray-400 mb-6">Neural Study OS</p>
+                            <button
+                                onClick={async () => {
+                                    const { error } = await window.sb.auth.signInWithOAuth({
+                                        provider: 'google',
+                                        options: { redirectTo: window.location.origin }
+                                    });
+                                    if (error) alert(error.message);
+                                }}
+                                className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-6 rounded-lg transition"
+                            >
+                                Sign in with Google
+                            </button>
+                        </div>
+                    </div>
+                );
+            }
+
+            return (
+                <div className="min-h-screen p-8">
+                    <div className="max-w-4xl mx-auto">
+                        <div className="flex justify-between items-center mb-8">
+                            <h1 className="text-3xl font-bold text-blue-400">Velosify Dashboard</h1>
+                            <button
+                                onClick={() => window.sb.auth.signOut()}
+                                className="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded-lg"
+                            >
+                                Sign Out
+                            </button>
+                        </div>
+                        <div className="bg-gray-900 rounded-xl p-6">
+                            <h2 className="text-xl font-bold mb-4">Welcome back!</h2>
+                            <p className="text-gray-400">Email: {session.user.email}</p>
+                            <p className="text-green-400 mt-4">✅ Website is working correctly!</p>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<SimpleApp />);
+    </script>
+</body>
+
+</html>
