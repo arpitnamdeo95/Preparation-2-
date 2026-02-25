@@ -10,7 +10,14 @@
 
 @layer base {
   body {
-    @apply bg-[#05050a] text-slate-200 antialiased selection:bg-brand-500/30;
+    @apply bg-[#05050a] text-slate-200 antialiased selection:bg-brand-500/30 overflow-x-hidden;
+  }
+
+  /* Improved Touch Targets for Mobile */
+  button,
+  [role="button"],
+  a {
+    @apply cursor-pointer touch-manipulation;
   }
 }
 
@@ -31,25 +38,30 @@
     @apply bg-white/10 rounded-full hover:bg-white/20;
   }
 
-  /* Document Typography Styles */
+  /* Document Typography Styles with Mobile Responsiveness */
   .doc-h1 {
-    @apply text-5xl font-black text-white tracking-tight leading-[1.1] uppercase italic;
+    @apply text-3xl md:text-5xl lg:text-7xl font-black text-white tracking-tight leading-[1.1] uppercase italic;
   }
 
   .doc-h2 {
-    @apply text-3xl font-black text-white tracking-tight leading-snug uppercase;
+    @apply text-2xl md:text-3xl lg:text-4xl font-black text-white tracking-tight leading-snug uppercase;
   }
 
   .doc-h3 {
-    @apply text-sm font-black text-slate-400 tracking-widest uppercase;
+    @apply text-xs md:text-sm font-black text-slate-400 tracking-widest uppercase;
   }
 
   .doc-body {
-    @apply text-base text-slate-400 leading-relaxed;
+    @apply text-sm md:text-base text-slate-400 leading-relaxed;
   }
 
   .premium-gradient-text {
     @apply text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-cyan-400;
+  }
+
+  /* Section Spacing Utilities */
+  .section-padding {
+    @apply py-12 px-6 md:py-20 md:px-12 lg:px-24;
   }
 }
 
@@ -114,4 +126,57 @@
 
 .animate-fade-in {
   animation: fade-in 0.5s ease-out forwards;
+}
+
+@layer utilities {
+  .scifi-grid {
+    position: fixed;
+    width: 200%;
+    height: 200%;
+    bottom: -50%;
+    left: -50%;
+    background-image: linear-gradient(rgba(99, 102, 241, 0.15) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(99, 102, 241, 0.15) 1px, transparent 1px);
+    background-size: 50px 50px;
+    transform: perspective(500px) rotateX(60deg);
+    animation: grid-move 30s linear infinite;
+    z-index: -1;
+    opacity: 0.3;
+    pointer-events: none;
+    mask-image: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+  }
+
+  @keyframes grid-move {
+    from {
+      transform: perspective(500px) rotateX(60deg) translateY(0);
+    }
+
+    to {
+      transform: perspective(500px) rotateX(60deg) translateY(50px);
+    }
+  }
+
+  .glass-panel {
+    @apply bg-white/[0.02] backdrop-blur-xl border border-white/5 shadow-2xl;
+  }
+}
+
+/* Mobile-only Utility Classes */
+@media (max-width: 768px) {
+  .mobile-hide {
+    display: none !important;
+  }
+
+  .mobile-p-4 {
+    padding: 1rem !important;
+  }
+
+  .mobile-stack {
+    flex-direction: column !important;
+  }
+
+  .scifi-grid {
+    background-size: 30px 30px;
+    opacity: 0.2;
+  }
 }
