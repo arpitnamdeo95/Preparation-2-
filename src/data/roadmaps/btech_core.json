@@ -1,0 +1,58 @@
+{
+    "id": "btech-core",
+    "title": "B.Tech Core Engineering x Tech Integration",
+    "nodes": [
+        {
+            "id": "root",
+            "type": "roadmapRoot",
+            "data": {
+                "label": "Core Engineering Blueprint",
+                "description": "Integration of core engineering principles with modern software industrial tools."
+            },
+            "position": {
+                "x": 400,
+                "y": 0
+            }
+        },
+        {
+            "id": "industry-tools",
+            "type": "roadmapNode",
+            "data": {
+                "label": "Industry Tools Mapping",
+                "description": "Aligning core concepts with industrial software tools.",
+                "details": "✔ Industry tools mapping (AutoCAD, MATLAB, SolidWorks, Ansys)\n✔ Software + Core integration (IoT, Embedded Systems)\n✔ Certification alignment with global job roles"
+            },
+            "position": {
+                "x": 400,
+                "y": 150
+            }
+        },
+        {
+            "id": "internship-strategy",
+            "type": "roadmapNode",
+            "data": {
+                "label": "Placement & Internships",
+                "description": "Strategic targeting of core and multi-national companies.",
+                "details": "✔ Internship targeting strategy (PSUs, Private Core, R&D)\n✔ Resume optimization for core roles\n✔ Technical interview preparation for core domains"
+            },
+            "position": {
+                "x": 400,
+                "y": 300
+            }
+        }
+    ],
+    "edges": [
+        {
+            "id": "e-root-1",
+            "source": "root",
+            "target": "industry-tools",
+            "animated": true
+        },
+        {
+            "id": "e-1-2",
+            "source": "industry-tools",
+            "target": "internship-strategy",
+            "animated": true
+        }
+    ]
+}

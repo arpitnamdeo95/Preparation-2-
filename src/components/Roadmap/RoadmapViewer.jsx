@@ -105,19 +105,46 @@ const RoadmapViewer = ({ data, onBack }) => {
                             </div>
 
                             {/* Drawer Content */}
-                            <div className="flex-1 overflow-y-auto custom-scrollbar p-8 space-y-8">
+                            <div className="flex-1 overflow-y-auto custom-scrollbar p-8 space-y-10">
                                 {/* Description */}
-                                <div>
-                                    <h4 className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-3">Context Protocol</h4>
-                                    <p className="text-slate-400 text-sm leading-relaxed font-medium">
+                                <div className="space-y-4">
+                                    <h4 className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">Context Protocol</h4>
+                                    <p className="text-slate-300 text-sm leading-relaxed font-medium">
                                         {selectedNode.data.description || "System overview for this node is not yet decrypted. Accessing standard learning protocols."}
                                     </p>
                                 </div>
 
+                                {/* Strategic Details */}
+                                {selectedNode.data.details && (
+                                    <div className="space-y-6">
+                                        <h4 className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">Execution Strategy</h4>
+                                        <div className="space-y-4">
+                                            {selectedNode.data.details.split('\n').map((line, idx) => {
+                                                if (line.trim().startsWith('✔') || line.trim().startsWith('-')) {
+                                                    return (
+                                                        <div key={idx} className="flex gap-3 text-sm text-slate-400 leading-relaxed">
+                                                            <span className="text-brand-400 mt-1">▹</span>
+                                                            <span>{line.replace(/^[✔-]\s*/, '')}</span>
+                                                        </div>
+                                                    );
+                                                }
+                                                if (line.trim().startsWith('🎯')) {
+                                                    return (
+                                                        <div key={idx} className="p-4 rounded-xl bg-brand-500/5 border border-brand-500/10 text-brand-400 text-sm font-bold flex items-center gap-3">
+                                                            <span>{line}</span>
+                                                        </div>
+                                                    );
+                                                }
+                                                return <p key={idx} className="text-sm text-slate-400 leading-relaxed">{line}</p>;
+                                            })}
+                                        </div>
+                                    </div>
+                                )}
+
                                 {/* Status */}
                                 <div className="p-6 rounded-2xl bg-white/5 border border-white/10">
                                     <h4 className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-4">Mastery Status</h4>
-                                    <button className={`w-full flex items-center justify-center gap-3 py-4 rounded-xl font-bold uppercase tracking-widest text-xs transition-all
+                                    <button className={`w-full flex items-center justify-center gap-3 py-4 rounded-xl font-bold uppercase tracking-widest text-[10px] transition-all
                     ${selectedNode.data.status === 'done'
                                             ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
                                             : 'bg-brand-600 text-white hover:bg-brand-500 shadow-lg shadow-brand-600/20 active:scale-[0.98]'}`}
@@ -131,8 +158,8 @@ const RoadmapViewer = ({ data, onBack }) => {
                                 </div>
 
                                 {/* Resources */}
-                                <div className="space-y-4">
-                                    <h4 className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">Learning Relics</h4>
+                                <div className="space-y-6">
+                                    <h4 className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">Knowledge Relics</h4>
                                     <div className="grid gap-3">
                                         {(selectedNode.data.resources || []).length > 0 ? (
                                             selectedNode.data.resources.map((res, i) => (
@@ -141,23 +168,23 @@ const RoadmapViewer = ({ data, onBack }) => {
                                                     href={res.url}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className="group flex items-center justify-between p-4 bg-white/5 border border-white/5 rounded-2xl hover:bg-white/10 hover:border-brand-500/30 transition-all active:scale-[0.99]"
+                                                    className="group flex items-center justify-between p-4 bg-[#111] border border-white/5 rounded-2xl hover:bg-white/5 hover:border-brand-500/30 transition-all active:scale-[0.99]"
                                                 >
                                                     <div className="flex items-center gap-4">
-                                                        <div className="w-10 h-10 rounded-xl bg-[#111] border border-white/5 flex items-center justify-center group-hover:text-brand-400 transition-colors">
+                                                        <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:text-brand-400 transition-colors">
                                                             {res.type === 'video' ? <Play size={18} fill="currentColor" /> : <FileText size={18} />}
                                                         </div>
                                                         <div>
                                                             <div className="text-sm font-bold text-white group-hover:text-brand-400 transition-colors">{res.title}</div>
-                                                            <div className="text-[10px] text-slate-500 uppercase tracking-widest font-mono">{res.type}</div>
+                                                            <div className="text-[10px] text-slate-600 uppercase tracking-widest font-mono">{res.type}</div>
                                                         </div>
                                                     </div>
-                                                    <ExternalLink size={14} className="text-slate-600 group-hover:text-brand-400 transition-colors" />
+                                                    <ExternalLink size={14} className="text-slate-700 group-hover:text-brand-400 transition-colors" />
                                                 </a>
                                             ))
                                         ) : (
-                                            <div className="py-12 text-center border-2 border-dashed border-white/5 rounded-2xl">
-                                                <p className="text-xs text-slate-500 font-mono">NO RESOURCES LOCATED</p>
+                                            <div className="py-12 text-center border-2 border-dashed border-white/5 rounded-2xl bg-white/[0.02]">
+                                                <p className="text-[10px] text-slate-600 font-mono tracking-widest uppercase">No Additional Relics Encrypted</p>
                                             </div>
                                         )}
                                     </div>

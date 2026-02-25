@@ -1,0 +1,166 @@
+{
+    "id": "cs-mastery",
+    "title": "CS Mastery Blueprint 2026",
+    "nodes": [
+        {
+            "id": "root",
+            "type": "roadmapRoot",
+            "data": {
+                "label": "CS Mastery Blueprint",
+                "description": "Strategic 12-month blueprint for high-tier software engineering roles. Deep fundamentals, pattern-based DSA, and real-world project impact."
+            },
+            "position": {
+                "x": 400,
+                "y": 0
+            }
+        },
+        {
+            "id": "phase-1",
+            "type": "roadmapNode",
+            "data": {
+                "label": "Phase 1: Foundation (0-3M)",
+                "description": "Build programming confidence and logical thinking. Master a core language and start DSA early.",
+                "details": "🎯 Goal: Build Programming Confidence + Logical Thinking\n\n1. Choose One Core Language: C++ (DSA focus), Java, or Python (AI focus).\n2. Master Programming Fundamentals: Variables, Loops, Functions, Arrays, Strings, Recursion, Time complexity (Big-O).\n3. Start DSA Early: Solve 150+ problems in 3 months on LeetCode (Easy), GFG, CodeStudio.\n4. Version Control: Learn Git basics, push projects, maintain GitHub streak.\n\n🎯 Milestone: 150+ problems solved."
+            },
+            "position": {
+                "x": 400,
+                "y": 150
+            }
+        },
+        {
+            "id": "phase-2",
+            "type": "roadmapNode",
+            "data": {
+                "label": "Phase 2: Skill Building (3-6M)",
+                "description": "Become internship-ready by mastering advanced DSA and choosing a specialized development path.",
+                "details": "🎯 Goal: Become Internship-Ready\n\n1. Advanced DSA: Linked List, Trees, BST, Hashing, Sliding Window, Two Pointers. Target: 350+ problems.\n2. Choose Development Path:\n   - Option A: Web Dev (HTML, CSS, JS, React, Node, MongoDB)\n   - Option B: Data Path (Python, NumPy, Pandas, SQL, Basic ML)\n   - Option C: Cloud Path (Linux, Networking, AWS, Docker)\n3. Build 3 Real Projects: Authentication system, Blog platform, Expense tracker, or E-commerce clone.\n4. Resume Strategy: Impact-driven bullet points, problem-solving stats, clean structure.\n\n🎯 Target: 350+ problems solved."
+            },
+            "position": {
+                "x": 400,
+                "y": 300
+            }
+        },
+        {
+            "id": "phase-3",
+            "type": "roadmapNode",
+            "data": {
+                "label": "Phase 3: Advanced (6-12M)",
+                "description": "Master patterns, system design basics, and execution of placement strategy.",
+                "details": "🎯 Goal: Crack Internship / Placement\n\n1. Master Patterns in DSA: DP patterns, Graph patterns, Backtracking, Greedy, Binary search on answer. Target: 500+ problems.\n2. System Design Basics: Scalability, Load Balancers, Database Indexing, Caching, API Rate Limiting, CAP Theorem.\n3. Internship Strategy: Apply daily on LinkedIn, Cold message recruiters, Hackathons, Referrals.\n4. Interview Preparation: Coding rounds, Technical rounds, HR rounds. Common questions & project rehearsals.\n\n🎯 Target: 500+ quality problems solved."
+            },
+            "position": {
+                "x": 400,
+                "y": 450
+            }
+        }
+    ],
+    "edges": [
+        {
+            "id": "e-root-1",
+            "source": "root",
+            "target": "phase-1",
+            "animated": true
+        },
+        {
+            "id": "e-1-2",
+            "source": "phase-1",
+            "target": "phase-2",
+            "animated": true
+        },
+        {
+            "id": "e-2-3",
+            "source": "phase-2",
+            "target": "phase-3",
+            "animated": true
+        }
+    ],
+    "fullBlueprint": {
+        "title": "Computer Science – From Beginner to Industry-Ready (12-Month Blueprint)",
+        "intro": "A high-performance roadmap designed by career strategists and senior engineers. This 12-month protocol ensures you transition from a beginner to an industry-ready professional with deep technical mastery.",
+        "phases": [
+            {
+                "name": "PHASE 1: Foundation Phase (Month 0–3)",
+                "goal": "Build Programming Confidence + Logical Thinking",
+                "steps": [
+                    {
+                        "title": "Step 1: Choose One Core Language",
+                        "content": "Recommended: C++ (for DSA focus), Java, or Python (if AI-focused). Don’t switch languages every month. Master the syntax but move to logic quickly."
+                    },
+                    {
+                        "title": "Step 2: Master Programming Fundamentals",
+                        "content": "Focus on: Variables, Loops, Functions, Arrays, Strings, Recursion basics, and Time complexity basics (Big-O). Recommendation: 5 days coding, 2 days revision."
+                    },
+                    {
+                        "title": "Step 3: Start DSA Early (Don’t Delay)",
+                        "content": "Topics: Arrays, Strings, Recursion, Basic Sorting, Searching. Platforms: LeetCode (Easy), GeeksforGeeks, CodeStudio."
+                    },
+                    {
+                        "title": "Step 4: Version Control & GitHub",
+                        "content": "Learn Git basics. Push every practice project. Maintain consistency streak. Your GitHub must not look empty."
+                    }
+                ]
+            },
+            {
+                "name": "PHASE 2: Skill Building Phase (Month 3–6)",
+                "goal": "Become Internship-Ready",
+                "steps": [
+                    {
+                        "title": "Step 1: Advanced DSA",
+                        "content": "Topics: Linked List, Stack, Queue, Binary Trees, BST, Hashing, Sliding Window, Two Pointers. Target: 300–350 total problems solved."
+                    },
+                    {
+                        "title": "Step 2: Choose Development Path",
+                        "content": "Specialization: Web Dev (MERN Stack), Data Path (Python/SQL/ML), or Cloud Path (Linux/AWS/Docker)."
+                    },
+                    {
+                        "title": "Step 3: Build 3 Real Projects",
+                        "content": "Not tutorial clones. Authentication systems, Blog platforms, E-commerce clones, or REST API projects. Deploy them and link in README."
+                    },
+                    {
+                        "title": "Step 4: Resume Strategy",
+                        "content": "Structure: Skills, Impact-driven project bullets, Problem-solving stats, GitHub links. Avoid fake roles or irrelevant tools."
+                    }
+                ]
+            },
+            {
+                "name": "PHASE 3: Advanced & Placement Phase (Month 6–12)",
+                "goal": "Crack Internship / Placement",
+                "steps": [
+                    {
+                        "title": "Step 1: Master Patterns in DSA",
+                        "content": "Focus on patterns: DP, Graph, Backtracking, Greedy, Binary search on answer. Target: 500+ quality problems."
+                    },
+                    {
+                        "title": "Step 2: System Design Basics",
+                        "content": "Learn: Scalability, Load balancers, Database indexing, Caching, API rate limiting, CAP theorem. You need fundamentals, not FAANG-level design."
+                    },
+                    {
+                        "title": "Step 3: Internship Strategy",
+                        "content": "Daily LinkedIn outreach, Cold messaging, Hackathons, referrals. 10 applications/day, 5 recruiter messages."
+                    },
+                    {
+                        "title": "Step 4: Interview Preparation",
+                        "content": "Coding Round, Technical Round, HR Round. Prepare 50 common questions, 10 project rehearsals, 5 mock interviews."
+                    }
+                ]
+            }
+        ],
+        "career_progression": [
+            {
+                "stage": "Beginners Level",
+                "skills": "Basics + Foundational DSA",
+                "income": "₹3–6 LPA"
+            },
+            {
+                "stage": "Intermediate Practitioner",
+                "skills": "Project Portfolio + Internship",
+                "income": "₹6–12 LPA"
+            },
+            {
+                "stage": "Advanced Engineer",
+                "skills": "System Design + High-Performance DSA",
+                "income": "₹12–25+ LPA"
+            }
+        ]
+    }
+}

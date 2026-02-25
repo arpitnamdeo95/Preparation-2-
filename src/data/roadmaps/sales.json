@@ -1,0 +1,77 @@
+{
+    "id": "sales-growth",
+    "title": "Sales & Revenue Engineering",
+    "nodes": [
+        {
+            "id": "root",
+            "type": "roadmapRoot",
+            "data": {
+                "label": "Sales Mastery Blueprint",
+                "description": "A high-performance roadmap for modern sales professionals, covering outreach frameworks and funnel optimization."
+            },
+            "position": {
+                "x": 400,
+                "y": 0
+            }
+        },
+        {
+            "id": "fundamentals",
+            "type": "roadmapNode",
+            "data": {
+                "label": "Sales Fundamentals",
+                "description": "Understanding commission structures and outreach frameworks.",
+                "details": "✔ Commission structure understanding\n✔ Outreach framework (Email, LinkedIn, Cold Call)\n✔ Objection handling basics: SPIN & Challenger methods"
+            },
+            "position": {
+                "x": 400,
+                "y": 150
+            }
+        },
+        {
+            "id": "stack-mastery",
+            "type": "roadmapNode",
+            "data": {
+                "label": "CRM & Tools Mastery",
+                "description": "Become proficient in modern sales stacks and funnel logic.",
+                "details": "✔ CRM mastery roadmap (HubSpot/Salesforce)\n✔ Funnel optimization strategy\n✔ Sales automation tools (Apollo, Lemlist, Gong)"
+            },
+            "position": {
+                "x": 400,
+                "y": 300
+            }
+        },
+        {
+            "id": "positioning",
+            "type": "roadmapNode",
+            "data": {
+                "label": "Growth & Monetization",
+                "description": "Scale your personal brand and optimize for high-ticket sales.",
+                "details": "✔ Personal brand monetization\n✔ Advanced negotiation frameworks\n✔ Closing high-ticket deals"
+            },
+            "position": {
+                "x": 400,
+                "y": 450
+            }
+        }
+    ],
+    "edges": [
+        {
+            "id": "e-root-1",
+            "source": "root",
+            "target": "fundamentals",
+            "animated": true
+        },
+        {
+            "id": "e-1-2",
+            "source": "fundamentals",
+            "target": "stack-mastery",
+            "animated": true
+        },
+        {
+            "id": "e-2-3",
+            "source": "stack-mastery",
+            "target": "positioning",
+            "animated": true
+        }
+    ]
+}

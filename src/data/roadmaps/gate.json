@@ -1,0 +1,77 @@
+{
+    "id": "gate-strategy",
+    "title": "GATE Excellence Protocol 2026",
+    "nodes": [
+        {
+            "id": "root",
+            "type": "roadmapRoot",
+            "data": {
+                "label": "GATE Strategic Blueprint",
+                "description": "Expert-led strategy for GATE preparation, focusing on subject dependency, mistake tracking, and revision cycles."
+            },
+            "position": {
+                "x": 400,
+                "y": 0
+            }
+        },
+        {
+            "id": "subject-mapping",
+            "type": "roadmapNode",
+            "data": {
+                "label": "Subject Dependency & Weightage",
+                "description": "Understand the order of subjects and prioritize high-weightage topics.",
+                "details": "✔ Subject dependency order (e.g., C -> DS -> Algo)\n✔ PYQ weightage strategy (Prioritize high-yield subjects)\n✔ 6-month vs 12-month strategy difference"
+            },
+            "position": {
+                "x": 400,
+                "y": 150
+            }
+        },
+        {
+            "id": "revision-protocol",
+            "type": "roadmapNode",
+            "data": {
+                "label": "Revision & Mistake Tracking",
+                "description": "Implement smart revision cycles and utilize the mistake tracking sheet method.",
+                "details": "✔ Smart revision cycles (1-3-7-30 day rule)\n✔ Mistake tracking sheet method: Log every error in mocks\n✔ Improvement framework: Analyze conceptually weak areas"
+            },
+            "position": {
+                "x": 400,
+                "y": 300
+            }
+        },
+        {
+            "id": "mock-mastery",
+            "type": "roadmapNode",
+            "data": {
+                "label": "Mock Test Mastery",
+                "description": "Strategic approach to full-length tests and performance optimization.",
+                "details": "✔ Subject-wise tests -> Multi-subject -> Full Mocks\n✔ Analysis of mock performance (Time management, Accuracy)\n✔ Last 3 months focused on test-taking temperament"
+            },
+            "position": {
+                "x": 400,
+                "y": 450
+            }
+        }
+    ],
+    "edges": [
+        {
+            "id": "e-root-1",
+            "source": "root",
+            "target": "subject-mapping",
+            "animated": true
+        },
+        {
+            "id": "e-1-2",
+            "source": "subject-mapping",
+            "target": "revision-protocol",
+            "animated": true
+        },
+        {
+            "id": "e-2-3",
+            "source": "revision-protocol",
+            "target": "mock-mastery",
+            "animated": true
+        }
+    ]
+}
