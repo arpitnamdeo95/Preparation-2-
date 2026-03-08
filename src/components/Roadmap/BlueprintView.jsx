@@ -23,7 +23,7 @@ const BlueprintView = ({ data, onBack }) => {
                     className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-slate-500 hover:text-white transition-colors"
                 >
                     <ArrowLeft size={16} /> <span className="hidden sm:inline">[ Back to Neural Link ]</span>
-                    <span className="sm:hidden">BACK</span>
+                    <span className="sm:hidden">BACK</span> 
                 </button>
                 <div className="flex items-center gap-4">
                     <button

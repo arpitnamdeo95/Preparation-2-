@@ -14,8 +14,7 @@ class Settings:
     
     # API Keys
     GOOGLE_API_KEY: str = os.getenv("GOOGLE_API_KEY", "")
-    SUPABASE_URL: str = os.getenv("SUPABASE_URL", "")
-    SUPABASE_KEY: str = os.getenv("SUPABASE_KEY", "")
+
     
     # Server Configuration
     HOST: str = os.getenv("HOST", "0.0.0.0")
@@ -53,8 +52,6 @@ class Settings:
         """Validate that required settings are present"""
         if not self.GOOGLE_API_KEY:
             raise ValueError("GOOGLE_API_KEY is required")
-        if not self.SUPABASE_URL or not self.SUPABASE_KEY:
-            raise ValueError("Supabase credentials are required")
         return True
 
 # Global settings instance

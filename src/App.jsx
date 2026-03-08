@@ -10,7 +10,7 @@ import {
     BarChart3,
     Compass
 } from 'lucide-react';
-import { supabase } from './lib/supabase';
+
 import Sidebar from './components/Layout/Sidebar';
 
 // Lazy load heavy components for better initial load performance
@@ -39,8 +39,8 @@ const LoadingFallback = () => (
 );
 
 const App = () => {
-    const [session, setSession] = useState(null);
-    const [loadingAuth, setLoadingAuth] = useState(true);
+    const [session, setSession] = useState({ user: { id: 'guest', email: 'guest@velosify.io' } });
+    const [loadingAuth, setLoadingAuth] = useState(false);
     const [tab, setTab] = useState('roadmaps');
     const [isExpanded, setIsExpanded] = useState(true);
 
@@ -72,20 +72,11 @@ const App = () => {
     }, [data, storageKey]);
 
     useEffect(() => {
-        supabase.auth.getSession().then(({ data: { session } }) => {
-            setSession(session);
-            setLoadingAuth(false);
-        });
-
-        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-            setSession(session);
-        });
-
-        return () => subscription.unsubscribe();
+        // Auth initialization skipped
     }, []);
 
-    const logout = async () => {
-        await supabase.auth.signOut();
+    const logout = () => {
+        window.location.reload();
     };
 
     if (loadingAuth) return (

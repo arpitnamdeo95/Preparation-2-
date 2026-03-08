@@ -17,7 +17,7 @@
         src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lucide@0.469.0/dist/umd/lucide.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
@@ -299,25 +299,17 @@
     <div id="root"></div>
 
     <script>
-        window.SUPABASE_URL = "https://wgjwgovcarpsvvmwuaww.supabase.co";
-        window.SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indnandnb3ZjYXJwc3Z2bXd1YXd3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwNDQ3NTksImV4cCI6MjA4NTYyMDc1OX0.Up0WU1xqUH5ZqAPpz0lVypZrcr9RJOjcMEKwG399f_A";
-        window.sb = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
-        window.__SESSION__ = null;
+        window.__SESSION__ = { user: { id: 'guest', email: 'guest@velosify.io' } };
 
-        async function boot() {
-            try {
-                const { data } = await window.sb.auth.getSession();
-                window.__SESSION__ = data.session;
-                if (window.location.hash?.includes('access_token')) {
-                    const { data: { session } } = await window.sb.auth.getSession();
-                    window.__SESSION__ = session;
-                    window.history.replaceState(null, null, window.location.pathname);
+        function boot() {
+            window.dispatchEvent(new Event('velosify-ready'));
+            setTimeout(() => {
+                const el = document.getElementById('boot-screen');
+                if (el) {
+                    el.style.opacity = '0';
+                    setTimeout(() => el.remove(), 500);
                 }
-            } catch (e) { console.error("Boot:", e); window.__SESSION__ = null; }
-            finally {
-                window.dispatchEvent(new Event('velosify-ready'));
-                setTimeout(() => { const el = document.getElementById('boot-screen'); el.style.opacity = '0'; setTimeout(() => el.remove(), 500); }, 800);
-            }
+            }, 800);
         }
         boot();
     </script>
@@ -866,50 +858,7 @@
         };
 
         /* --- AUTH PAGE MODAL --- */
-        const AuthModal = ({ onClose }) => {
-            const [email, setEmail] = useState(""); const [password, setPassword] = useState(""); const [loading, setLoading] = useState(false); const [errorMsg, setErrorMsg] = useState(null); const [mode, setMode] = useState("signin");
-            useEffect(() => { const h = (e) => { if (e.key === 'Escape') onClose(); }; window.addEventListener('keydown', h); return () => window.removeEventListener('keydown', h); }, [onClose]);
 
-            const handleAuth = async (e) => {
-                e.preventDefault(); setLoading(true); setErrorMsg(null);
-                try {
-                    const sb = window.sb;
-                    const redirectTo = window.location.origin;
-                    if (mode === 'signin') { const { error } = await sb.auth.signInWithPassword({ email, password }); if (error) throw error; }
-                    else { const { data, error } = await sb.auth.signUp({ email, password, options: { emailRedirectTo: redirectTo } }); if (error) throw error; if (data.user && !data.session) alert("Check email for confirmation."); }
-                    const { data } = await sb.auth.getSession(); if (data.session) window.location.reload();
-                } catch (err) { setErrorMsg(String(err?.message || err || "Auth Failed")); } finally { setLoading(false); }
-            };
-            const handleGoogle = async () => {
-                setLoading(true); setErrorMsg(null);
-                try {
-                    const redirectTo = window.location.origin;
-                    const { error } = await window.sb.auth.signInWithOAuth({ provider: 'google', options: { redirectTo } }); if (error) throw error;
-                }
-                catch (err) { setErrorMsg(String(err?.message || "Google Auth Failed")); setLoading(false); }
-            };
-            return (
-                <div onClick={onClose} className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
-                    <div onClick={e => e.stopPropagation()} className="w-full max-w-md holo-card rounded-2xl p-8 border-t border-white/20 relative shadow-[0_0_50px_rgba(var(--brand-500),0.2)]">
-                        <button onClick={onClose} className="absolute top-4 right-4 text-slate-500 hover:text-white transition-colors bg-white/5 hover:bg-white/10 p-2 rounded-full"><Icon name="x" size={20} /></button>
-                        <div className="text-center mb-10">
-                            <Logo className="w-16 h-16 mx-auto mb-6 shadow-[0_0_30px_rgba(var(--brand-500),0.4)] animate-pulse" />
-                            <h2 className="text-3xl font-extrabold text-white tracking-tight uppercase">Velosify</h2>
-                            <p className="text-brand-400 text-[10px] font-mono tracking-[0.3em] mt-3 uppercase opacity-80">Identity Verification</p>
-                        </div>
-                        {errorMsg && <div className="mb-6 bg-red-500/10 border border-red-500/20 rounded-xl p-4 text-red-300 text-xs font-mono">{errorMsg}</div>}
-                        <form onSubmit={handleAuth} className="space-y-5">
-                            <div className="group relative"><Icon name="mail" size={16} className="absolute left-4 top-3.5 text-slate-500 group-focus-within:text-brand-400" /><input type="email" required value={email} onChange={e => setEmail(e.target.value)} className="w-full bg-black/40 border border-white/10 rounded-xl py-3 pl-11 pr-4 text-sm text-white focus:border-brand-500 focus:ring-1 focus:ring-brand-500 outline-none transition-all placeholder:text-slate-600 font-mono" placeholder="NEURAL ID" /></div>
-                            <div className="group relative"><Icon name="lock" size={16} className="absolute left-4 top-3.5 text-slate-500 group-focus-within:text-brand-400" /><input type="password" required value={password} onChange={e => setPassword(e.target.value)} className="w-full bg-black/40 border border-white/10 rounded-xl py-3 pl-11 pr-4 text-sm text-white focus:border-brand-500 focus:ring-1 focus:ring-brand-500 outline-none transition-all placeholder:text-slate-600 font-mono" placeholder="ACCESS CODE" /></div>
-                            <button type="submit" disabled={loading} className="w-full bg-brand-600 hover:bg-brand-500 text-white font-bold py-2.5 rounded-xl transition-all shadow-lg shadow-brand-600/20 active:scale-[0.98] uppercase text-[10px] tracking-widest">{loading ? 'PROCESSING...' : (mode === 'signin' ? 'AUTHENTICATE' : 'INITIATE REGISTRATION')}</button>
-                        </form>
-                        <div className="my-8 flex items-center gap-4 opacity-50"><div className="h-px bg-white/20 flex-1"></div><span className="text-[10px] uppercase font-bold tracking-widest">OR</span><div className="h-px bg-white/20 flex-1"></div></div>
-                        <button onClick={handleGoogle} className="w-full bg-white text-black font-bold py-2.5 rounded-xl flex items-center justify-center gap-3 hover:bg-slate-200 transition-colors shadow-lg active:scale-[0.98] uppercase text-[10px] tracking-widest"><svg className="w-4 h-4" viewBox="0 0 24 24"><path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" /><path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" /><path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" /><path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" /></svg> GOOGLE ACCESS</button>
-                        <div className="mt-8 text-center"><button onClick={() => setMode(mode === 'signin' ? 'signup' : 'signin')} className="text-brand-400 text-[10px] font-mono border-b border-dashed border-brand-500/50 pb-0.5 hover:text-white transition-colors uppercase tracking-widest">{mode === 'signin' ? 'New User? Initialize Protocol' : 'Existing User? Authenticate'}</button></div>
-                    </div>
-                </div>
-            );
-        };
 
         /* --- LANDING PAGE COMPONENTS --- */
 
@@ -7262,7 +7211,7 @@ def subsets(nums):
             }, []);
 
             const log = () => setData(d => ({ ...d, totalTime: d.totalTime + 1 }));
-            const logout = async () => { await window.sb.auth.signOut(); window.location.reload(); };
+            const logout = () => { if (confirm("Sign out and return to landing page? Session data in storage will remain.")) window.location.reload(); };
             const resetData = () => { if (confirm("This will include your saved data.")) { localStorage.removeItem(storageKey); window.location.reload(); } };
 
             return (
@@ -7311,7 +7260,7 @@ def subsets(nums):
                             </div>
                         )}
 
-                        {/* Mobile Backdrop */}
+                        {/* Mobile Backdrop features */}
                         {mobileOpen && <div className="fixed inset-0 z-40 bg-black/80 backdrop-blur-sm lg:hidden" onClick={() => setMobileOpen(false)}></div>}
 
                         {/* Sidebar */}
@@ -7349,13 +7298,12 @@ def subsets(nums):
                                         key={x.id}
                                         onClick={() => { setTab(x.id); setMobileOpen(false); }}
                                         className={`w-full flex items-center gap-4 px-3 py-2.5 rounded-xl transition-all duration-300 group relative overflow-hidden ${tab === x.id ? 'text-white bg-brand-500/10 shadow-[0_0_20px_rgba(var(--brand-500),0.1)] border border-brand-500/20' : 'text-slate-500 hover:text-white hover:bg-white/5'} ${!isExpanded ? 'lg:justify-center lg:px-0' : ''}`}
-                                    >
-                                        {tab === x.id && (
-                                            <motion.div
-                                                layoutId="activeTab"
-                                                className="absolute inset-0 bg-gradient-to-r from-brand-500/10 to-transparent opacity-50 z-0"
-                                            />
-                                        )}
+                                    >                                        {tab === x.id && (
+                                        <motion.div
+                                            layoutId="activeTab"
+                                            className="absolute inset-0 bg-gradient-to-r from-brand-500/10 to-transparent opacity-50 z-0"
+                                        />
+                                    )}
                                         <div className={`relative z-10 transition-transform duration-300 group-hover:scale-110 ${tab === x.id ? 'text-brand-400' : ''}`}>
                                             <Icon name={x.i} size={20} />
                                         </div>
@@ -7438,28 +7386,20 @@ def subsets(nums):
 
         const Root = () => {
             const [ready, setReady] = useState(false);
-            const [session, setSession] = useState(null);
-            const [showAuth, setShowAuth] = useState(false);
+            const [inApp, setInApp] = useState(false);
 
             useEffect(() => {
-                const check = () => { if (window.__SESSION__ !== undefined) { setSession(window.__SESSION__); setReady(true); } };
+                const check = () => { setReady(true); };
                 check();
-                const onAuth = (_e, s) => { setSession(s); setReady(true); };
-                const { data: { subscription } } = window.sb.auth.onAuthStateChange(onAuth);
                 window.addEventListener('velosify-ready', check);
-                return () => { subscription.unsubscribe(); window.removeEventListener('velosify-ready', check); }
+                return () => window.removeEventListener('velosify-ready', check);
             }, []);
 
-            if (!ready && window.__SESSION__ === undefined) return null;
+            if (!ready) return null;
 
-            if (session) return <MainApp key={session.user.id} session={session} />;
+            if (inApp) return <MainApp session={window.__SESSION__} />;
 
-            return (
-                <>
-                    <LandingPage onLogin={() => setShowAuth(true)} />
-                    {showAuth && <AuthModal onClose={() => setShowAuth(false)} />}
-                </>
-            );
+            return <LandingPage onLogin={() => setInApp(true)} />;
         };
 
         const root = ReactDOM.createRoot(document.getElementById('root'));
